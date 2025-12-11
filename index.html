@@ -1068,6 +1068,7 @@
             Use this form when you invite a new investor. The details are stored locally in the
             browser so that admins can review activity later in the Admin dashboard.
           </p>
+          <p id="ref-banner" class="form-footnote" style="display:none;"></p>
 
           <form id="invitationForm" autocomplete="off">
             <div class="form-grid">
@@ -1106,7 +1107,7 @@
                   id="inv-ref-code"
                   name="referralCode"
                   type="text"
-                  placeholder="Example: UMOJA-HOLIDAY-001"
+                  placeholder="Example: UMJ-HOLIDAY-001"
                   required
                 />
               </div>
@@ -1178,7 +1179,7 @@
               <div class="admin-form-grid">
                 <div>
                   <label for="admin-email">Admin email (optional)</label>
-                  <input id="admin-email" type="email" placeholder="admin@umoja..." />
+                  <input id="admin-email" type="email" placeholder="admin@umojaofficial.com" />
                 </div>
                 <div>
                   <label for="admin-password">
@@ -1215,6 +1216,7 @@
                 </div>
               </div>
 
+              <!-- Detailed invitation list -->
               <div style="overflow-x: auto; max-height: 260px;">
                 <table>
                   <thead>
@@ -1237,6 +1239,28 @@
               <div id="adminEmptyState" class="empty-state">
                 No invitations saved yet. Submit one from the Invitation form.
               </div>
+
+              <!-- Referral performance summary -->
+              <div style="margin-top: 12px;">
+                <div class="admin-title" style="margin-bottom: 4px;">
+                  Referral performance summary
+                </div>
+                <div id="referralSummaryEmpty" class="empty-state">
+                  No data yet. When invitations are saved, you’ll see total investors &amp; volume per code here.
+                </div>
+                <div style="overflow-x:auto;">
+                  <table id="referralSummaryTable" style="display:none;">
+                    <thead>
+                      <tr>
+                        <th>Referral code</th>
+                        <th>Investors</th>
+                        <th>Total amount (USD)</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1258,7 +1282,24 @@
     </footer>
   </div>
 
+  <!-- MAIN SCRIPT -->
   <script>
+    // Read ?ref=XYZ from URL
+    function getQueryParam(name) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(name);
+    }
+
+    // Generate an automatic referral / invitation code
+    function generateReferralCode() {
+      const now = new Date();
+      const y = String(now.getFullYear()).slice(-2);
+      const m = String(now.getMonth() + 1).padStart(2, "0");
+      const d = String(now.getDate()).padStart(2, "0");
+      const rand = Math.floor(Math.random() * 9999).toString().padStart(4, "0");
+      return `UMJ-${y}${m}${d}-${rand}`; // e.g. UMJ-251211-4829
+    }
+
     // Smooth scroll
     document.querySelectorAll("[data-scroll-to]").forEach(btn => {
       btn.addEventListener("click", () => {
@@ -1331,11 +1372,26 @@
       });
     }
 
-    // Invitation storage
+    // Invitation storage & referral link handling
     const INV_KEY = "umojaInvitations";
     const invitationForm = document.getElementById("invitationForm");
     const invitationStatus = document.getElementById("invitationStatus");
     const clearInvitationFormBtn = document.getElementById("clearInvitationForm");
+
+    const referralInput = document.getElementById("inv-ref-code");
+    const refBanner = document.getElementById("ref-banner");
+    const refFromUrl = getQueryParam("ref");
+
+    if (refFromUrl && referralInput) {
+      referralInput.value = refFromUrl;
+      referralInput.readOnly = true;
+      if (refBanner) {
+        refBanner.style.display = "block";
+        refBanner.textContent =
+          "You were invited with referral code " + refFromUrl +
+          ". This helps Umoja track rewards for your inviter.";
+      }
+    }
 
     function loadInvitations() {
       try { return JSON.parse(localStorage.getItem(INV_KEY)) || []; }
@@ -1352,6 +1408,12 @@
 
     invitationForm.addEventListener("submit", (e) => {
       e.preventDefault();
+
+      // If referral code is empty (and not prefilled), auto-generate one
+      if (referralInput && !referralInput.value.trim()) {
+        referralInput.value = generateReferralCode();
+      }
+
       const fd = new FormData(invitationForm);
       const rec = {
         name: fd.get("name").trim(),
@@ -1374,20 +1436,32 @@
 
       addInvitation(rec);
       invitationForm.reset();
+
+      // If URL locked a referral, restore it after reset
+      if (refFromUrl && referralInput) {
+        referralInput.value = refFromUrl;
+        referralInput.readOnly = true;
+      }
+
       invitationStatus.textContent =
-        "Invitation saved locally. Admins can see it in the dashboard.";
+        "Invitation saved locally with code " + rec.referralCode +
+        ". Admins can see it in the dashboard.";
       invitationStatus.className = "status status-success";
       if (adminUnlocked) renderInvitationTable();
     });
 
     clearInvitationFormBtn.addEventListener("click", () => {
       invitationForm.reset();
+      if (refFromUrl && referralInput) {
+        referralInput.value = refFromUrl;
+        referralInput.readOnly = true;
+      }
       invitationStatus.textContent = "";
       invitationStatus.className = "status";
     });
 
     // Admin logic
-    const ADMIN_PASSWORD = "October27!";
+    const ADMIN_PASSWORD = "UmojaAdmin2025!";
     let adminUnlocked = false;
 
     const adminLoginForm = document.getElementById("adminLoginForm");
@@ -1400,16 +1474,69 @@
     const exportCsvBtn = document.getElementById("exportCsvBtn");
     const clearAllInvitationsBtn = document.getElementById("clearAllInvitationsBtn");
 
+    const referralSummaryTable = document.getElementById("referralSummaryTable");
+    const referralSummaryBody = referralSummaryTable
+      ? referralSummaryTable.querySelector("tbody")
+      : null;
+    const referralSummaryEmpty = document.getElementById("referralSummaryEmpty");
+
+    function renderReferralSummary(list) {
+      if (!referralSummaryTable || !referralSummaryBody || !referralSummaryEmpty) return;
+
+      if (!list.length) {
+        referralSummaryBody.innerHTML = "";
+        referralSummaryTable.style.display = "none";
+        referralSummaryEmpty.style.display = "block";
+        return;
+      }
+
+      const statsByCode = {};
+      list.forEach(inv => {
+        const code = inv.referralCode && inv.referralCode.trim()
+          ? inv.referralCode.trim()
+          : "—";
+        const amount = parseFloat(inv.amount || 0) || 0;
+        if (!statsByCode[code]) {
+          statsByCode[code] = { count: 0, total: 0 };
+        }
+        statsByCode[code].count += 1;
+        statsByCode[code].total += amount;
+      });
+
+      referralSummaryBody.innerHTML = "";
+      Object.entries(statsByCode)
+        .sort((a, b) => b[1].total - a[1].total)
+        .forEach(([code, stats]) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${code}</td>
+            <td>${stats.count}</td>
+            <td>${stats.total.toLocaleString(undefined, {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 2
+            })}</td>
+          `;
+          referralSummaryBody.appendChild(tr);
+        });
+
+      referralSummaryTable.style.display = "table";
+      referralSummaryEmpty.style.display = "none";
+    }
+
     function renderInvitationTable() {
       const list = loadInvitations();
       invitationTableBody.innerHTML = "";
+
       if (!list.length) {
         invitationCount.textContent = "0";
         adminEmptyState.style.display = "block";
+        renderReferralSummary([]); // clear summary
         return;
       }
+
       adminEmptyState.style.display = "none";
       invitationCount.textContent = String(list.length);
+
       list.forEach((inv, idx) => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
@@ -1426,6 +1553,8 @@
         `;
         invitationTableBody.appendChild(tr);
       });
+
+      renderReferralSummary(list);
     }
 
     adminLoginForm.addEventListener("submit", (e) => {
@@ -1506,8 +1635,10 @@
         card.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg)";
       });
     });
+  </script>
 
-    // Particle background
+  <!-- PARTICLE BACKGROUND SCRIPT -->
+  <script>
     (function initParticles() {
       const canvas = document.getElementById("particleCanvas");
       const ctx = canvas.getContext("2d");
