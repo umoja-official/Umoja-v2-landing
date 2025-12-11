@@ -70,28 +70,12 @@
       gap: 12px;
     }
 
-    .logo-circle {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #ffe89b, #f5c842 40%, #7f5b12 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 20px;
-      color: #1b1202;
-      box-shadow: 0 0 22px rgba(245, 200, 66, 0.65);
-    }
-
-    /* If you want to use your real logo image, replace
-       <div class="logo-circle">U</div>
-       with an <img> that has class="logo-img" */
     .logo-img {
-      width: 42px;
-      height: 42px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       object-fit: contain;
+      box-shadow: 0 0 24px rgba(59, 130, 246, 0.8);
     }
 
     .brand-text {
@@ -508,8 +492,8 @@
     .referral-main {
       display: flex;
       flex-direction: column;
-      gap: 3px;
-      max-width: 420px;
+      gap: 4px;
+      max-width: 480px;
     }
 
     .referral-main strong {
@@ -673,9 +657,8 @@
     <!-- TOP: BRAND BAR -->
     <header>
       <div class="brand-left">
-        <!-- Use this placeholder OR replace with your real logo:
-        <img src="umoja-logo.png" alt="Umoja V2 logo" class="logo-img" /> -->
-        <div class="logo-circle">U</div>
+        <!-- Make sure umoja-logo.png exists in the repo -->
+        <img src="umoja-logo.png" alt="Umoja V2 logo" class="logo-img" />
         <div class="brand-text">
           <div class="brand-title">UMOJA V2</div>
           <div class="brand-sub">Early investment invitation • Community-driven crypto project</div>
@@ -940,22 +923,31 @@
       </div>
     </section>
 
-    <!-- REFERRAL / COMMUNITY STRIP (customize with your promo later) -->
+    <!-- HOLIDAY PRIVATE SALE / REFERRAL STRIP -->
     <section class="section" id="referral">
       <div class="referral-strip animate-pop delay-2">
         <div class="referral-main">
-          <strong>Invite friends to learn &amp; invest responsibly.</strong>
+          <strong>🎉 Holiday Private Sales • December 16–30, 2025</strong>
           <span>
-            Umoja V2 focuses on community growth through <strong>education, transparency, and long-term holding</strong>.
-            If you invite others, teach them about risk and never pressure anyone to invest money they cannot afford to lose.
+            During this limited <strong>holiday private sale</strong>, early Umoja V2 believers can secure a position
+            and also earn referral bonuses. This phase is designed for serious, long-term investors who understand the risk
+            and want to grow with the ecosystem.
+          </span>
+          <ul style="margin-left: 18px; margin-top: 4px; color: #e5e7eb; font-size: 12px;">
+            <li><strong>5% bonus</strong> for a minimum individual investment of <strong>$1,000</strong>.</li>
+            <li>When your total referred investments reach <strong>$20,000</strong>, you qualify for an extra
+              <strong>$1,000 special bonus</strong>.</li>
+          </ul>
+          <span style="color:#9ca3af; font-size:11px;">
+            Bonuses are subject to official Umoja V2 private sale terms. Always confirm details with the official team before investing.
           </span>
         </div>
         <div>
           <div class="referral-badge">
-            Example: private sale bonuses, referral rewards, or mentorship access.
+            Holiday Private Sale • Referral Bonus Program
           </div>
           <div style="font-size: 11px; margin-top: 4px; color: #4b5563;">
-            Customize this area with your actual holiday / private sale terms.
+            Share responsibly. Never pressure anyone or ask them to invest money they cannot afford to lose.
           </div>
         </div>
       </div>
