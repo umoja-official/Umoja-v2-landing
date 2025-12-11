@@ -32,6 +32,10 @@
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
         "Segoe UI", sans-serif;
@@ -78,6 +82,16 @@
       font-size: 20px;
       color: #1b1202;
       box-shadow: 0 0 22px rgba(245, 200, 66, 0.65);
+    }
+
+    /* If you want to use your real logo image, replace
+       <div class="logo-circle">U</div>
+       with an <img> that has class="logo-img" */
+    .logo-img {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      object-fit: contain;
     }
 
     .brand-text {
@@ -575,6 +589,52 @@
       opacity: 0.9;
     }
 
+    /* ANIMATIONS */
+    @keyframes fadeUpSoft {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInSoft {
+      from {
+        opacity: 0;
+        transform: scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .animate-in {
+      opacity: 0;
+      animation: fadeUpSoft 0.7s ease-out forwards;
+    }
+
+    .animate-pop {
+      opacity: 0;
+      animation: fadeInSoft 0.6s ease-out forwards;
+    }
+
+    .delay-1 {
+      animation-delay: 0.12s;
+    }
+    .delay-2 {
+      animation-delay: 0.22s;
+    }
+    .delay-3 {
+      animation-delay: 0.32s;
+    }
+    .delay-4 {
+      animation-delay: 0.42s;
+    }
+
     /* Responsive */
     @media (max-width: 900px) {
       .hero {
@@ -613,9 +673,9 @@
     <!-- TOP: BRAND BAR -->
     <header>
       <div class="brand-left">
-        <!-- Replace this circle with your official Umoja logo image if you want -->
-        <!-- Example: <img src="umoja-logo.png" alt="Umoja V2 logo" class="logo-img" /> -->
-        <img src="umoja-logo.png" alt="Umoja V2 logo" style="width:42px;height:42px;border-radius:50%;" />
+        <!-- Use this placeholder OR replace with your real logo:
+        <img src="umoja-logo.png" alt="Umoja V2 logo" class="logo-img" /> -->
+        <div class="logo-circle">U</div>
         <div class="brand-text">
           <div class="brand-title">UMOJA V2</div>
           <div class="brand-sub">Early investment invitation • Community-driven crypto project</div>
@@ -629,7 +689,7 @@
 
     <!-- HERO -->
     <section class="hero" id="top">
-      <div class="hero-left">
+      <div class="hero-left animate-in">
         <div class="eyebrow">
           <span class="eyebrow-dot"></span>
           Official early-stage access • Umoja V2
@@ -645,7 +705,7 @@
         </p>
 
         <div class="hero-ctas">
-          <a href="#how-to-buy" class="btn btn-primary">
+          <a href="#metamask-guide" class="btn btn-primary">
             <span class="icon">⚡</span>
             <span>How to Invest in Umoja V2</span>
           </a>
@@ -674,7 +734,7 @@
       </div>
 
       <!-- HERO SIDEBAR: CONTRACT + SAFETY -->
-      <aside class="hero-right">
+      <aside class="hero-right animate-pop delay-1">
         <div class="contract-label">
           <span>Official Umoja V2 contract address</span>
           <span class="badge-chain">BNB Smart Chain (BEP-20)</span>
@@ -720,7 +780,7 @@
         </div>
       </div>
       <div class="card-grid">
-        <article class="card">
+        <article class="card animate-in">
           <div class="card-label">Vision</div>
           <div class="card-main">
             A growing <span>financial ecosystem</span>, not just a meme token.
@@ -731,10 +791,10 @@
           </p>
         </article>
 
-        <article class="card">
+        <article class="card animate-in delay-1">
           <div class="card-label">Community</div>
           <div class="card-main">
-            <span>Early believers</span> share the upside & the responsibility.
+            <span>Early believers</span> share the upside &amp; the responsibility.
           </div>
           <p class="card-sub">
             Education is central: Zoom classes, mentorship, and community calls
@@ -742,10 +802,10 @@
           </p>
         </article>
 
-        <article class="card">
+        <article class="card animate-in delay-2">
           <div class="card-label">Timing</div>
           <div class="card-main">
-            Position before <span>AI & automation</span> change the job market.
+            Position before <span>AI &amp; automation</span> change the job market.
           </div>
           <p class="card-sub">
             As AI reduces some traditional jobs, Umoja’s long-term goal is to help people
@@ -755,7 +815,7 @@
       </div>
     </section>
 
-    <!-- TARGETS / GOALS (OPTIONAL – ADJUST AS YOU LIKE) -->
+    <!-- TARGETS / GOALS -->
     <section class="section" id="targets">
       <div class="section-header">
         <div>
@@ -766,7 +826,7 @@
         </div>
       </div>
       <div class="card-grid">
-        <article class="card">
+        <article class="card animate-in">
           <div class="card-label">Market cap target</div>
           <div class="card-main"><span>$10M+</span> before entering 2026 (illustrative)</div>
           <p class="card-sub">
@@ -775,8 +835,8 @@
           </p>
         </article>
 
-        <article class="card">
-          <div class="card-label">Holders & liquidity</div>
+        <article class="card animate-in delay-1">
+          <div class="card-label">Holders &amp; liquidity</div>
           <div class="card-main"><span>More active holders</span> over time</div>
           <p class="card-sub">
             The strategy is to steadily increase holder base, liquidity depth,
@@ -784,7 +844,7 @@
           </p>
         </article>
 
-        <article class="card">
+        <article class="card animate-in delay-2">
           <div class="card-label">Education first</div>
           <div class="card-main"><span>Crypto literacy</span> as core utility</div>
           <p class="card-sub">
@@ -795,13 +855,13 @@
       </div>
     </section>
 
-    <!-- HOW TO BUY -->
-    <section class="section" id="how-to-buy">
+    <!-- METAMASK + HOW TO BUY GUIDE -->
+    <section class="section" id="metamask-guide">
       <div class="section-header">
         <div>
-          <h2 class="section-title">How to invest in Umoja V2 (BNB Chain)</h2>
+          <h2 class="section-title">How to invest in Umoja V2 with MetaMask</h2>
           <p class="section-kicker">
-            Follow these steps carefully and always verify the contract address first.
+            Step-by-step: install MetaMask, add BNB Smart Chain, import Umoja V2, then buy safely.
           </p>
         </div>
         <a href="#top" class="section-kicker" style="text-decoration: underline;">
@@ -809,41 +869,82 @@
         </a>
       </div>
 
-      <div class="how-steps">
-        <div class="step">
+      <!-- META MASK SETUP -->
+      <div class="how-steps" style="margin-bottom: 18px;">
+        <div class="step animate-in">
           <div class="step-number">1</div>
-          <div class="step-title">Set up a BNB Chain wallet</div>
+          <div class="step-title">Install &amp; create your MetaMask wallet</div>
           <p class="step-note">
-            Install a wallet like <strong>MetaMask</strong> or <strong>Trust Wallet</strong>.
-            Add the BNB Smart Chain network if needed. Fund it with BNB (Smart Chain) from a trusted exchange.
+            • On desktop: go to <strong>metamask.io</strong> and install the browser extension (Chrome, Brave, Edge, etc).<br />
+            • On mobile: download the official MetaMask app from the App Store or Google Play.<br />
+            • Create a new wallet, write down your <strong>secret recovery phrase</strong> on paper, and never share it with anyone.
           </p>
         </div>
-        <div class="step">
+
+        <div class="step animate-in delay-1">
           <div class="step-number">2</div>
-          <div class="step-title">Use a DEX (e.g. PancakeSwap)</div>
+          <div class="step-title">Add the BNB Smart Chain network</div>
           <p class="step-note">
-            Open PancakeSwap (or another supported DEX) and connect your wallet.
-            Select BNB on the “From” side and add Umoja V2 on the “To” side using
-            the <strong>official contract address</strong> from this page.
+            In MetaMask, open <strong>Settings → Networks → Add network</strong>, then add the BNB Smart Chain (BSC).<br />
+            Use the official settings from Binance or another trusted guide and make sure you select
+            <strong>BNB Smart Chain (mainnet)</strong>, not testnet.<br />
+            After saving, switch your MetaMask network to BNB Smart Chain.
           </p>
         </div>
-        <div class="step">
+
+        <div class="step animate-in delay-2">
           <div class="step-number">3</div>
-          <div class="step-title">Confirm, then secure your position</div>
+          <div class="step-title">Fund your wallet with BNB (Smart Chain)</div>
           <p class="step-note">
-            Double-check slippage settings, the contract address, and the amount.
-            Confirm the transaction in your wallet.
-            After buying, keep your seed phrase private and track your investment responsibly.
+            Buy BNB on a trusted exchange (for example Binance, Crypto.com, etc.), then withdraw it to your MetaMask
+            wallet address <strong>on BNB Smart Chain</strong> (BEP-20).<br />
+            Always double-check the address and the network before sending.
+          </p>
+        </div>
+      </div>
+
+      <!-- IMPORT UMOJA TOKEN + BUY -->
+      <div class="how-steps">
+        <div class="step animate-in">
+          <div class="step-number">4</div>
+          <div class="step-title">Import Umoja V2 token into MetaMask</div>
+          <p class="step-note">
+            In MetaMask, make sure you are on the BNB Smart Chain network, then click <strong>Import tokens</strong>.<br />
+            Paste this official Umoja V2 contract address:<br />
+            <strong>0x8D6A79567a701FCe55b62C15d0fbB765913ac84a</strong><br />
+            MetaMask will usually fill the rest (symbol and decimals) automatically. If not, check the details on BscScan
+            using the same contract address before confirming.
+          </p>
+        </div>
+
+        <div class="step animate-in delay-1">
+          <div class="step-number">5</div>
+          <div class="step-title">Use PancakeSwap (or another DEX) to buy</div>
+          <p class="step-note">
+            Open <strong>pancakeswap.finance</strong> and connect your MetaMask wallet.<br />
+            Select <strong>BNB</strong> on the “From” side and add Umoja V2 on the “To” side by pasting the same official
+            contract address above.<br />
+            Double-check that the token you see matches the correct contract before swapping.
+          </p>
+        </div>
+
+        <div class="step animate-in delay-2">
+          <div class="step-number">6</div>
+          <div class="step-title">Confirm &amp; track your Umoja V2</div>
+          <p class="step-note">
+            Adjust slippage if needed, review the amount, and confirm the transaction in MetaMask.<br />
+            After the swap is confirmed, your Umoja V2 balance should appear in MetaMask (under the token you imported).<br />
+            Keep your recovery phrase safe and never send tokens to unknown wallets or contracts.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- REFERRAL / COMMUNITY STRIP (EDIT TEXT TO MATCH YOUR CURRENT OFFER) -->
+    <!-- REFERRAL / COMMUNITY STRIP (customize with your promo later) -->
     <section class="section" id="referral">
-      <div class="referral-strip">
+      <div class="referral-strip animate-pop delay-2">
         <div class="referral-main">
-          <strong>Invite friends to learn & invest responsibly.</strong>
+          <strong>Invite friends to learn &amp; invest responsibly.</strong>
           <span>
             Umoja V2 focuses on community growth through <strong>education, transparency, and long-term holding</strong>.
             If you invite others, teach them about risk and never pressure anyone to invest money they cannot afford to lose.
@@ -872,7 +973,83 @@
       </div>
 
       <div class="faq-grid">
-        <div class="faq-item">
+        <div class="faq-item animate-in">
           <div class="faq-q">Is Umoja V2 a guaranteed investment?</div>
           <div class="faq-a">
-            No. <strong>There are no guarantees.</strong> Umoja V
+            No. <strong>There are no guarantees.</strong> Umoja V2 is a high-risk crypto asset.
+            The value can go up or down sharply, and you could lose all the money you invest.
+            Never treat this as a guaranteed source of income.
+          </div>
+        </div>
+        <div class="faq-item animate-in delay-1">
+          <div class="faq-q">How much should I invest?</div>
+          <div class="faq-a">
+            Only invest <strong>what you can afford to lose</strong>.
+            Many people start with a small amount while they are still learning.
+            If you are not sure, seek independent financial advice.
+          </div>
+        </div>
+        <div class="faq-item animate-in delay-2">
+          <div class="faq-q">Where can I verify the contract?</div>
+          <div class="faq-a">
+            You can verify the official Umoja V2 contract on BscScan using the address on this page.
+            Always copy it directly from here and compare carefully before every trade.
+          </div>
+        </div>
+        <div class="faq-item animate-in delay-3">
+          <div class="faq-q">What is the long-term plan for Umoja?</div>
+          <div class="faq-a">
+            The vision includes building a full ecosystem: wallet, peer-to-peer transfers, global payments,
+            debit card, staking, tokenization of assets, and eventually an Umoja Chain — combined with
+            strong education and community mentoring.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-top">
+        <div class="footer-warning">
+          <span class="footer-warning-icon">⚠️</span>
+          <span>
+            <strong>Risk warning:</strong> Crypto assets are highly volatile and unregulated in many
+            jurisdictions. You could lose the entire amount you invest. Do your own research and
+            never rely only on promises, screenshots, or forwarded messages.
+          </span>
+        </div>
+        <div class="footer-meta">
+          <span>Umoja V2 • BNB Smart Chain (BEP-20)</span>
+          <span>Arcana10 Investment &amp; Crosby Ventures LLC</span>
+        </div>
+      </div>
+      <div>
+        This website is for information and invitation purposes only and does not constitute financial,
+        investment, or legal advice. Always make your own independent decision.
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Copy contract address
+    const copyBtn = document.getElementById("copyBtn");
+    const contractAddress = document.getElementById("contractAddress");
+
+    copyBtn?.addEventListener("click", async () => {
+      const text = contractAddress?.textContent?.trim();
+      if (!text) return;
+
+      try {
+        await navigator.clipboard.writeText(text);
+        const original = copyBtn.textContent;
+        copyBtn.textContent = "✅ Copied";
+        setTimeout(() => {
+          copyBtn.textContent = original;
+        }, 1600);
+      } catch (err) {
+        alert("Copy failed. Please copy manually.");
+      }
+    });
+  </script>
+</body>
+</html>
