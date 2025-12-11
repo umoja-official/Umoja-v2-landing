@@ -2,28 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Invest in Umoja V2 | Official Invitation</title>
+  <title>Umoja V2 • Early Investment Invitation</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta
-    name="description"
-    content="Join the Umoja V2 journey early. Learn how to invest, stay safe, and grow with the Umoja ecosystem."
-  />
+  <meta name="description" content="Umoja V2 – Early investment invitation • Community-driven crypto project on BNB Smart Chain (BEP-20)." />
+
+  <!-- Optional Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
     :root {
-      --bg-dark: #050714;
-      --bg-card: #0d1022;
-      --accent: #f5c842;
-      --accent-soft: rgba(245, 200, 66, 0.18);
-      --text-main: #f5f5f7;
-      --text-muted: #9ca3af;
-      --danger: #f97373;
-      --border-soft: rgba(255, 255, 255, 0.08);
-      --radius-lg: 18px;
-      --radius-md: 12px;
-      --radius-full: 999px;
-      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.5);
-      --max-width: 1120px;
+      --bg: #050718;
+      --bg-card: #0d1024;
+      --bg-card-soft: #11152b;
+      --accent: #f5a623;
+      --accent-soft: rgba(245, 166, 35, 0.15);
+      --highlight: #2ecc71;
+      --danger: #ff4d4f;
+      --text-main: #f5f7ff;
+      --text-muted: #a4aac5;
+      --border-soft: rgba(255, 255, 255, 0.06);
+      --chip-bg: rgba(14, 18, 40, 0.85);
+      --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.65);
+      --radius-lg: 24px;
+      --radius-md: 999px;
+      --transition-fast: 0.22s ease-out;
     }
 
     * {
@@ -32,613 +34,777 @@
       padding: 0;
     }
 
-    html {
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top left, #1a2140 0, #050718 45%, #020311 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 24px 12px 48px;
       scroll-behavior: smooth;
     }
 
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #151a3c 0, #050714 55%, #000 100%);
-      color: var(--text-main);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
+    .page-shell {
+      width: 100%;
+      max-width: 1000px;
+      background: radial-gradient(circle at top, rgba(19, 51, 107, 0.2), rgba(3, 6, 22, 0.95));
+      border-radius: 32px;
+      padding: 16px 16px 32px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
     }
 
-    a {
-      color: inherit;
+    .page-shell::before {
+      content: "";
+      position: absolute;
+      inset: -120px;
+      background:
+        radial-gradient(circle at 0 0, rgba(0, 133, 255, 0.25), transparent 55%),
+        radial-gradient(circle at 100% 0, rgba(255, 194, 82, 0.18), transparent 50%),
+        radial-gradient(circle at 50% 100%, rgba(0, 199, 133, 0.18), transparent 55%);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .page-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* TOP NAV */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      margin: -8px -8px 14px;
+      padding: 10px 12px;
+      border-radius: 20px;
+      background: rgba(4, 6, 20, 0.9);
+      backdrop-filter: blur(22px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-logo-mini {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+      flex-shrink: 0;
+    }
+
+    .nav-logo-mini img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .nav-brand-text {
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.78rem;
+    }
+
+    .nav-links a {
       text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 999px;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      background: transparent;
+      transition: background var(--transition-fast), color var(--transition-fast), border var(--transition-fast), transform var(--transition-fast);
+      white-space: nowrap;
     }
 
-    main {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 32px 16px 64px;
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .nav-links a.nav-login {
+      border-color: rgba(245, 166, 35, 0.7);
+      background: rgba(245, 166, 35, 0.14);
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .nav-links a.nav-login:hover {
+      background: rgba(245, 166, 35, 0.22);
+    }
+
+    /* Header / Hero */
+    #home-section {
+      scroll-margin-top: 80px;
     }
 
     header {
       display: flex;
       align-items: center;
-      justify-content: space-between;
       gap: 16px;
-      margin-bottom: 32px;
-    }
-
-    .brand-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo-img {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      object-fit: contain;
-      box-shadow: 0 0 24px rgba(59, 130, 246, 0.8);
-    }
-
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .brand-title {
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-    }
-
-    .brand-sub {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .brand-right {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: flex-end;
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    .pill {
-      padding: 4px 10px;
-      border-radius: var(--radius-full);
-      border: 1px solid var(--border-soft);
-      background: rgba(10, 13, 35, 0.85);
-      backdrop-filter: blur(18px);
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 3fr) minmax(0, 2.3fr);
-      gap: 28px;
-      margin-bottom: 40px;
-    }
-
-    .hero-left {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 4px 10px;
-      border-radius: var(--radius-full);
-      background: rgba(10, 13, 35, 0.9);
-      border: 1px solid var(--accent-soft);
-      width: fit-content;
-      font-size: 11px;
-      color: var(--accent);
-    }
-
-    .eyebrow-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 8px rgba(245, 200, 66, 0.9);
-    }
-
-    .hero h1 {
-      font-size: 36px;
-      line-height: 1.15;
-      letter-spacing: 0.01em;
-    }
-
-    .hero h1 span {
-      color: var(--accent);
-    }
-
-    .hero-sub {
-      color: var(--text-muted);
-      font-size: 14px;
-      max-width: 540px;
-    }
-
-    .hero-sub strong {
-      color: #e5e7eb;
-      font-weight: 600;
-    }
-
-    .hero-ctas {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 4px;
-    }
-
-    .btn {
-      border-radius: var(--radius-full);
-      border: 1px solid transparent;
-      padding: 10px 18px;
-      font-size: 13px;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      transition: 0.18s ease all;
-      text-decoration: none;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #f5c842, #f09c1e);
-      color: #1b1202;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.8);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.9);
-    }
-
-    .btn-ghost {
-      border-color: var(--border-soft);
-      background: rgba(7, 9, 28, 0.9);
-      color: var(--text-main);
-    }
-
-    .btn-ghost:hover {
-      border-color: rgba(245, 200, 66, 0.65);
-      background: rgba(13, 16, 42, 0.9);
-    }
-
-    .btn span.icon {
-      font-size: 16px;
-      line-height: 1;
-    }
-
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
+      margin-bottom: 12px;
       margin-top: 6px;
-      font-size: 11px;
+    }
+
+    .hero-logo {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .hero-logo::before {
+      content: "";
+      position: absolute;
+      inset: -18px;
+      background: radial-gradient(circle, rgba(0, 180, 255, 0.58), transparent 60%);
+      opacity: 0.9;
+      filter: blur(4px);
+      z-index: 0;
+    }
+
+    .hero-logo img {
+      position: relative;
+      z-index: 1;
+      width: 180px;   /* 180px logo */
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.8);
+      animation: floatLogo 4s ease-in-out infinite;
+    }
+
+    @keyframes floatLogo {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .hero-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .hero-title {
+      font-size: 1.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .hero-title span.version-pill {
+      font-size: 0.78rem;
+      text-transform: none;
+      letter-spacing: 0.08em;
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: linear-gradient(120deg, rgba(0, 0, 0, 0.3), rgba(42, 64, 112, 0.5));
       color: var(--text-muted);
     }
 
-    .hero-meta-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
-      border-radius: var(--radius-full);
-      background: rgba(8, 10, 30, 0.9);
-      border: 1px solid var(--border-soft);
+    .hero-subtitle {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.5;
     }
 
-    .hero-right {
-      border-radius: var(--radius-lg);
-      background: radial-gradient(circle at top, #1f2937 0, #050714 50%);
-      border: 1px solid var(--border-soft);
-      box-shadow: var(--shadow-soft);
-      padding: 18px 18px 16px;
+    .hero-subtitle strong {
+      color: #ffffff;
+      font-weight: 500;
+    }
+
+    /* Chips row */
+    .chip-row {
       display: flex;
-      flex-direction: column;
-      gap: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 14px 0 18px;
+    }
+
+    .chip {
+      padding: 7px 14px;
+      border-radius: var(--radius-md);
+      background: var(--chip-bg);
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(16px);
+    }
+
+    .chip.chip-gold {
+      border-color: rgba(245, 166, 35, 0.6);
+      color: var(--accent);
+      background: linear-gradient(135deg, rgba(245, 166, 35, 0.15), rgba(0, 0, 0, 0.2));
+    }
+
+    /* Cards */
+    .card {
+      border-radius: var(--radius-lg);
+      background: linear-gradient(145deg, rgba(10, 13, 40, 0.96), rgba(9, 12, 33, 0.96));
+      padding: 18px 16px;
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 16px 46px rgba(0, 0, 0, 0.7);
+      margin-bottom: 14px;
       position: relative;
       overflow: hidden;
     }
 
-    .hero-right::before {
-      content: "";
-      position: absolute;
-      inset: -40%;
-      background:
-        radial-gradient(circle at top, rgba(245, 200, 66, 0.18) 0, transparent 55%),
-        radial-gradient(circle at bottom, rgba(12, 148, 136, 0.16) 0, transparent 55%);
-      opacity: 0.8;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    .contract-label {
-      font-size: 11px;
-      color: var(--text-muted);
+    .card-header-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 6px;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-muted);
     }
 
     .badge-chain {
-      padding: 2px 8px;
+      padding: 5px 12px;
       border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid var(--border-soft);
-      font-size: 10px;
+      font-size: 0.73rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(245, 166, 35, 0.12);
+      border: 1px solid rgba(245, 166, 35, 0.7);
       color: var(--accent);
+      white-space: nowrap;
     }
 
-    .contract-box {
-      margin-top: 2px;
-      padding: 10px 12px;
-      border-radius: var(--radius-md);
-      background: rgba(3, 7, 18, 0.9);
-      border: 1px solid rgba(248, 250, 252, 0.08);
-      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono",
-        "Courier New", monospace;
-      font-size: 12px;
+    .contract-bar {
+      background: radial-gradient(circle at 0 50%, rgba(0, 209, 151, 0.18), rgba(2, 5, 18, 0.95));
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 10px 10px 10px 14px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 10px;
+      justify-content: space-between;
+      gap: 9px;
+      font-family: "SF Mono", "JetBrains Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.78rem;
+      color: #e3f7ff;
     }
 
     .contract-address {
       overflow-wrap: anywhere;
-      color: #e5e7eb;
+      flex: 1;
     }
 
-    .copy-chip {
-      font-size: 11px;
-      padding: 4px 8px;
+    .btn-copy {
+      flex-shrink: 0;
+      padding: 8px 12px;
+      font-size: 0.76rem;
       border-radius: 999px;
-      border: 1px solid var(--border-soft);
-      background: rgba(15, 23, 42, 0.9);
+      border: none;
       cursor: pointer;
-      user-select: none;
-      transition: 0.16s ease all;
-    }
-
-    .copy-chip:hover {
-      border-color: var(--accent);
-    }
-
-    .status-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      font-size: 11px;
-      margin-top: 6px;
-    }
-
-    .status-pill {
-      padding: 4px 9px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.4);
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      background: linear-gradient(135deg, #214cff, #18b8ff);
+      color: #ffffff;
+      font-weight: 500;
+      box-shadow: 0 9px 22px rgba(0, 0, 0, 0.7);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
     }
 
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: #22c55e;
-      box-shadow: 0 0 8px rgba(34, 197, 94, 0.9);
+    .btn-copy:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8);
     }
 
-    .warning-card {
-      margin-top: 10px;
-      border-radius: var(--radius-md);
-      padding: 10px 12px;
-      background: rgba(127, 29, 29, 0.18);
-      border: 1px solid rgba(248, 113, 113, 0.6);
-      font-size: 11px;
-      color: #fecaca;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .warning-title {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 600;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .warning-icon {
-      font-size: 13px;
-    }
-
-    .warning-list {
-      margin-left: 15px;
-      margin-top: 4px;
-      display: grid;
-      gap: 2px;
-    }
-
-    .warning-list li {
-      list-style: disc;
-    }
-
-    .section {
-      margin-bottom: 40px;
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
-    .section-title {
-      font-size: 20px;
-      font-weight: 600;
-    }
-
-    .section-kicker {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .card {
-      border-radius: var(--radius-md);
-      background: rgba(10, 12, 32, 0.95);
-      border: 1px solid var(--border-soft);
-      padding: 14px 14px 13px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      font-size: 13px;
-    }
-
-    .card-label {
-      font-size: 11px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-    }
-
-    .card-main {
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .card-main span {
-      color: var(--accent);
-    }
-
-    .card-sub {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .how-steps {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .step {
-      border-radius: var(--radius-md);
-      background: rgba(9, 11, 29, 0.95);
-      border: 1px solid var(--border-soft);
-      padding: 12px 13px;
-      font-size: 12px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .step-number {
-      width: 20px;
-      height: 20px;
-      border-radius: 999px;
-      border: 1px solid rgba(248, 250, 252, 0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      margin-bottom: 6px;
-    }
-
-    .step-title {
-      font-weight: 600;
-      margin-bottom: 4px;
-      font-size: 13px;
-    }
-
-    .step-note {
-      color: var(--text-muted);
-      font-size: 12px;
-    }
-
-    .referral-strip {
-      border-radius: var(--radius-lg);
-      padding: 13px 14px;
-      background: linear-gradient(135deg, rgba(245, 200, 66, 0.14), rgba(59, 130, 246, 0.06));
-      border: 1px solid rgba(248, 250, 252, 0.08);
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      font-size: 12px;
-    }
-
-    .referral-main {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      max-width: 480px;
-    }
-
-    .referral-main strong {
-      font-size: 13px;
-    }
-
-    .referral-badge {
-      font-size: 11px;
-      padding: 4px 9px;
-      border-radius: 999px;
-      border: 1px dashed rgba(0, 0, 0, 0.25);
-      background: rgba(0, 0, 0, 0.16);
-      color: #111827;
-    }
-
-    .faq-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-      font-size: 13px;
-    }
-
-    .faq-item {
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-soft);
-      background: rgba(8, 10, 28, 0.95);
-      padding: 12px 13px;
-    }
-
-    .faq-q {
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .faq-a {
-      color: var(--text-muted);
-      font-size: 12px;
-    }
-
-    footer {
-      margin-top: 32px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(31, 41, 55, 0.8);
-      font-size: 11px;
-      color: var(--text-muted);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .footer-top {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .footer-warning {
-      color: #fecaca;
-      display: flex;
-      gap: 6px;
-      align-items: flex-start;
-    }
-
-    .footer-warning-icon {
-      font-size: 13px;
-      line-height: 1.2;
-    }
-
-    .footer-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .footer-meta span {
+    .btn-copy:active {
+      transform: translateY(0);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.7);
       opacity: 0.9;
     }
 
-    /* ANIMATIONS */
-    @keyframes fadeUpSoft {
-      from {
-        opacity: 0;
-        transform: translateY(16px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 0 50%, rgba(46, 204, 113, 0.18), rgba(6, 15, 30, 0.9));
+      border: 1px solid rgba(46, 204, 113, 0.55);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 10px;
     }
 
-    @keyframes fadeInSoft {
-      from {
-        opacity: 0;
-        transform: scale(0.98);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
+    .dot-green {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--highlight);
+      box-shadow: 0 0 8px rgba(46, 204, 113, 0.9);
     }
 
-    .animate-in {
-      opacity: 0;
-      animation: fadeUpSoft 0.7s ease-out forwards;
+    /* Safety notice */
+    .card-danger {
+      background: radial-gradient(circle at 0 0, rgba(255, 77, 79, 0.2), rgba(19, 6, 26, 0.98));
+      border-color: rgba(255, 77, 79, 0.5);
     }
 
-    .animate-pop {
-      opacity: 0;
-      animation: fadeInSoft 0.6s ease-out forwards;
+    .card-danger-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
     }
 
-    .delay-1 {
-      animation-delay: 0.12s;
-    }
-    .delay-2 {
-      animation-delay: 0.22s;
-    }
-    .delay-3 {
-      animation-delay: 0.32s;
-    }
-    .delay-4 {
-      animation-delay: 0.42s;
+    .card-danger-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, rgba(255, 208, 0, 0.95), rgba(255, 126, 0, 0.85));
+      color: #000;
+      font-weight: 800;
+      font-size: 0.88rem;
+      box-shadow: 0 0 16px rgba(255, 193, 7, 0.85);
     }
 
-    /* Responsive */
-    @media (max-width: 900px) {
-      .hero {
+    .card-danger-title {
+      font-size: 0.88rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ffd8d9;
+    }
+
+    .card-danger-body {
+      font-size: 0.82rem;
+      color: #f8d4d6;
+    }
+
+    .card-danger-body ul {
+      padding-left: 18px;
+      margin-top: 6px;
+      display: grid;
+      gap: 4px;
+    }
+
+    /* Sections */
+    .section-title {
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 22px;
+      margin-bottom: 6px;
+    }
+
+    #private-sale-section,
+    #how-to-invest,
+    #invite-portal,
+    #contact-section {
+      scroll-margin-top: 90px;
+    }
+
+    /* Holiday private sale section */
+    .card-sale {
+      margin-top: 6px;
+      background: radial-gradient(circle at 0 0, rgba(255, 212, 128, 0.18), rgba(16, 12, 32, 0.96));
+      border-color: rgba(245, 166, 35, 0.5);
+      display: grid;
+      gap: 18px;
+    }
+
+    .sale-header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sale-heading-main {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffe9c4;
+    }
+
+    .sale-date-pill {
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(245, 166, 35, 0.8);
+      color: #ffd391;
+    }
+
+    .sale-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+    }
+
+    .sale-box {
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(0, 0, 0, 0.32);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.82rem;
+      color: #ffe9c4;
+    }
+
+    .sale-box-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 235, 195, 0.7);
+      margin-bottom: 3px;
+    }
+
+    .sale-highlight {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .sale-note {
+      font-size: 0.8rem;
+      color: rgba(255, 235, 195, 0.75);
+    }
+
+    /* CTA buttons */
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .btn-primary,
+    .btn-ghost {
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), border var(--transition-fast), color var(--transition-fast), opacity var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(130deg, #2ecc71, #1abc9c);
+      color: #020711;
+      font-weight: 600;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.7);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.85);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow: 0 7px 18px rgba(0, 0, 0, 0.75);
+      opacity: 0.94;
+    }
+
+    .btn-ghost {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-1px);
+    }
+
+    /* How to invest section */
+    section#how-to-invest {
+      margin-top: 26px;
+      padding-top: 6px;
+    }
+
+    .steps-card {
+      margin-top: 6px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(145deg, rgba(14, 19, 55, 0.96), rgba(5, 7, 22, 0.98));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 16px 16px 18px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      display: grid;
+      gap: 10px;
+    }
+
+    .steps-card h3 {
+      font-size: 0.92rem;
+      margin-bottom: 4px;
+      color: #f7fbff;
+    }
+
+    .steps-list {
+      list-style: none;
+      counter-reset: step-count;
+      display: grid;
+      gap: 8px;
+    }
+
+    .steps-list li {
+      position: relative;
+      padding-left: 32px;
+    }
+
+    .steps-list li::before {
+      counter-increment: step-count;
+      content: counter(step-count);
+      position: absolute;
+      left: 0;
+      top: 2px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 0, #4facfe, #00f2fe);
+      color: #020712;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      box-shadow: 0 0 16px rgba(0, 242, 254, 0.65);
+    }
+
+    .steps-note {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      border-top: 1px dashed rgba(255, 255, 255, 0.12);
+      padding-top: 8px;
+    }
+
+    /* INVITATION / LOGIN PORTAL */
+    .invite-card {
+      margin-top: 8px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .invite-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    .invite-info {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+
+    .invite-info strong {
+      color: #ffffff;
+    }
+
+    .invite-form-card {
+      background: linear-gradient(145deg, rgba(10, 13, 40, 0.96), rgba(9, 12, 33, 0.96));
+      border-radius: 20px;
+      padding: 14px 14px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: grid;
+      gap: 10px;
+      font-size: 0.82rem;
+    }
+
+    .invite-form-card h3 {
+      font-size: 0.9rem;
+      color: #f7fbff;
+    }
+
+    .form-row {
+      display: grid;
+      gap: 8px;
+    }
+
+    .form-field {
+      display: grid;
+      gap: 4px;
+    }
+
+    .form-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .form-label span.req {
+      color: #ffb347;
+    }
+
+    .form-input {
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: rgba(2, 4, 16, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      font-size: 0.82rem;
+      outline: none;
+      width: 100%;
+    }
+
+    .form-input:focus {
+      border-color: rgba(86, 164, 255, 0.9);
+      box-shadow: 0 0 0 1px rgba(86, 164, 255, 0.4);
+    }
+
+    .invite-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+      align-items: center;
+    }
+
+    .helper-text {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+
+    .invite-status {
+      font-size: 0.78rem;
+      min-height: 18px;
+      color: var(--text-muted);
+    }
+
+    .invite-status.ok {
+      color: #8be29c;
+    }
+
+    .invite-status.err {
+      color: #ffb3b8;
+    }
+
+    .invite-table-wrap {
+      margin-top: 8px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: radial-gradient(circle at 0 0, rgba(0, 191, 165, 0.12), rgba(5, 7, 20, 0.95));
+      padding: 10px;
+    }
+
+    .invite-table-title {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    table.invite-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+
+    .invite-table th,
+    .invite-table td {
+      padding: 6px 4px;
+      text-align: left;
+    }
+
+    .invite-table th {
+      color: var(--text-muted);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      font-weight: 500;
+    }
+
+    .invite-table td {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      color: #e6ecff;
+    }
+
+    .invite-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Contact / footer */
+    #contact-section {
+      margin-top: 26px;
+    }
+
+    .contact-card {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .contact-card strong {
+      color: #ffffff;
+    }
+
+    footer {
+      margin-top: 22px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    footer span.brand {
+      color: #e9ecff;
+    }
+
+    @media (max-width: 768px) {
+      .invite-grid {
         grid-template-columns: minmax(0, 1fr);
       }
-
-      .hero-right {
-        order: -1;
-      }
-
-      .card-grid,
-      .how-steps,
-      .faq-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
     }
 
-    @media (max-width: 600px) {
-      main {
-        padding: 20px 14px 40px;
+    @media (max-width: 640px) {
+      .page-shell {
+        padding: 12px 10px 26px;
+        border-radius: 24px;
+      }
+
+      .top-nav {
+        flex-direction: column;
+        align-items: flex-start;
       }
 
       header {
@@ -646,402 +812,488 @@
         align-items: flex-start;
       }
 
-      .hero h1 {
-        font-size: 28px;
+      .hero-logo img {
+        width: 120px;
+        height: 120px;
       }
+
+      .hero-title {
+        font-size: 1.6rem;
+      }
+
+      .card,
+      .steps-card {
+        padding: 14px 12px;
+      }
+    }
+
+    /* Scroll animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
 <body>
-  <main>
-    <!-- TOP: BRAND BAR -->
-    <header>
-      <div class="brand-left">
-        <!-- Make sure umoja-logo.png exists in the repo -->
-        <img src="umoja-logo.png" alt="Umoja V2 logo" class="logo-img" />
-        <div class="brand-text">
-          <div class="brand-title">UMOJA V2</div>
-          <div class="brand-sub">Early investment invitation • Community-driven crypto project</div>
-        </div>
-      </div>
-      <div class="brand-right">
-        <div class="pill">Arcana10 Investment</div>
-        <div class="pill">Crosby Ventures LLC</div>
-      </div>
-    </header>
+  <main class="page-shell">
+    <div class="page-inner">
 
-    <!-- HERO -->
-    <section class="hero" id="top">
-      <div class="hero-left animate-in">
-        <div class="eyebrow">
-          <span class="eyebrow-dot"></span>
-          Official early-stage access • Umoja V2
+      <!-- TOP NAVBAR -->
+      <nav class="top-nav">
+        <div class="nav-left">
+          <div class="nav-logo-mini">
+            <img src="umoja-logo.png" alt="Umoja Logo Mini" />
+          </div>
+          <div class="nav-brand-text">UMOJA V2 • EARLY ACCESS</div>
         </div>
-        <h1>
-          Invest early in <span>Umoja V2</span><br />
-          and grow with the ecosystem.
-        </h1>
-        <p class="hero-sub">
-          Umoja V2 is building a long-term ecosystem around payments, DeFi, and real-world usage.
-          This page helps you understand <strong>why</strong> Umoja exists, <strong>how</strong> to invest safely,
-          and <strong>what</strong> you should know before taking any risk.
-        </p>
+        <div class="nav-links">
+          <a href="#home-section">Home</a>
+          <a href="#private-sale-section">Private Sale</a>
+          <a href="#how-to-invest">How to Invest</a>
+          <a href="#invite-portal" class="nav-login">Login / Invitation Code</a>
+          <a href="#contact-section">Contact</a>
+        </div>
+      </nav>
 
-        <div class="hero-ctas">
-          <a href="#metamask-guide" class="btn btn-primary">
-            <span class="icon">⚡</span>
-            <span>How to Invest in Umoja V2</span>
-          </a>
-          <a
-            href="https://bscscan.com/token/0x8D6A79567a701FCe55b62C15d0fbB765913ac84a"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn btn-ghost"
-          >
-            <span class="icon">🔍</span>
-            <span>View Contract on BscScan</span>
-          </a>
-        </div>
+      <!-- Header / Hero -->
+      <section id="home-section" class="fade-in">
+        <header>
+          <div class="hero-logo">
+            <!-- 🔵 Official Umoja logo -->
+            <img src="umoja-logo.png" alt="Umoja V2 Logo" />
+          </div>
+          <div class="hero-text">
+            <div class="hero-title">
+              <span>UMOJA V2</span>
+              <span class="version-pill">BNB Smart Chain • BEP-20</span>
+            </div>
+            <p class="hero-subtitle">
+              <strong>Early investment invitation</strong> • Community-driven crypto project designed for long-term holders, real-world utility, and transparent on-chain safety.
+            </p>
+          </div>
+        </header>
+      </section>
 
-        <div class="hero-meta">
-          <div class="hero-meta-item">
-            <span>🛡️</span> Contract verified on BNB Chain
-          </div>
-          <div class="hero-meta-item">
-            <span>👥</span> Community-driven, education focused
-          </div>
-          <div class="hero-meta-item">
-            <span>⚠️</span> High-risk crypto asset – invest responsibly
-          </div>
-        </div>
+      <!-- Brand chips -->
+      <div class="chip-row fade-in">
+        <span class="chip">Arcana10 Investment</span>
+        <span class="chip">Crosby Ventures LLC</span>
+        <span class="chip chip-gold">Official early-stage access • Umoja V2</span>
       </div>
 
-      <!-- HERO SIDEBAR: CONTRACT + SAFETY -->
-      <aside class="hero-right animate-pop delay-1">
-        <div class="contract-label">
-          <span>Official Umoja V2 contract address</span>
-          <span class="badge-chain">BNB Smart Chain (BEP-20)</span>
-        </div>
-        <div class="contract-box">
-          <span class="contract-address" id="contractAddress">
-            0x8D6A79567a701FCe55b62C15d0fbB765913ac84a
-          </span>
-          <button class="copy-chip" id="copyBtn" type="button">
-            📋 Copy
-          </button>
-        </div>
+      <!-- Contract Address Card -->
+      <section class="fade-in">
+        <div class="card">
+          <div class="card-header-row">
+            <div class="card-title">Official Umoja V2 contract address</div>
+            <div class="badge-chain">BNB Smart Chain (BEP-20)</div>
+          </div>
 
-        <div class="status-row">
+          <div class="contract-bar">
+            <div class="contract-address" id="contractText">
+              0x8D6A79567a701FCe55b62C15d0fbB765913ac84a
+            </div>
+            <button class="btn-copy" id="copyBtn" type="button">
+              <span>Copy</span>
+            </button>
+          </div>
+
           <div class="status-pill">
-            <span class="status-dot"></span>
+            <span class="dot-green"></span>
             <span>Always double-check this exact address before investing.</span>
           </div>
         </div>
+      </section>
 
-        <div class="warning-card">
-          <div class="warning-title">
-            <span class="warning-icon">⚠️</span>
-            Important safety notice for investors
+      <!-- Safety Notice -->
+      <section class="fade-in">
+        <div class="card card-danger">
+          <div class="card-danger-header">
+            <div class="card-danger-icon">!</div>
+            <div class="card-danger-title">
+              Important safety notice for investors
+            </div>
           </div>
-          <ul class="warning-list">
-            <li>Only use the <strong>official contract address</strong> listed here.</li>
-            <li>Ignore screenshots or forwarded messages that show a different contract.</li>
-            <li>Never send funds to any wallet that claims to be “Umoja” but uses another address.</li>
+          <div class="card-danger-body">
+            <ul>
+              <li>Only use the <strong>official contract address</strong> listed on this website.</li>
+              <li>Ignore screenshots or forwarded messages that show any other address.</li>
+              <li>Never send funds to any wallet that claims to be “Umoja” but uses a different contract.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Holiday Private Sale -->
+      <section id="private-sale-section" class="fade-in">
+        <div class="section-title">Holiday private sale 2025</div>
+        <div class="card card-sale">
+          <div class="sale-header">
+            <div>
+              <div class="sale-heading-main">Exclusive Holiday Private Sale • Umoja V2</div>
+              <div class="sale-note">Limited allocation for early believers in the Umoja ecosystem.</div>
+            </div>
+            <div class="sale-date-pill">
+              Dec 16 – Dec 30, 2025
+            </div>
+          </div>
+
+          <div class="sale-grid">
+            <div class="sale-box">
+              <div class="sale-box-label">Minimum investment</div>
+              <div class="sale-highlight">$1,000</div>
+              <div class="sale-note">Per wallet, in BNB equivalent, to join the holiday sale allocation.</div>
+            </div>
+            <div class="sale-box">
+              <div class="sale-box-label">Referral bonus</div>
+              <div class="sale-highlight">5% bonus</div>
+              <div class="sale-note">On every successful referral who invests the minimum of $1,000 during the holiday sale.</div>
+            </div>
+            <div class="sale-box">
+              <div class="sale-box-label">Special achiever reward</div>
+              <div class="sale-highlight">$1,000 bonus</div>
+              <div class="sale-note">For referrers who bring a total of <strong>$20,000+</strong> invested volume across all their referrals.</div>
+            </div>
+          </div>
+
+          <div class="cta-row">
+            <button class="btn-primary" type="button" id="scrollHowTo">
+              🚀 How to invest in Umoja V2
+            </button>
+            <a class="btn-ghost" href="#how-to-invest">
+              View MetaMask setup steps
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- How to invest section -->
+      <section id="how-to-invest" class="fade-in">
+        <div class="section-title">How to invest in Umoja V2 (MetaMask guide)</div>
+        <div class="steps-card">
+          <h3>Step-by-step: from wallet setup to buying Umoja V2</h3>
+          <ul class="steps-list">
+            <li>
+              <strong>Install MetaMask</strong> on your browser or mobile (Chrome, Brave, Firefox, iOS, Android). Create a new wallet or import an existing one and safely back up your secret recovery phrase.
+            </li>
+            <li>
+              <strong>Add BNB Smart Chain (BEP-20)</strong> network to MetaMask. Use the official BSC RPC details from trusted sources (Binance / BNB Chain documentation).
+            </li>
+            <li>
+              <strong>Fund your wallet with BNB.</strong> Send BNB (BEP-20) to your MetaMask address from your preferred exchange or another wallet. Always send a small test first if you are new.
+            </li>
+            <li>
+              <strong>Add Umoja V2 as a custom token.</strong> In MetaMask, choose “Import tokens” → “Custom token” and paste the official contract:
+              <br />
+              <code>0x8D6A79567a701FCe55b62C15d0fbB765913ac84a</code>
+            </li>
+            <li>
+              <strong>Join the private sale.</strong> Follow the official instructions from Arcana10 Investment / Crosby Ventures LLC on how to send BNB and receive Umoja V2 during the holiday sale window.
+            </li>
+            <li>
+              <strong>Verify everything before confirming.</strong> Always confirm the contract address, destination wallet, and sale terms directly from this official page or authorized communication channels.
+            </li>
           </ul>
-        </div>
-      </aside>
-    </section>
-
-    <!-- WHY UMOJA SECTION -->
-    <section class="section" id="why">
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">Why Umoja V2?</h2>
-          <p class="section-kicker">
-            A long-term vision built around real use-cases, education, and community.
-          </p>
-        </div>
-      </div>
-      <div class="card-grid">
-        <article class="card animate-in">
-          <div class="card-label">Vision</div>
-          <div class="card-main">
-            A growing <span>financial ecosystem</span>, not just a meme token.
+          <div class="steps-note">
+            This page is for educational and informational purposes only and does not constitute financial advice.
+            Always do your own research and only invest what you can afford to lose.
           </div>
-          <p class="card-sub">
-            Umoja aims to support products like wallets, peer-to-peer payments, debit cards,
-            staking, and a future Umoja Chain — with a focus on accessibility and education.
-          </p>
-        </article>
+        </div>
+      </section>
 
-        <article class="card animate-in delay-1">
-          <div class="card-label">Community</div>
-          <div class="card-main">
-            <span>Early believers</span> share the upside &amp; the responsibility.
+      <!-- LOGIN / INVITATION CODE PORTAL -->
+      <section id="invite-portal" class="fade-in">
+        <div class="section-title">Login / Invitation code portal</div>
+        <div class="card invite-card">
+          <div class="invite-grid">
+            <div class="invite-info">
+              <p>
+                <strong>Manage investor invitations and referrals</strong> using unique invitation codes.
+                Each investor receives a personal code that they share with their network.
+              </p>
+              <p style="margin-top:6px;">
+                When a new investor joins and submits their invitation code here, you can identify:
+              </p>
+              <ul style="margin-top:6px; padding-left:18px; display:grid; gap:4px;">
+                <li>Which referrer invited them.</li>
+                <li>The wallet that will receive the referral bonus.</li>
+                <li>The invitation codes used during the holiday private sale.</li>
+              </ul>
+              <p style="margin-top:8px; font-size:0.78rem;">
+                <strong>Note:</strong> This demo stores data only in the browser (localStorage).  
+                For production, connect this portal to your backend / database for full referral tracking.
+              </p>
+            </div>
+
+            <div class="invite-form-card">
+              <h3>Investor login / invitation code</h3>
+              <div class="form-row">
+                <div class="form-field">
+                  <label class="form-label" for="invName">
+                    Full name <span class="req">*</span>
+                  </label>
+                  <input class="form-input" id="invName" type="text" placeholder="e.g. John Doe" />
+                </div>
+
+                <div class="form-field">
+                  <label class="form-label" for="invEmail">
+                    Email (optional)
+                  </label>
+                  <input class="form-input" id="invEmail" type="email" placeholder="e.g. investor@email.com" />
+                </div>
+
+                <div class="form-field">
+                  <label class="form-label" for="invWallet">
+                    Wallet address (BNB Smart Chain) <span class="req">*</span>
+                  </label>
+                  <input class="form-input" id="invWallet" type="text" placeholder="0x..." />
+                </div>
+
+                <div class="form-field">
+                  <label class="form-label" for="invCode">
+                    Invitation code <span class="req">*</span>
+                  </label>
+                  <input class="form-input" id="invCode" type="text" placeholder="e.g. UMJ-ARCANA-1234" />
+                </div>
+              </div>
+
+              <div class="invite-actions">
+                <button id="saveInviteBtn" class="btn-primary" type="button">
+                  Save / Login with invitation code
+                </button>
+                <button id="clearInvitesBtn" class="btn-ghost" type="button">
+                  Clear local records
+                </button>
+              </div>
+
+              <div id="inviteStatus" class="invite-status"></div>
+
+              <div class="helper-text">
+                The login here helps you register your invitation code for tracking.
+                In a full system, the same code will be used to calculate referral rewards (5% + $1,000 bonus conditions).
+              </div>
+            </div>
           </div>
-          <p class="card-sub">
-            Education is central: Zoom classes, mentorship, and community calls
-            help new investors understand risk, strategy, and how crypto works.
-          </p>
-        </article>
 
-        <article class="card animate-in delay-2">
-          <div class="card-label">Timing</div>
-          <div class="card-main">
-            Position before <span>AI &amp; automation</span> change the job market.
+          <div class="invite-table-wrap">
+            <div class="invite-table-title">Recent invitation code log (this browser only)</div>
+            <table class="invite-table" id="inviteTable">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Wallet</th>
+                  <th>Invitation code</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody id="inviteTableBody">
+                <!-- Filled by JS -->
+              </tbody>
+            </table>
           </div>
-          <p class="card-sub">
-            As AI reduces some traditional jobs, Umoja’s long-term goal is to help people
-            build alternative income streams through crypto literacy and disciplined investing.
-          </p>
-        </article>
-      </div>
-    </section>
+        </div>
+      </section>
 
-    <!-- TARGETS / GOALS -->
-    <section class="section" id="targets">
-      <div class="section-header">
+      <!-- CONTACT / INFO SECTION -->
+      <section id="contact-section" class="fade-in">
+        <div class="section-title">Contact & project management</div>
+        <div class="card contact-card">
+          <p>
+            <strong>Project leadership:</strong> Arcana10 Investment &amp; Crosby Ventures LLC – managing the Umoja V2 early-stage access, holiday private sale, and referral structure.
+          </p>
+          <p style="margin-top:6px;">
+            Use your official communication channels (WhatsApp VIP group, email, or website forms) to confirm
+            allocation, KYC (if required), and final investment steps.
+          </p>
+          <p style="margin-top:6px; font-size:0.78rem;">
+            Add your real contact details here later – email addresses, Telegram, WhatsApp, or official website links –
+            so investors always know how to reach the core team safely.
+          </p>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="fade-in">
         <div>
-          <h2 class="section-title">Umoja V2 growth goals</h2>
-          <p class="section-kicker">
-            Example long-term targets. These are not guarantees — only aspirations.
-          </p>
-        </div>
-      </div>
-      <div class="card-grid">
-        <article class="card animate-in">
-          <div class="card-label">Market cap target</div>
-          <div class="card-main"><span>$10M+</span> before entering 2026 (illustrative)</div>
-          <p class="card-sub">
-            The project focuses on sustainable growth, not pump-and-dump speculation.
-            Real results depend on execution, adoption, and market conditions.
-          </p>
-        </article>
-
-        <article class="card animate-in delay-1">
-          <div class="card-label">Holders &amp; liquidity</div>
-          <div class="card-main"><span>More active holders</span> over time</div>
-          <p class="card-sub">
-            The strategy is to steadily increase holder base, liquidity depth,
-            and real utility in the Umoja ecosystem.
-          </p>
-        </article>
-
-        <article class="card animate-in delay-2">
-          <div class="card-label">Education first</div>
-          <div class="card-main"><span>Crypto literacy</span> as core utility</div>
-          <p class="card-sub">
-            A key part of Umoja’s mission is teaching people how to manage risk,
-            understand compounding, and avoid common crypto mistakes.
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <!-- METAMASK + HOW TO BUY GUIDE -->
-    <section class="section" id="metamask-guide">
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">How to invest in Umoja V2 with MetaMask</h2>
-          <p class="section-kicker">
-            Step-by-step: install MetaMask, add BNB Smart Chain, import Umoja V2, then buy safely.
-          </p>
-        </div>
-        <a href="#top" class="section-kicker" style="text-decoration: underline;">
-          Back to top ↑
-        </a>
-      </div>
-
-      <!-- META MASK SETUP -->
-      <div class="how-steps" style="margin-bottom: 18px;">
-        <div class="step animate-in">
-          <div class="step-number">1</div>
-          <div class="step-title">Install &amp; create your MetaMask wallet</div>
-          <p class="step-note">
-            • On desktop: go to <strong>metamask.io</strong> and install the browser extension (Chrome, Brave, Edge, etc).<br />
-            • On mobile: download the official MetaMask app from the App Store or Google Play.<br />
-            • Create a new wallet, write down your <strong>secret recovery phrase</strong> on paper, and never share it with anyone.
-          </p>
-        </div>
-
-        <div class="step animate-in delay-1">
-          <div class="step-number">2</div>
-          <div class="step-title">Add the BNB Smart Chain network</div>
-          <p class="step-note">
-            In MetaMask, open <strong>Settings → Networks → Add network</strong>, then add the BNB Smart Chain (BSC).<br />
-            Use the official settings from Binance or another trusted guide and make sure you select
-            <strong>BNB Smart Chain (mainnet)</strong>, not testnet.<br />
-            After saving, switch your MetaMask network to BNB Smart Chain.
-          </p>
-        </div>
-
-        <div class="step animate-in delay-2">
-          <div class="step-number">3</div>
-          <div class="step-title">Fund your wallet with BNB (Smart Chain)</div>
-          <p class="step-note">
-            Buy BNB on a trusted exchange (for example Binance, Crypto.com, etc.), then withdraw it to your MetaMask
-            wallet address <strong>on BNB Smart Chain</strong> (BEP-20).<br />
-            Always double-check the address and the network before sending.
-          </p>
-        </div>
-      </div>
-
-      <!-- IMPORT UMOJA TOKEN + BUY -->
-      <div class="how-steps">
-        <div class="step animate-in">
-          <div class="step-number">4</div>
-          <div class="step-title">Import Umoja V2 token into MetaMask</div>
-          <p class="step-note">
-            In MetaMask, make sure you are on the BNB Smart Chain network, then click <strong>Import tokens</strong>.<br />
-            Paste this official Umoja V2 contract address:<br />
-            <strong>0x8D6A79567a701FCe55b62C15d0fbB765913ac84a</strong><br />
-            MetaMask will usually fill the rest (symbol and decimals) automatically. If not, check the details on BscScan
-            using the same contract address before confirming.
-          </p>
-        </div>
-
-        <div class="step animate-in delay-1">
-          <div class="step-number">5</div>
-          <div class="step-title">Use PancakeSwap (or another DEX) to buy</div>
-          <p class="step-note">
-            Open <strong>pancakeswap.finance</strong> and connect your MetaMask wallet.<br />
-            Select <strong>BNB</strong> on the “From” side and add Umoja V2 on the “To” side by pasting the same official
-            contract address above.<br />
-            Double-check that the token you see matches the correct contract before swapping.
-          </p>
-        </div>
-
-        <div class="step animate-in delay-2">
-          <div class="step-number">6</div>
-          <div class="step-title">Confirm &amp; track your Umoja V2</div>
-          <p class="step-note">
-            Adjust slippage if needed, review the amount, and confirm the transaction in MetaMask.<br />
-            After the swap is confirmed, your Umoja V2 balance should appear in MetaMask (under the token you imported).<br />
-            Keep your recovery phrase safe and never send tokens to unknown wallets or contracts.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- HOLIDAY PRIVATE SALE / REFERRAL STRIP -->
-    <section class="section" id="referral">
-      <div class="referral-strip animate-pop delay-2">
-        <div class="referral-main">
-          <strong>🎉 Holiday Private Sales • December 16–30, 2025</strong>
-          <span>
-            During this limited <strong>holiday private sale</strong>, early Umoja V2 believers can secure a position
-            and also earn referral bonuses. This phase is designed for serious, long-term investors who understand the risk
-            and want to grow with the ecosystem.
-          </span>
-          <ul style="margin-left: 18px; margin-top: 4px; color: #e5e7eb; font-size: 12px;">
-            <li><strong>5% bonus</strong> for a minimum individual investment of <strong>$1,000</strong>.</li>
-            <li>When your total referred investments reach <strong>$20,000</strong>, you qualify for an extra
-              <strong>$1,000 special bonus</strong>.</li>
-          </ul>
-          <span style="color:#9ca3af; font-size:11px;">
-            Bonuses are subject to official Umoja V2 private sale terms. Always confirm details with the official team before investing.
-          </span>
+          <span class="brand">Arcana10 Investment &amp; Crosby Ventures LLC</span><br />
+          Community-driven Umoja V2 early-stage access.
         </div>
         <div>
-          <div class="referral-badge">
-            Holiday Private Sale • Referral Bonus Program
-          </div>
-          <div style="font-size: 11px; margin-top: 4px; color: #4b5563;">
-            Share responsibly. Never pressure anyone or ask them to invest money they cannot afford to lose.
-          </div>
+          Contract: <code>0x8D6A79567a701FCe55b62C15d0fbB765913ac84a</code><br />
+          Always verify before sending funds.
         </div>
-      </div>
-    </section>
-
-    <!-- FAQ / RISK -->
-    <section class="section" id="faq">
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">Frequently asked questions</h2>
-          <p class="section-kicker">
-            Read this carefully before you decide to invest.
-          </p>
-        </div>
-      </div>
-
-      <div class="faq-grid">
-        <div class="faq-item animate-in">
-          <div class="faq-q">Is Umoja V2 a guaranteed investment?</div>
-          <div class="faq-a">
-            No. <strong>There are no guarantees.</strong> Umoja V2 is a high-risk crypto asset.
-            The value can go up or down sharply, and you could lose all the money you invest.
-            Never treat this as a guaranteed source of income.
-          </div>
-        </div>
-        <div class="faq-item animate-in delay-1">
-          <div class="faq-q">How much should I invest?</div>
-          <div class="faq-a">
-            Only invest <strong>what you can afford to lose</strong>.
-            Many people start with a small amount while they are still learning.
-            If you are not sure, seek independent financial advice.
-          </div>
-        </div>
-        <div class="faq-item animate-in delay-2">
-          <div class="faq-q">Where can I verify the contract?</div>
-          <div class="faq-a">
-            You can verify the official Umoja V2 contract on BscScan using the address on this page.
-            Always copy it directly from here and compare carefully before every trade.
-          </div>
-        </div>
-        <div class="faq-item animate-in delay-3">
-          <div class="faq-q">What is the long-term plan for Umoja?</div>
-          <div class="faq-a">
-            The vision includes building a full ecosystem: wallet, peer-to-peer transfers, global payments,
-            debit card, staking, tokenization of assets, and eventually an Umoja Chain — combined with
-            strong education and community mentoring.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer>
-      <div class="footer-top">
-        <div class="footer-warning">
-          <span class="footer-warning-icon">⚠️</span>
-          <span>
-            <strong>Risk warning:</strong> Crypto assets are highly volatile and unregulated in many
-            jurisdictions. You could lose the entire amount you invest. Do your own research and
-            never rely only on promises, screenshots, or forwarded messages.
-          </span>
-        </div>
-        <div class="footer-meta">
-          <span>Umoja V2 • BNB Smart Chain (BEP-20)</span>
-          <span>Arcana10 Investment &amp; Crosby Ventures LLC</span>
-        </div>
-      </div>
-      <div>
-        This website is for information and invitation purposes only and does not constitute financial,
-        investment, or legal advice. Always make your own independent decision.
-      </div>
-    </footer>
+      </footer>
+    </div>
   </main>
 
   <script>
     // Copy contract address
-    const copyBtn = document.getElementById("copyBtn");
-    const contractAddress = document.getElementById("contractAddress");
+    (function () {
+      const copyBtn = document.getElementById('copyBtn');
+      const contractText = document.getElementById('contractText');
 
-    copyBtn?.addEventListener("click", async () => {
-      const text = contractAddress?.textContent?.trim();
-      if (!text) return;
+      if (copyBtn && contractText) {
+        copyBtn.addEventListener('click', async () => {
+          const value = contractText.textContent.trim();
 
-      try {
-        await navigator.clipboard.writeText(text);
-        const original = copyBtn.textContent;
-        copyBtn.textContent = "✅ Copied";
-        setTimeout(() => {
-          copyBtn.textContent = original;
-        }, 1600);
-      } catch (err) {
-        alert("Copy failed. Please copy manually.");
+          try {
+            await navigator.clipboard.writeText(value);
+            const original = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<span>Copied!</span>';
+            copyBtn.style.opacity = '0.9';
+
+            setTimeout(() => {
+              copyBtn.innerHTML = original;
+              copyBtn.style.opacity = '1';
+            }, 1500);
+          } catch (e) {
+            alert('Copy failed. Please copy manually: ' + value);
+          }
+        });
       }
-    });
+    })();
+
+    // Smooth scroll button for CTA
+    (function () {
+      const btn = document.getElementById('scrollHowTo');
+      const target = document.getElementById('how-to-invest');
+
+      if (btn && target) {
+        btn.addEventListener('click', () => {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      }
+    })();
+
+    // Simple scroll reveal animation
+    (function () {
+      const els = Array.from(document.querySelectorAll('.fade-in'));
+      const onScroll = () => {
+        const trigger = window.innerHeight * 0.9;
+        els.forEach(el => {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < trigger) {
+            el.classList.add('visible');
+          }
+        });
+      };
+      window.addEventListener('scroll', onScroll);
+      window.addEventListener('load', onScroll);
+      onScroll();
+    })();
+
+    // Invitation code portal logic (localStorage demo)
+    (function () {
+      const STORAGE_KEY = 'umojaInvites';
+      const saveBtn = document.getElementById('saveInviteBtn');
+      const clearBtn = document.getElementById('clearInvitesBtn');
+      const statusEl = document.getElementById('inviteStatus');
+      const tbody = document.getElementById('inviteTableBody');
+
+      function loadInvites() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return [];
+          const parsed = JSON.parse(raw);
+          return Array.isArray(parsed) ? parsed : [];
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function saveInvites(list) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      }
+
+      function renderInvites() {
+        const invites = loadInvites();
+        tbody.innerHTML = '';
+        if (!invites.length) {
+          const tr = document.createElement('tr');
+          const td = document.createElement('td');
+          td.colSpan = 4;
+          td.textContent = 'No invitation codes registered yet in this browser.';
+          td.style.color = '#a4aac5';
+          tr.appendChild(td);
+          tbody.appendChild(tr);
+          return;
+        }
+
+        invites.slice().reverse().forEach(inv => {
+          const tr = document.createElement('tr');
+          const tdName = document.createElement('td');
+          const tdWallet = document.createElement('td');
+          const tdCode = document.createElement('td');
+          const tdTime = document.createElement('td');
+
+          tdName.textContent = inv.name || '-';
+          tdWallet.textContent = inv.wallet || '-';
+          tdCode.textContent = inv.code || '-';
+          tdTime.textContent = inv.time || '-';
+
+          tr.appendChild(tdName);
+          tr.appendChild(tdWallet);
+          tr.appendChild(tdCode);
+          tr.appendChild(tdTime);
+          tbody.appendChild(tr);
+        });
+      }
+
+      function setStatus(msg, type) {
+        if (!statusEl) return;
+        statusEl.textContent = msg || '';
+        statusEl.classList.remove('ok', 'err');
+        if (type === 'ok') statusEl.classList.add('ok');
+        if (type === 'err') statusEl.classList.add('err');
+      }
+
+      if (saveBtn) {
+        saveBtn.addEventListener('click', () => {
+          const name = document.getElementById('invName')?.value.trim();
+          const email = document.getElementById('invEmail')?.value.trim();
+          const wallet = document.getElementById('invWallet')?.value.trim();
+          const code = document.getElementById('invCode')?.value.trim();
+
+          if (!name || !wallet || !code) {
+            setStatus('Please fill in name, wallet, and invitation code.', 'err');
+            return;
+          }
+
+          const invites = loadInvites();
+          const now = new Date();
+          const timestamp = now.toLocaleString();
+
+          invites.push({
+            name,
+            email,
+            wallet,
+            code,
+            time: timestamp
+          });
+
+          saveInvites(invites);
+          renderInvites();
+          setStatus('Invitation code registered locally. In production, this will sync to your referral database.', 'ok');
+        });
+      }
+
+      if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+          localStorage.removeItem(STORAGE_KEY);
+          renderInvites();
+          setStatus('Local records cleared. This does not affect any backend data.', 'ok');
+        });
+      }
+
+      renderInvites();
+    })();
   </script>
 </body>
 </html>
+
