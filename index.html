@@ -2,8 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Umoja V2 – Holiday Private Sale & Invitations</title>
+  <title>Umoja v2 – Holiday Private Sale & Invitations</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Favicon using the same logo -->
+  <link rel="icon" type="image/png" href="Umoja-logo.png" />
+
   <style>
     :root {
       --bg: #020618;
@@ -36,6 +40,18 @@
       background: radial-gradient(circle at top, #04102d 0, var(--bg) 45%);
       color: var(--text-main);
       min-height: 100vh;
+      animation: bodyFadeIn 0.9s ease-out forwards;
+    }
+
+    @keyframes bodyFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     a {
@@ -47,6 +63,62 @@
       max-width: 1120px;
       margin: 0 auto;
       padding: 18px 16px 60px;
+    }
+
+    /* SPLASH SCREEN (Apple-style logo reveal) */
+
+    .splash {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top, #061633 0, #00010a 50%, #000 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.7s ease, visibility 0.7s ease;
+    }
+
+    .splash-hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .splash-logo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 0, #4bf3ff 0, #0072ff 40%, #001435 90%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 0 35px rgba(0, 0, 0, 0.9),
+        0 0 90px rgba(15, 23, 42, 0.9);
+      animation: splashPop 1.6s ease-out forwards;
+      overflow: hidden;
+    }
+
+    .splash-logo img {
+      width: 76%;
+      height: 76%;
+      object-fit: contain;
+    }
+
+    @keyframes splashPop {
+      0% {
+        opacity: 0;
+        transform: scale(0.4);
+        filter: blur(7px);
+      }
+      55% {
+        opacity: 1;
+        transform: scale(1.03);
+        filter: blur(0);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     /* HEADER */
@@ -62,26 +134,61 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 11px;
     }
 
     .brand-logo {
-      width: 44px;
-      height: 44px;
-      border-radius: 16px;
-      background: radial-gradient(circle at 30% 0, #4bf3ff 0, #006dff 36%, #012765 90%);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 0, #4bf3ff 0, #0072ff 40%, #00163d 90%);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.6);
+      position: relative;
       overflow: hidden;
+      box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.75),
+        0 0 40px rgba(15, 23, 42, 0.9);
+      animation: logoFloat 6s ease-in-out infinite alternate;
+    }
+
+    /* dark glow under main logo */
+    .brand-logo::after {
+      content: "";
+      position: absolute;
+      inset: 55% -30%;
+      background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.9), transparent 70%);
+      opacity: 0.85;
+      pointer-events: none;
     }
 
     .brand-logo img {
-      width: 80%;
-      height: 80%;
+      width: 72%;
+      height: 72%;
       object-fit: contain;
-      display: block;
+      z-index: 1;
+      animation: logoFadeIn 1.2s ease-out forwards;
+    }
+
+    @keyframes logoFloat {
+      from {
+        transform: translateY(0px);
+      }
+      to {
+        transform: translateY(-5px);
+      }
+    }
+
+    @keyframes logoFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.85);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     .brand-text-title {
@@ -141,7 +248,29 @@
       nav {
         width: 100%;
         justify-content: flex-start;
-        flex-wrap: wrap;
+      }
+    }
+
+    /* Extra mobile optimization for logo area */
+    @media (max-width: 640px) {
+      header {
+        align-items: center;
+      }
+      .brand {
+        justify-content: center;
+      }
+      .brand-logo {
+        width: 54px;
+        height: 54px;
+      }
+      .brand-text-title {
+        font-size: 0.82rem;
+      }
+      .brand-text-sub {
+        font-size: 0.7rem;
+      }
+      nav {
+        justify-content: center;
       }
     }
 
@@ -577,13 +706,20 @@
   </style>
 </head>
 <body>
+  <!-- Splash screen -->
+  <div id="splash" class="splash">
+    <div class="splash-logo">
+      <img src="Umoja-logo.png" alt="Umoja Logo" />
+    </div>
+  </div>
+
   <div class="app-shell">
     <!-- HEADER -->
     <header>
       <div class="brand">
         <div class="brand-logo">
-  <img src="Umoja-logo.png" alt="Umoja Logo" />
-</div>
+          <img src="Umoja-logo.png" alt="Umoja Logo" />
+        </div>
         <div class="brand-text">
           <div class="brand-text-title">UMOJA</div>
           <div class="brand-text-sub">Early investment • Web3 ecosystem</div>
@@ -959,6 +1095,14 @@
   </div>
 
   <script>
+    // Splash: hide after page load
+    window.addEventListener("load", () => {
+      const splash = document.getElementById("splash");
+      setTimeout(() => {
+        splash.classList.add("splash-hidden");
+      }, 2000); // duration before fade-out
+    });
+
     // Smooth scroll for nav buttons
     document.querySelectorAll("[data-scroll-to]").forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -1026,7 +1170,6 @@
       invitationStatus.textContent = "Invitation saved locally. Admins can see it in the dashboard.";
       invitationStatus.className = "status status-success";
 
-      // Refresh admin table if already unlocked
       if (adminUnlocked) {
         renderInvitationTable();
       }
@@ -1039,7 +1182,7 @@
     });
 
     // ------------- ADMIN LOGIC (FRONT-END ONLY) -------------
-    const ADMIN_PASSWORD = "UmojaAdmin2025!"; // Change this to your own secret before using
+    const ADMIN_PASSWORD = "UmojaAdmin2025!"; // change before production
     let adminUnlocked = false;
 
     const adminLoginForm = document.getElementById("adminLoginForm");
