@@ -1109,5 +1109,32 @@
       window.addEventListener("resize", resize);
     })();
   </script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+  import { getFirestore, addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCbQ9fNYrq-qko-GUhKi3xSMkb_IKhrBBo",
+    authDomain: "umoja-v2-landing.firebaseapp.com",
+    projectId: "umoja-v2-landing",
+    storageBucket: "umoja-v2-landing.firebasestorage.app",
+    messagingSenderId: "964715983746",
+    appId: "1:964715983746:web:b4bb1615f35d773ae7159b"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // This function will be called when the form submits
+  window.saveInvitationToFirestore = async (invitation) => {
+    await addDoc(collection(db, "invitations"), {
+      ...invitation,
+      createdAt: serverTimestamp()
+    });
+  };
+
+  console.log("🔥 Firebase connected on index.html");
+</script>
 </body>
 </html>
