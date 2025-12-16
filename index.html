@@ -198,6 +198,7 @@
       font-weight: 500;
       letter-spacing:.2px;
     }
+<div id="recaptcha-container"></div>
 
     /* Footer help text */
     .help{
@@ -238,22 +239,27 @@
             <span class="emoji">🇺🇸</span>
             <span class="code">+1</span>
           </div>
-          <input type="tel" placeholder="Please enter your phone number" />
+          <input id="phone" type="tel" placeholder="Please enter your phone number" />
+
         </div>
 
         <div class="field">
-          <input type="text" placeholder="Please enter the code" />
-          <button class="send-btn" type="button">Send Code</button>
+          <input id="code" type="text" placeholder="Please enter the code" />
+
+          <button id="sendBtn" class="send-btn" type="button">Send Code</button>
+
         </div>
 
         <a class="forgot" href="#">Forgot Password</a>
 
         <label class="agree">
-          <input type="checkbox" checked />
+          <input id="agree" type="checkbox" checked />
+
           <span>You agree to the 《<a href="#">Registration Agreement</a>》</span>
         </label>
 
-        <button class="next" type="button" disabled>Next</button>
+        <button id="nextBtn" class="next" type="button" disabled>Next</button>
+
 
         <div class="account-login">Account Login</div>
       </form>
@@ -322,6 +328,65 @@
 
   const auth = firebase.auth();
   auth.useDeviceLanguage();
+</script>
+<script>
+  const phoneEl = document.getElementById('phone');
+  const codeEl  = document.getElementById('code');
+  const sendBtn = document.getElementById('sendBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const agreeEl = document.getElementById('agree');
+
+  let confirmationResult = null;
+
+  // ✅ reCAPTCHA (required)
+  window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+    'recaptcha-container',
+    { size: 'invisible' }
+  );
+
+  function normalizePhone(raw){
+    const digits = (raw || '').replace(/\D/g,'');
+    if (digits.length === 10) return '+1' + digits;
+    if (digits.length === 11 && digits.startsWith('1')) return '+' + digits;
+    return raw.startsWith('+') ? raw : ('+' + digits);
+  }
+
+  function updateNextState(){
+    const ok = agreeEl.checked && codeEl.value.trim().length >= 4 && confirmationResult;
+    nextBtn.disabled = !ok;
+    nextBtn.classList.toggle('active', !!ok);
+  }
+
+  codeEl.addEventListener('input', updateNextState);
+  agreeEl.addEventListener('change', updateNextState);
+
+  sendBtn.addEventListener('click', async () => {
+    try {
+      const phone = normalizePhone(phoneEl.value);
+      if(!phone || phone.length < 8) return alert('Enter a valid phone number');
+
+      const appVerifier = window.recaptchaVerifier;
+      confirmationResult = await firebase.auth().signInWithPhoneNumber(phone, appVerifier);
+
+      alert('Code sent (or test code ready).');
+      updateNextState();
+    } catch (e) {
+      console.error(e);
+      alert(e.message || 'Failed to send code');
+    }
+  });
+
+  nextBtn.addEventListener('click', async () => {
+    try{
+      if(!confirmationResult) return alert('Click Send Code first');
+      const code = codeEl.value.trim();
+      const result = await confirmationResult.confirm(code);
+      alert('Verified ✅ UID: ' + result.user.uid);
+    } catch(e){
+      console.error(e);
+      alert(e.message || 'Invalid code');
+    }
+  });
 </script>
 
 </body>
