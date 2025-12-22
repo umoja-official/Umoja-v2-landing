@@ -2,176 +2,150 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>UMOJA Admin • Invitations</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UMOJA • Admin Dashboard</title>
 
   <style>
     :root{
-      --bg:#061517;
-      --card: rgba(255,255,255,.06);
-      --stroke: rgba(255,255,255,.10);
+      --bg:#061314;
+      --card: rgba(255,255,255,.07);
+      --stroke: rgba(255,255,255,.12);
       --text:#eaf6f5;
-      --muted: rgba(234,246,245,.70);
-      --brand:#22c7a6;
-      --shadow: 0 18px 60px rgba(0,0,0,.35);
+      --muted: rgba(234,246,245,.72);
+      --brand:#23c7a7;
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
       --radius: 18px;
     }
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial;
-      background: radial-gradient(800px 500px at 50% -80px, rgba(34,199,166,.22), transparent 60%),
-                  linear-gradient(180deg,#0a2b2d 0%,#061517 55%,#050f11 100%);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--text);
-      padding:22px 14px 50px;
+      background:
+        radial-gradient(1000px 600px at 50% -50%, rgba(35,199,167,.25), transparent 60%),
+        linear-gradient(180deg, #0a2a2c 0%, var(--bg) 100%);
+      min-height:100svh;
+      padding:18px;
     }
-    .wrap{width:min(980px,100%); margin:0 auto}
-    h1{margin:0 0 6px; letter-spacing:.5px}
-    .sub{margin:0 0 18px; color:var(--muted)}
-    .grid{display:grid; gap:12px; grid-template-columns: 1fr}
-    @media(min-width:900px){
-      .grid{grid-template-columns: 340px 1fr}
+    .wrap{max-width:1100px; margin:0 auto}
+    .head{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap}
+    h1{margin:6px 0; font-size:22px; letter-spacing:.06em}
+    .pill{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      padding:10px 12px;
+      border-radius:999px;
+      color:var(--muted);
+      font-weight:700;
+    }
+    .btn{
+      border:none;
+      background: linear-gradient(180deg, var(--brand) 0%, #1aa68b 100%);
+      color:#06201b;
+      font-weight:900;
+      padding:10px 14px;
+      border-radius:14px;
+      cursor:pointer;
     }
     .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      margin-top:14px;
+      background: var(--card);
       border:1px solid var(--stroke);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding:14px;
       backdrop-filter: blur(10px);
     }
-    .field{
-      background: rgba(0,0,0,.25);
-      border:1px solid rgba(255,255,255,.10);
-      border-radius: 14px;
-      padding:10px;
-      margin:10px 0;
-      display:flex; align-items:center;
-    }
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
     input{
-      width:100%;
-      background: transparent;
-      border:0;
+      width:280px;
+      max-width:100%;
+      padding:12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color:var(--text);
       outline:none;
-      color:var(--text);
-      font-size:16px;
-      padding:8px;
     }
-    .btn{
+    table{
       width:100%;
-      border:0;
-      border-radius: 14px;
-      padding:12px 14px;
-      font-weight:900;
-      cursor:pointer;
-      background: linear-gradient(180deg, var(--brand), #12a08a);
-      color:#01221e;
-      margin-top:8px;
+      border-collapse:collapse;
+      margin-top:10px;
+      overflow:hidden;
+      border-radius:14px;
     }
-    .ghost{
-      width:100%;
-      border-radius: 14px;
-      padding:12px 14px;
-      font-weight:900;
-      cursor:pointer;
-      background: rgba(255,255,255,.08);
-      color:var(--text);
-      border:1px solid rgba(255,255,255,.10);
-      margin-top:8px;
-    }
-    .pill{
-      display:inline-block;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:12px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.22);
-      color:rgba(234,246,245,.85);
-      margin-right:6px;
-    }
-    table{width:100%; border-collapse: collapse}
-    th,td{
+    th, td{
       text-align:left;
-      padding:10px 8px;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      font-size:13px;
+      padding:10px 10px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      font-size:14px;
       vertical-align:top;
     }
-    th{color:rgba(234,246,245,.75); font-weight:800}
-    .muted{color:rgba(234,246,245,.70)}
-    .topRow{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px}
-    .warn{
-      margin-top:10px;
-      color:rgba(255,220,150,.9);
-      font-size:13px;
-      line-height:1.4;
-    }
+    th{color:rgba(234,246,245,.85); font-size:13px; letter-spacing:.06em; text-transform:uppercase}
+    .muted{color:var(--muted)}
+    .msg{margin-top:10px; color:var(--muted)}
+    .err{color:#ffd1d8}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace}
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <h1>UMOJA Admin Dashboard</h1>
-    <p class="sub">Manage invitation activity (separate from main site)</p>
+    <div class="head">
+      <div>
+        <h1>UMOJA • Admin Dashboard</h1>
+        <div class="pill" id="statusPill">Checking access…</div>
+      </div>
+      <div class="row">
+        <button class="btn" id="btnLogout" style="display:none">Logout</button>
+      </div>
+    </div>
 
-    <div class="grid">
-      <div class="card" id="authCard">
-        <div class="topRow">
-          <span class="pill">Admin Login</span>
-          <span class="pill">Firestore</span>
-        </div>
+    <div class="card" id="loginCard">
+      <div class="row">
+        <input id="email" placeholder="Admin Email or Phone">
+        <input id="pass" placeholder="Password" type="password">
+        <button class="btn" id="btnLogin">Login</button>
+      </div>
+      <div class="msg" id="loginMsg"></div>
+      <div class="msg muted">Admin access requires Firestore: <span class="mono">admins/{UID}</span> with <span class="mono">role="admin"</span>.</div>
+    </div>
 
-        <div class="field"><input id="email" placeholder="Admin email" autocomplete="username" /></div>
-        <div class="field"><input id="pass" type="password" placeholder="Password" autocomplete="current-password" /></div>
-        <button id="loginBtn" class="btn">Login</button>
-        <button id="logoutBtn" class="ghost" style="display:none">Logout</button>
-
-        <div class="warn">
-          Access is controlled by Firestore: collection <b>admins</b> with doc id = your <b>UID</b>.
-          (Steps below after you paste.)
-        </div>
+    <div class="card" id="dashCard" style="display:none">
+      <div class="row">
+        <div class="pill">Recent Invitation Opens/Clicks</div>
+        <button class="btn" id="btnRefresh">Refresh</button>
       </div>
 
-      <div class="card" id="dashCard" style="display:none">
-        <div class="topRow">
-          <span class="pill" id="adminPill">Admin</span>
-          <span class="pill" id="statsPill">Loading…</span>
-        </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Ref Code</th>
+            <th>User UID</th>
+            <th>URL</th>
+          </tr>
+        </thead>
+        <tbody id="clickRows"></tbody>
+      </table>
 
-        <h3 style="margin:8px 0 8px">Latest invitation opens/clicks</h3>
-        <div style="overflow:auto">
-          <table>
-            <thead>
-              <tr>
-                <th>Ref Code</th>
-                <th>Type</th>
-                <th>Time</th>
-                <th>User Agent</th>
-              </tr>
-            </thead>
-            <tbody id="clickRows"></tbody>
-          </table>
-        </div>
-
-        <h3 style="margin:16px 0 8px">Latest users</h3>
-        <div style="overflow:auto">
-          <table>
-            <thead>
-              <tr>
-                <th>User</th>
-                <th>Invite Code</th>
-                <th>Referred By</th>
-                <th>Created</th>
-              </tr>
-            </thead>
-            <tbody id="userRows"></tbody>
-          </table>
-        </div>
-      </div>
+      <div class="msg muted" style="margin-top:14px">Recent Registrations (with referredBy)</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Created</th>
+            <th>Email/Phone</th>
+            <th>My Ref</th>
+            <th>Referred By</th>
+            <th>UID</th>
+          </tr>
+        </thead>
+        <tbody id="userRows"></tbody>
+      </table>
     </div>
   </div>
 
-  <!-- Firebase compat -->
+  <!-- Firebase compat SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
@@ -190,117 +164,144 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    const email = document.getElementById("email");
-    const pass = document.getElementById("pass");
-    const loginBtn = document.getElementById("loginBtn");
-    const logoutBtn = document.getElementById("logoutBtn");
-
-    const authCard = document.getElementById("authCard");
-    const dashCard = document.getElementById("dashCard");
-    const adminPill = document.getElementById("adminPill");
-    const statsPill = document.getElementById("statsPill");
-
-    const clickRows = document.getElementById("clickRows");
-    const userRows = document.getElementById("userRows");
-
-    function fmt(ts){
-      if (!ts) return "—";
-      try{
-        const d = ts.toDate ? ts.toDate() : new Date(ts);
-        return d.toLocaleString();
-      }catch(_){ return "—"; }
+    function normalizeEmailOrPhone(v){
+      v = (v || '').trim();
+      if(!v) return null;
+      if(v.includes('@')) return v.toLowerCase();
+      const phone = v.replace(/\s+/g,'');
+      return phone + "@phone.umoja";
     }
+
+    const statusPill = document.getElementById('statusPill');
+    const loginCard  = document.getElementById('loginCard');
+    const dashCard   = document.getElementById('dashCard');
+    const btnLogout  = document.getElementById('btnLogout');
 
     async function isAdmin(uid){
-      const snap = await db.collection("admins").doc(uid).get();
-      return snap.exists;
+      const doc = await db.collection('admins').doc(uid).get();
+      return doc.exists && (doc.data().role === 'admin');
     }
 
-    async function loadDashboard(){
-      // clicks (latest 50)
-      db.collection("inviteClicks")
-        .orderBy("createdAt","desc")
-        .limit(50)
-        .onSnapshot(snap=>{
-          clickRows.innerHTML = "";
-          snap.forEach(doc=>{
-            const d = doc.data() || {};
-            const tr = document.createElement("tr");
-            tr.innerHTML = `
-              <td><b>${(d.ref||"—")}</b></td>
-              <td class="muted">${(d.type||"—")}</td>
-              <td class="muted">${fmt(d.createdAt)}</td>
-              <td class="muted" style="max-width:360px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
-                ${(d.userAgent||"—")}
-              </td>
-            `;
-            clickRows.appendChild(tr);
-          });
-        });
-
-      // users (latest 50)
-      db.collection("users")
-        .orderBy("createdAt","desc")
-        .limit(50)
-        .onSnapshot(snap=>{
-          userRows.innerHTML = "";
-          snap.forEach(doc=>{
-            const d = doc.data() || {};
-            const tr = document.createElement("tr");
-            tr.innerHTML = `
-              <td>
-                <div><b>${(d.emailOrPhone||d.authEmail||doc.id)}</b></div>
-                <div class="muted" style="font-size:12px">${doc.id}</div>
-              </td>
-              <td class="muted"><b>${(d.inviteCode||"—")}</b></td>
-              <td class="muted">${(d.referredBy||"—")}</td>
-              <td class="muted">${fmt(d.createdAt)}</td>
-            `;
-            userRows.appendChild(tr);
-          });
-        });
-
-      // simple stats
-      const clicksSnap = await db.collection("inviteClicks").get();
-      const usersSnap = await db.collection("users").get();
-      statsPill.textContent = `Clicks: ${clicksSnap.size} • Users: ${usersSnap.size}`;
-    }
-
-    loginBtn.addEventListener("click", async ()=>{
-      const e = (email.value||"").trim();
-      const p = (pass.value||"").trim();
-      if (!e || !p) return alert("Enter admin email + password");
-
-      loginBtn.disabled = true;
+    function fmtTs(ts){
       try{
-        await auth.signInWithEmailAndPassword(e, p);
-      }catch(err){
-        alert(err.message || "Login error");
-      }finally{
-        loginBtn.disabled = false;
+        if(!ts) return '';
+        const d = ts.toDate();
+        return d.toLocaleString();
+      }catch(e){
+        return '';
       }
-    });
+    }
 
-    logoutBtn.addEventListener("click", ()=>auth.signOut());
+    async function loadClicks(){
+      const tbody = document.getElementById('clickRows');
+      tbody.innerHTML = '';
+      const snap = await db.collection('inviteClicks')
+        .orderBy('createdAt','desc')
+        .limit(50)
+        .get();
 
-    auth.onAuthStateChanged(async (user)=>{
-      if (!user){
-        dashCard.style.display = "none";
-        logoutBtn.style.display = "none";
-        statsPill.textContent = "Loading…";
+      snap.forEach(doc=>{
+        const x = doc.data();
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="muted">${fmtTs(x.createdAt)}</td>
+          <td class="mono">${x.ref || ''}</td>
+          <td class="mono">${x.uid || ''}</td>
+          <td class="muted" style="word-break:break-all">${x.url || ''}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function loadUsers(){
+      const tbody = document.getElementById('userRows');
+      tbody.innerHTML = '';
+      const snap = await db.collection('users')
+        .orderBy('createdAt','desc')
+        .limit(50)
+        .get();
+
+      snap.forEach(doc=>{
+        const x = doc.data();
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="muted">${fmtTs(x.createdAt)}</td>
+          <td class="mono">${x.emailOrPhone || ''}</td>
+          <td class="mono">${x.myRef || ''}</td>
+          <td class="mono">${x.referredBy || ''}</td>
+          <td class="mono">${doc.id}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function loadAll(){
+      await loadClicks();
+      await loadUsers();
+    }
+
+    document.getElementById('btnLogin').onclick = async () => {
+      const m = document.getElementById('loginMsg');
+      m.textContent = '';
+      m.className = 'msg';
+
+      const email = normalizeEmailOrPhone(document.getElementById('email').value);
+      const pass  = (document.getElementById('pass').value || '').trim();
+
+      if(!email || !pass){
+        m.textContent = "Enter admin email/phone and password.";
+        m.className = "msg err";
         return;
       }
 
-      const ok = await isAdmin(user.uid);
-      if (!ok){
-        await auth.signOut();
-        return alert("Not authorized. Add your UID to Firestore collection: admins");
+      try{
+        await auth.signInWithEmailAndPassword(email, pass);
+      }catch(e){
+        m.textContent = e.message || "Login failed.";
+        m.className = "msg err";
+      }
+    };
+
+    btnLogout.onclick = async ()=> auth.signOut();
+
+    document.getElementById('btnRefresh').onclick = async ()=>{
+      statusPill.textContent = "Refreshing…";
+      await loadAll();
+      statusPill.textContent = "Admin Access ✅";
+    };
+
+    auth.onAuthStateChanged(async (user)=>{
+      if(!user){
+        statusPill.textContent = "Not logged in";
+        loginCard.style.display = "block";
+        dashCard.style.display = "none";
+        btnLogout.style.display = "none";
+        return;
       }
 
-      adminPill.textContent = `Admin: ${user.email || user.uid}`;
-      logoutBtn.style.display = "";
-      dashCard.style.display = "";
-      loadDashboard().catch(()=>{});
+      statusPill.textContent = "Checking admin…";
+      btnLogout.style.display = "inline-block";
+
+      try{
+        const ok = await isAdmin(user.uid);
+        if(!ok){
+          statusPill.textContent = "Access denied ❌";
+          loginCard.style.display = "block";
+          dashCard.style.display = "none";
+          document.getElementById('loginMsg').textContent = "This account is not in Firestore admins collection.";
+          document.getElementById('loginMsg').className = "msg err";
+          return;
+        }
+
+        statusPill.textContent = "Admin Access ✅";
+        loginCard.style.display = "none";
+        dashCard.style.display = "block";
+        await loadAll();
+      }catch(e){
+        statusPill.textContent = "Error";
+        document.getElementById('loginMsg').textContent = e.message || "Error checking admin.";
+        document.getElementById('loginMsg').className = "msg err";
+      }
     });
   </script>
 </body>
