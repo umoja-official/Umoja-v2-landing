@@ -5,608 +5,583 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>UMOJA V2 • Register / Login</title>
 
-
   <style>
- /* ===== UMOJA LOGO (perfect circle) ===== */
-.logo-wrap{
-  width:64px;
-  height:64px;
-  border-radius:50%;
-  overflow:hidden;                 /* IMPORTANT: forces circle crop */
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background: rgba(255,255,255,.06);
-  border:1px solid var(--stroke);
-  box-shadow: var(--shadow);
-}
-
-.logo-img{
-  width:100%;
-  height:100%;
-  object-fit: cover;               /* fills the circle */
-  display:block;
-}
-
-/* If you prefer NO crop (shows whole logo), use this instead:
-.logo-img{ object-fit: contain; padding:6px; background: rgba(0,0,0,.25); }
-*/
-/* ===== MOBILE LAYOUT FIX ===== */
-@media (max-width: 640px){
-  body{ padding: 18px 12px 40px; }
-
-  .top{
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 10px;
-    margin-bottom: 12px;
-  }
-
-  .brand{
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .card{
-    border-radius: 16px;
-  }
-
-  .tabs{
-    justify-content: center;
-  }
-
-  .cardInner{
-    padding: 14px;
-  }
-
-  /* make inputs + buttons feel better on mobile */
-  .field{ padding: 12px; }
-  .btn{ padding: 14px; font-size: 16px; }
-}
-
-
-/* Optional hover (desktop only) */
-@media (hover:hover){
-  .logo-wrap:hover{
-    box-shadow:
-      0 0 26px rgba(0,200,255,0.55),
-      0 0 60px rgba(0,120,255,0.35),
-      inset 0 0 14px rgba(255,255,255,0.08);
-    transform: translateY(-1px);
-    transition: all .25s ease;
-  }
-}
     :root{
       --bg:#07181a;
       --card: rgba(255,255,255,.06);
       --stroke: rgba(255,255,255,.10);
       --text:#eaf6f5;
       --muted: rgba(234,246,245,.70);
-      --accent:#2fd0a6;
-      --accent2:#c7b08a;
-      --danger:#ff5b5b;
-      --radius: 18px;
-      --shadow: 0 18px 50px rgba(0,0,0,.35);
+      --accent:#32d0b2;
+      --accent2:#78ffdf;
+      --danger:#ff5c5c;
+      --radius:18px;
     }
     *{box-sizing:border-box}
     body{
       margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(900px 700px at 50% 20%, rgba(50,208,178,.22), transparent 55%),
+                  radial-gradient(900px 700px at 50% 80%, rgba(120,255,223,.10), transparent 55%),
+                  var(--bg);
+      color:var(--text);
       min-height:100vh;
-      font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
-      background:
-        radial-gradient(1200px 700px at 15% 10%, rgba(47,208,166,.25), transparent 60%),
-        radial-gradient(900px 600px at 80% 20%, rgba(199,176,138,.18), transparent 55%),
-        linear-gradient(180deg, #051214 0%, #07181a 60%, #061316 100%);
-      color: var(--text);
-      padding: 28px 14px 60px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:22px;
     }
-    .wrap{max-width: 900px; margin: 0 auto;}
+    .wrap{width:min(420px, 92vw);}
     .top{
-      display:flex; gap:14px; align-items:center; justify-content:space-between;
-      margin-bottom: 16px;
+      text-align:center;
+      margin-bottom:14px;
     }
-    .brand{display:flex; gap:12px; align-items:center;}
-    .logo{
-      width:54px; height:54px; border-radius: 50%;
-      background:
-        radial-gradient(circle at 30% 25%, rgba(47,208,166,.55), transparent 55%),
-        radial-gradient(circle at 70% 65%, rgba(199,176,138,.45), transparent 58%),
-        rgba(255,255,255,.06);
+    .logoCircle{
+      width:78px;height:78px;border-radius:50%;
+      margin:0 auto 10px;
+      display:grid;place-items:center;
+      background: rgba(0,0,0,.25);
       border:1px solid var(--stroke);
-      box-shadow: var(--shadow);
+      overflow:hidden;
+      box-shadow: 0 16px 40px rgba(0,0,0,.35);
     }
-    .brand h1{font-size:18px; margin:0; letter-spacing:.5px}
-    .brand p{margin:2px 0 0; color: var(--muted); font-size: 12px}
+    .logoCircle img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    h1{margin:0;font-size:26px;letter-spacing:.6px}
+    .sub{margin-top:6px;color:var(--muted);font-size:14px}
 
     .card{
+      margin-top:14px;
       background: var(--card);
-      border: 1px solid var(--stroke);
+      border:1px solid var(--stroke);
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow:hidden;
+      padding:18px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.35);
+      backdrop-filter: blur(14px);
     }
-    .cardInner{padding: 18px;}
+
     .tabs{
-      display:flex; gap:14px;
-      padding: 14px 18px 0;
+      display:flex;gap:10px;
+      background: rgba(0,0,0,.14);
+      border:1px solid var(--stroke);
+      padding:8px;
+      border-radius: 14px;
+      margin-bottom:14px;
     }
     .tab{
+      flex:1;
+      text-align:center;
+      padding:10px 10px;
+      border-radius: 12px;
       cursor:pointer;
-      font-weight:700;
       color: var(--muted);
-      padding: 10px 6px;
-      border-bottom: 2px solid transparent;
+      font-weight:600;
       user-select:none;
     }
     .tab.active{
+      background: rgba(50,208,178,.18);
       color: var(--text);
-      border-bottom-color: var(--accent2);
+      border:1px solid rgba(120,255,223,.25);
     }
-    .row{display:flex; gap:12px; flex-wrap:wrap}
+
     .field{
-      width: 100%;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.14);
+      border:1px solid var(--stroke);
       border-radius: 14px;
-      padding: 12px 12px;
-      display:flex; align-items:center; gap:10px;
+      padding:10px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:12px;
     }
     .field input{
       width:100%;
-      border:none; outline:none;
+      border:none;
+      outline:none;
       background: transparent;
       color: var(--text);
-      font-size: 16px;
+      font-size:16px;
+      padding:8px 6px;
     }
-    .hint{color: var(--muted); font-size: 12px; margin: 8px 2px 0; line-height: 1.45;}
+    .field input::placeholder{color:rgba(234,246,245,.5)}
+    .field button{
+      border:none;
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      padding:8px 12px;
+      border-radius: 12px;
+      cursor:pointer;
+      font-weight:700;
+    }
+
     .btn{
       width:100%;
       border:none;
-      border-radius: 14px;
-      padding: 14px 14px;
-      font-weight: 800;
-      font-size: 15px;
+      background: linear-gradient(90deg, rgba(50,208,178,.95), rgba(120,255,223,.85));
+      color:#06211f;
+      font-weight:900;
+      letter-spacing:.4px;
+      border-radius: 16px;
+      padding:14px 14px;
+      font-size:16px;
       cursor:pointer;
-      background: linear-gradient(90deg, rgba(47,208,166,.9), rgba(47,208,166,.65));
-      color: #06201c;
-      margin-top: 12px;
+      margin-top:6px;
+      box-shadow: 0 14px 35px rgba(50,208,178,.22);
     }
-    .btn.secondary{
-      background: rgba(255,255,255,.08);
-      color: var(--text);
-      border: 1px solid rgba(255,255,255,.12);
-      font-weight: 750;
-    }
-    .pill{
-      display:inline-flex; align-items:center; justify-content:center; gap:8px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      cursor:pointer;
-      font-weight:800;
-      font-size: 13px;
-      user-select:none;
-    }
-    .pill.green{
-      background: rgba(47,208,166,.18);
-      border-color: rgba(47,208,166,.25);
-    }
-    .msg{
-      margin: 10px 0 0;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.06);
+    .btn:active{transform: translateY(1px)}
+    .hint{
+      margin-top:12px;
+      text-align:center;
+      font-size:13px;
       color: var(--muted);
-      font-size: 13px;
-      white-space: pre-line;
+      line-height:1.4;
     }
-    .msg.good{border-color: rgba(47,208,166,.35); color: rgba(234,246,245,.92)}
-    .msg.bad{border-color: rgba(255,91,91,.35); color: rgba(255,91,91,.95)}
+    .hint a{color: var(--accent2); text-decoration:none; font-weight:800}
 
-    /* App content (shown after login) */
-    .appHeader{
-      display:flex; gap:10px; align-items:center; justify-content:space-between;
-      padding: 16px 18px;
-      border-bottom: 1px solid rgba(255,255,255,.08);
+    .row{
+      display:flex;gap:10px;align-items:center;justify-content:space-between;
+      margin-top:10px;
+      color:var(--muted);
+      font-size:13px;
     }
-    .section{padding: 16px 18px}
-    .hero{
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      padding: 18px;
+    .row a{color:var(--accent2);text-decoration:none;font-weight:800}
+    .msg{
+      margin-top:10px;
+      font-size:13px;
+      padding:10px 12px;
+      border-radius: 14px;
+      border:1px solid var(--stroke);
+      background: rgba(0,0,0,.14);
+      color: var(--muted);
+      display:none;
+      white-space:pre-wrap;
     }
-    .hero h2{margin:0 0 6px; font-size: 28px; letter-spacing:.2px}
-    .hero p{margin:0; color: var(--muted); line-height: 1.5}
-    .grid{
-      display:grid; gap: 12px;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      margin-top: 12px;
+    .msg.ok{border-color: rgba(120,255,223,.25); color: rgba(234,246,245,.92)}
+    .msg.bad{border-color: rgba(255,92,92,.35); color: rgba(255,200,200,.92)}
+
+    .panel{
+      margin-top:14px;
+      padding:12px;
+      border-radius: 16px;
+      border:1px solid var(--stroke);
+      background: rgba(0,0,0,.14);
+      display:none;
     }
-    @media (max-width: 640px){ .grid{grid-template-columns: 1fr;} }
-    .box{
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      padding: 14px;
-    }
-    .box h3{margin:0 0 8px; font-size: 16px}
+    .panel h3{margin:0 0 8px;font-size:15px}
     .mono{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      word-break: break-all;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
-      color: rgba(234,246,245,.92);
-      font-size: 12px;
+      font-size:12px;
+      color:rgba(234,246,245,.92);
+      word-break:break-all;
     }
-    .small{color: var(--muted); font-size: 12px; line-height: 1.45}
-    a.link{color: rgba(47,208,166,.95); text-decoration: none; font-weight: 800}
+    .smallbtn{
+      border:none;
+      background: rgba(255,255,255,.10);
+      color: var(--text);
+      padding:10px 12px;
+      border-radius: 12px;
+      cursor:pointer;
+      font-weight:800;
+      width:100%;
+      margin-top:10px;
+    }
+    .danger{
+      background: rgba(255,92,92,.12);
+      border:1px solid rgba(255,92,92,.25);
+      color:rgba(255,220,220,.95);
+    }
   </style>
 </head>
 
 <body>
   <div class="wrap">
     <div class="top">
-      <div class="brand">
-  <div class="logo-wrap">
-    <img
-      src="./Umoja-logo.png"
-      alt="UMOJA V2 Logo"
-      class="logo-img"
-    />
-  </div>
+      <div class="logoCircle">
+        <!-- Replace this with your official logo path -->
+        <img src="umoja-logo.png" alt="UMOJA Logo" />
+      </div>
+      <h1>UMOJA V2</h1>
+      <div class="sub">Official Landing • Verify • Invest • Invite</div>
+    </div>
 
-  <div>
-    <h1>UMOJA V2</h1>
-    <p>Official Landing • Verify • Invest • Invite</p>
-  </div>
-</div>
-
-    <!-- AUTH CARD -->
-    <div id="authCard" class="card">
+    <div class="card">
       <div class="tabs">
         <div id="tabRegister" class="tab active">Register</div>
         <div id="tabLogin" class="tab">Login</div>
       </div>
 
-      <div class="cardInner">
-        <div class="msg" id="authMsg" style="display:none"></div>
+      <!-- REGISTER -->
+      <div id="registerView">
+        <div class="field">
+          <input id="regEmailPhone" placeholder="Email or Phone (no SMS)" autocomplete="username" />
+        </div>
+
+        <div class="field">
+          <input id="regPass" placeholder="Password" type="password" autocomplete="new-password" />
+          <button id="toggleRegPass" type="button">Show</button>
+        </div>
+
+        <!-- (Removed highlighted section here ✅) -->
+
+        <button id="btnRegister" class="btn">Create Account</button>
 
         <div class="row">
-          <div class="field">
-            <input id="identifier" placeholder="Email or Phone (ex: user@gmail.com or 4809369727)" autocomplete="username" />
-          </div>
-
-          <div class="field">
-            <input id="password" type="password" placeholder="Password (min 6 chars)" autocomplete="current-password" />
-            <button id="togglePw" class="pill" type="button" style="padding:8px 12px;">Show</button>
-          </div>
+          <span>Already have an account?</span>
+          <a href="#" id="goLogin">Login</a>
         </div>
 
-      
+        <div id="regMsg" class="msg"></div>
 
-        <button id="primaryBtn" class="btn">Create Account</button>
-        <button id="forgotBtn" class="btn secondary" style="display:none">Forgot Password (Email only)</button>
-
-        <div class="hint" style="margin-top:12px">
-          By continuing you agree to the
-          <a class="link" href="#" onclick="alert('Add your Registration Agreement link here'); return false;">Registration Agreement</a>.
+        <div class="hint">
+          By continuing you agree to the <a href="#" onclick="alert('Add your Registration Agreement link/page here.');return false;">Registration Agreement</a>.
         </div>
       </div>
-    </div>
 
-    <!-- APP CONTENT (SHOW AFTER LOGIN) -->
-    <div id="appCard" class="card" style="display:none; margin-top:16px;">
-      <div class="appHeader">
-        <div style="display:flex; flex-direction:column; gap:4px;">
-          <div style="font-weight:900; letter-spacing:.3px;">Welcome ✅</div>
-          <div class="small">
-            Logged in as:
-            <span id="whoami" class="mono" style="display:inline-block; padding:6px 10px;"></span>
-          </div>
+      <!-- LOGIN -->
+      <div id="loginView" style="display:none;">
+        <div class="field">
+          <input id="logEmailPhone" placeholder="Email or Phone" autocomplete="username" />
         </div>
-        <button id="logoutBtn" class="pill">Logout</button>
+
+        <div class="field">
+          <input id="logPass" placeholder="Password" type="password" autocomplete="current-password" />
+          <button id="toggleLogPass" type="button">Show</button>
+        </div>
+
+        <button id="btnLogin" class="btn">Login</button>
+
+        <div class="row">
+          <span>New here?</span>
+          <a href="#" id="goRegister">Register</a>
+        </div>
+
+        <div id="logMsg" class="msg"></div>
       </div>
 
-      <div class="section">
-        <div class="hero">
-          <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
-            <button class="pill" onclick="scrollToId('how')">How to Invest</button>
-            <button class="pill" onclick="scrollToId('verify')">Verify Contract</button>
-            <button class="pill green" onclick="scrollToId('invite')">Invitation Link</button>
-          </div>
+      <!-- LOGGED IN PANEL -->
+      <div id="afterLogin" class="panel">
+        <h3>✅ Logged in</h3>
+        <div style="margin-bottom:8px;color:rgba(234,246,245,.78);font-size:13px">
+          Your personal invitation link:
+        </div>
+        <div id="inviteLink" class="mono">Generating…</div>
 
-          <h2 style="margin-top:10px;">Build your position early in Umoja V2.</h2>
-          <p>
-            Use the official steps below to invest safely, verify the contract address,
-            and share your invitation link to track new investors.
-          </p>
+        <button id="copyInvite" class="smallbtn" type="button">Copy Invitation Link</button>
+        <button id="shareInvite" class="smallbtn" type="button">Share</button>
+
+        <div class="row" style="margin-top:12px">
+          <a href="admin.html" target="_blank" rel="noopener">Open Admin Dashboard</a>
+          <a href="#" id="logout">Logout</a>
         </div>
 
-        <div class="grid">
-          <div id="verify" class="box">
-            <h3>✅ Official Contract</h3>
-            <div id="contract" class="mono">0x8D6A79567a701FCe55b62C15d0fbB765913ac84a</div>
-            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-              <button class="pill" onclick="copyContract()">Copy Contract</button>
-              <button class="pill" onclick="openBscScan()">Open on BscScan</button>
-            </div>
-            <div class="small" style="margin-top:10px;">Tip: Always verify from official channels before sending funds.</div>
-          </div>
-
-          <div id="how" class="box">
-            <h3>🦊 How to Invest in Umoja V2 (MetaMask)</h3>
-            <ol class="small" style="margin:0; padding-left:16px; line-height:1.6;">
-              <li>Install MetaMask (browser extension or mobile app).</li>
-              <li>Add / switch to <b>BNB Smart Chain</b> network in MetaMask.</li>
-              <li>Fund your wallet with <b>BNB</b> for gas + investment.</li>
-              <li>Import the token using the official contract address.</li>
-              <li>Buy using your official DEX link (add yours later).</li>
-            </ol>
-          </div>
-
-          <div class="box" style="border-color: rgba(255,91,91,.25);">
-            <h3>⛔ Don’t do this</h3>
-            <ul class="small" style="margin:0; padding-left:16px; line-height:1.6;">
-              <li>Don’t trust screenshots or forwarded messages without verification.</li>
-              <li>Don’t send funds to any address that isn’t officially published.</li>
-              <li>Don’t buy “Umoja” tokens that are not the verified contract.</li>
-            </ul>
-          </div>
-
-          <div id="invite" class="box">
-            <h3>🔗 Invitation Link (Referral Tracking)</h3>
-            <div class="small">Enter your referral code (example: FISTON1)</div>
-            <div class="field" style="margin-top:10px;">
-              <input id="refCode" placeholder="Enter your referral code (example: FISTON1)" />
-            </div>
-            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-              <button class="pill green" onclick="generateInvite()">Generate Link</button>
-              <button class="pill" onclick="copyInvite()">Copy Link</button>
-              <button class="pill" onclick="testInvite()">Test Link</button>
-            </div>
-            <div class="mono" id="inviteOut" style="margin-top:10px;">Enter a code, then click Generate Link</div>
-            <div class="small" style="margin-top:10px;">
-              Next step: connect this to Firestore so every signup is stored under the referrer automatically.
-            </div>
-          </div>
-        </div>
-
-        <div class="box" style="margin-top:12px;">
-          <div class="small">
-            <b>Disclaimer:</b> This page is informational and not financial advice. Crypto assets are volatile. Invest responsibly.
-          </div>
-        </div>
+        <div id="afterMsg" class="msg"></div>
       </div>
     </div>
   </div>
 
-  <!-- Firebase compat (works in simple HTML / GitHub Pages / Firebase Hosting) -->
+  <!-- Firebase Compat (matches what you already have) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
 
   <script>
-    // ✅ Use your REAL Firebase config (from Firebase Console → Project settings → Web app)
-    // Your earlier correct config looked like this:
-   const firebaseConfig = {
-  apiKey: "AIzaSyCbQ9fNYrq_qko-GUhKi3xSMkb_IKhrBB0",
-  authDomain: "umoja-v2-landing.firebaseapp.com",
-  projectId: "umoja-v2-landing",
-  storageBucket: "umoja-v2-landing.firebasestorage.app",
-  messagingSenderId: "964715983746",
-  appId: "1:964715983746:web:b4bb1615f35d773ae7159b"
-};
+    // ✅ Your Firebase config (keep yours)
+    const firebaseConfig = {
+      apiKey: "AIzaSyCbQ9fNYrq-qko-GUhKi3xSMkb_IKhrBBo",
+      authDomain: "umoja-v2-landing.firebaseapp.com",
+      projectId: "umoja-v2-landing",
+      storageBucket: "umoja-v2-landing.firebasestorage.app",
+      messagingSenderId: "964715983746",
+      appId: "1:964715983746:web:b4bb1615f35d773ae7159b"
+    };
 
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
+    const db = firebase.firestore();
 
-    // ---- UI refs
-    const authCard = document.getElementById('authCard');
-    const appCard = document.getElementById('appCard');
-    const tabRegister = document.getElementById('tabRegister');
-    const tabLogin = document.getElementById('tabLogin');
-    const primaryBtn = document.getElementById('primaryBtn');
-    const forgotBtn = document.getElementById('forgotBtn');
-    const authMsg = document.getElementById('authMsg');
-    const identifierEl = document.getElementById('identifier');
-    const passwordEl = document.getElementById('password');
-    const togglePw = document.getElementById('togglePw');
-    const whoami = document.getElementById('whoami');
-    const logoutBtn = document.getElementById('logoutBtn');
+    // -------------------------
+    // Helpers
+    // -------------------------
+    const $ = (id) => document.getElementById(id);
 
-    let mode = "register"; // register | login
-
-    function setMsg(text, type){
-      authMsg.style.display = "block";
-      authMsg.className = "msg " + (type || "");
-      authMsg.textContent = text;
+    function showMsg(el, text, ok=true){
+      el.style.display = "block";
+      el.className = "msg " + (ok ? "ok" : "bad");
+      el.textContent = text;
     }
-    function clearMsg(){
-      authMsg.style.display = "none";
-      authMsg.textContent = "";
-      authMsg.className = "msg";
+    function hideMsg(el){
+      el.style.display = "none";
+      el.textContent = "";
     }
 
-    // Email OR Phone (NO SMS):
-    // If user enters phone, we convert it into a pseudo email.
-    // They still login using the same phone + password.
-    function normalizeIdentifierToEmail(raw){
-      const v = (raw || "").trim();
-      if (!v) return "";
-      if (v.includes("@")) return v.toLowerCase();
+    // Normalizes "email or phone" into an email for Firebase Auth.
+    // Phone logins are stored like: +11234567890@umoja.local
+    function toAuthEmail(emailOrPhoneRaw){
+      const v = (emailOrPhoneRaw || "").trim();
+      const isEmail = v.includes("@");
+      if (isEmail) return v.toLowerCase();
 
-      // phone -> digits only
-      const digits = v.replace(/[^\d]/g, "");
-      if (digits.length < 7) return "";
-      return `${digits}@umoja.local`;
+      // Keep digits and + only
+      const phone = v.replace(/[^\d+]/g, "");
+      if (!phone || phone.length < 7) throw new Error("Enter a valid email or phone number.");
+      return phone + "@umoja.local";
     }
 
-    function isEmail(raw){
-      return (raw || "").includes("@");
-    }
-
-    function setMode(next){
-      mode = next;
-      clearMsg();
-      const isReg = mode === "register";
-      tabRegister.classList.toggle("active", isReg);
-      tabLogin.classList.toggle("active", !isReg);
-      primaryBtn.textContent = isReg ? "Create Account" : "Login";
-      forgotBtn.style.display = (!isReg) ? "block" : "none";
-    }
-
-    tabRegister.addEventListener("click", () => setMode("register"));
-    tabLogin.addEventListener("click", () => setMode("login"));
-
-    togglePw.addEventListener("click", () => {
-      const isPw = passwordEl.type === "password";
-      passwordEl.type = isPw ? "text" : "password";
-      togglePw.textContent = isPw ? "Hide" : "Show";
-    });
-
-    forgotBtn.addEventListener("click", async () => {
-      clearMsg();
-      const raw = identifierEl.value.trim();
-      if (!raw || !isEmail(raw)) {
-        setMsg("Password reset works for EMAIL only.\nEnter your email above.", "bad");
-        return;
-      }
-      try{
-        await auth.sendPasswordResetEmail(raw.toLowerCase());
-        setMsg("✅ Password reset email sent. Check your inbox/spam.", "good");
-      }catch(e){
-        setMsg(e.message || "Failed to send reset email.", "bad");
-      }
-    });
-
-    primaryBtn.addEventListener("click", async () => {
-      clearMsg();
-
-      const raw = identifierEl.value.trim();
-      const pw = passwordEl.value;
-
-      if (!raw) return setMsg("Enter your email or phone.", "bad");
-      if (!pw || pw.length < 6) return setMsg("Password must be at least 6 characters.", "bad");
-
-      const email = normalizeIdentifierToEmail(raw);
-      if (!email) return setMsg("Enter a valid email or phone number.", "bad");
-
-      try{
-        if (mode === "register") {
-          await auth.createUserWithEmailAndPassword(email, pw);
-          setMsg("✅ Account created. You are now logged in.", "good");
-        } else {
-          await auth.signInWithEmailAndPassword(email, pw);
-          setMsg("✅ Logged in.", "good");
-        }
-      } catch(e){
-        // Most common: enable Email/Password provider in Firebase Console
-        setMsg(e.message || "Auth failed.", "bad");
-      }
-    });
-
-    logoutBtn.addEventListener("click", async () => {
-      await auth.signOut();
-    });
-
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        authCard.style.display = "none";
-        appCard.style.display = "block";
-        whoami.textContent = user.email || user.uid;
-      } else {
-        appCard.style.display = "none";
-        authCard.style.display = "block";
-        setMode("register");
-      }
-    });
-
-    // ---- App helpers
-    function scrollToId(id){
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.scrollIntoView({behavior:"smooth", block:"start"});
-    }
-    window.scrollToId = scrollToId;
-
-    function copyContract(){
-      const addr = document.getElementById('contract').textContent.trim();
-      navigator.clipboard.writeText(addr);
-      alert("✅ Contract copied");
-    }
-    window.copyContract = copyContract;
-
-    function openBscScan(){
-      const addr = document.getElementById('contract').textContent.trim();
-      window.open(`https://bscscan.com/address/${addr}`, "_blank");
-    }
-    window.openBscScan = openBscScan;
-
-    function generateInvite(){
-      const code = (document.getElementById('refCode').value || "").trim();
-      if(!code) return alert("Enter a referral code first.");
-      const base = window.location.origin + window.location.pathname;
-      const url = `${base}?ref=${encodeURIComponent(code)}`;
-      document.getElementById('inviteOut').textContent = url;
-    }
-    window.generateInvite = generateInvite;
-
-    function copyInvite(){
-      const url = document.getElementById('inviteOut').textContent.trim();
-      if(!url || url.includes("Enter a code")) return alert("Generate a link first.");
-      navigator.clipboard.writeText(url);
-      alert("✅ Invitation link copied");
-    }
-    window.copyInvite = copyInvite;
-
-    function testInvite(){
-      const url = document.getElementById('inviteOut').textContent.trim();
-      if(!url || url.includes("Enter a code")) return alert("Generate a link first.");
-      window.open(url, "_blank");
-    }
-    window.testInvite = testInvite;
-
-    // Auto-fill referral from ?ref=
-    (function(){
+    function getRefFromUrl(){
       const params = new URLSearchParams(window.location.search);
-      const ref = params.get("ref");
-      if (ref) document.getElementById('refCode').value = ref;
+      return params.get("ref");
+    }
+
+    // Store referral in localStorage so it survives tab switches, etc.
+    function persistReferral(){
+      const ref = getRefFromUrl();
+      if (ref && ref.trim()){
+        localStorage.setItem("umoja_ref", ref.trim());
+      }
+    }
+
+    function getPersistedRef(){
+      return localStorage.getItem("umoja_ref");
+    }
+
+    function randomCode(len=8){
+      const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+      let out = "";
+      for (let i=0;i<len;i++) out += chars[Math.floor(Math.random()*chars.length)];
+      return out;
+    }
+
+    // -------------------------
+    // Invitation logging (auto every open/click)
+    // -------------------------
+    async function logInviteOpenIfAny(){
+      const ref = getRefFromUrl();
+      if (!ref) return;
+
+      // Avoid spamming: one log per ref per browser session
+      const key = "umoja_logged_ref_" + ref;
+      if (sessionStorage.getItem(key)) return;
+      sessionStorage.setItem(key, "1");
+
+      try{
+        await db.collection("inviteEvents").add({
+          type: "open",
+          ref: ref,
+          path: window.location.pathname,
+          ua: navigator.userAgent || null,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      }catch(e){
+        // silent (don’t block UX)
+        console.warn("Invite open log failed:", e);
+      }
+    }
+
+    // -------------------------
+    // Tabs UI
+    // -------------------------
+    function setTab(mode){
+      const isReg = mode === "register";
+      $("tabRegister").classList.toggle("active", isReg);
+      $("tabLogin").classList.toggle("active", !isReg);
+      $("registerView").style.display = isReg ? "block" : "none";
+      $("loginView").style.display = isReg ? "none" : "block";
+      hideMsg($("regMsg"));
+      hideMsg($("logMsg"));
+    }
+
+    $("tabRegister").onclick = () => setTab("register");
+    $("tabLogin").onclick = () => setTab("login");
+    $("goLogin").onclick = (e) => { e.preventDefault(); setTab("login"); };
+    $("goRegister").onclick = (e) => { e.preventDefault(); setTab("register"); };
+
+    // Password toggles
+    function togglePass(inputId, btnId){
+      const input = $(inputId);
+      const btn = $(btnId);
+      btn.onclick = () => {
+        const isPw = input.type === "password";
+        input.type = isPw ? "text" : "password";
+        btn.textContent = isPw ? "Hide" : "Show";
+      };
+    }
+    togglePass("regPass", "toggleRegPass");
+    togglePass("logPass", "toggleLogPass");
+
+    // -------------------------
+    // Register
+    // -------------------------
+    $("btnRegister").onclick = async () => {
+      hideMsg($("regMsg"));
+
+      const raw = $("regEmailPhone").value;
+      const pass = $("regPass").value;
+
+      if (!raw.trim() || !pass.trim()){
+        return showMsg($("regMsg"), "Please enter Email/Phone and Password.", false);
+      }
+
+      let authEmail;
+      try{
+        authEmail = toAuthEmail(raw);
+      }catch(err){
+        return showMsg($("regMsg"), err.message || String(err), false);
+      }
+
+      try{
+        const cred = await auth.createUserWithEmailAndPassword(authEmail, pass);
+        const user = cred.user;
+
+        // ✅ Attach referral to user (from URL/localStorage)
+        const referredBy = getPersistedRef() || null;
+
+        await db.collection("users").doc(user.uid).set({
+          emailOrPhone: raw.trim(),
+          authEmail: authEmail,
+          referredBy: referredBy,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+
+        showMsg($("regMsg"), "✅ Account created successfully. You are now logged in.", true);
+      }catch(e){
+        showMsg($("regMsg"), (e && e.message) ? e.message : "Registration failed.", false);
+      }
+    };
+
+    // -------------------------
+    // Login
+    // -------------------------
+    $("btnLogin").onclick = async () => {
+      hideMsg($("logMsg"));
+
+      const raw = $("logEmailPhone").value;
+      const pass = $("logPass").value;
+
+      if (!raw.trim() || !pass.trim()){
+        return showMsg($("logMsg"), "Please enter Email/Phone and Password.", false);
+      }
+
+      let authEmail;
+      try{
+        authEmail = toAuthEmail(raw);
+      }catch(err){
+        return showMsg($("logMsg"), err.message || String(err), false);
+      }
+
+      try{
+        await auth.signInWithEmailAndPassword(authEmail, pass);
+        showMsg($("logMsg"), "✅ Logged in.", true);
+      }catch(e){
+        showMsg($("logMsg"), (e && e.message) ? e.message : "Login failed.", false);
+      }
+    };
+
+    // -------------------------
+    // Generate invite link for each user
+    // -------------------------
+    async function ensureUserInvite(user){
+      const userRef = db.collection("users").doc(user.uid);
+      const snap = await userRef.get();
+      const data = snap.exists ? snap.data() : {};
+
+      let refCode = data && data.refCode ? data.refCode : null;
+
+      // Create one if missing
+      if (!refCode){
+        refCode = randomCode(8);
+        await userRef.set({
+          refCode: refCode,
+          inviteCreatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+      }
+
+      // Build the invitation link
+      const base = window.location.origin + window.location.pathname; // same page
+      const link = base + "?ref=" + encodeURIComponent(refCode);
+
+      $("inviteLink").textContent = link;
+      $("afterLogin").style.display = "block";
+
+      // Copy/share buttons
+      $("copyInvite").onclick = async () => {
+        try{
+          await navigator.clipboard.writeText(link);
+          showMsg($("afterMsg"), "✅ Invitation link copied.", true);
+
+          // log click
+          await db.collection("inviteEvents").add({
+            type: "copy",
+            ref: refCode,
+            uid: user.uid,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+        }catch(e){
+          showMsg($("afterMsg"), "Copy failed. You can manually copy the link above.", false);
+        }
+      };
+
+      $("shareInvite").onclick = async () => {
+        try{
+          if (navigator.share){
+            await navigator.share({ title: "UMOJA V2 Invite", text: "Join UMOJA V2 using my invitation link:", url: link });
+          }else{
+            await navigator.clipboard.writeText(link);
+            showMsg($("afterMsg"), "Share not supported here — link copied instead.", true);
+          }
+
+          // log click/share
+          await db.collection("inviteEvents").add({
+            type: "share",
+            ref: refCode,
+            uid: user.uid,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+        }catch(e){
+          // ignore
+        }
+      };
+    }
+
+    // -------------------------
+    // Auth state
+    // -------------------------
+    auth.onAuthStateChanged(async (user) => {
+      persistReferral();
+      await logInviteOpenIfAny();
+
+      if (user){
+        // Hide forms
+        $("registerView").style.display = "none";
+        $("loginView").style.display = "none";
+        $("tabRegister").classList.remove("active");
+        $("tabLogin").classList.remove("active");
+
+        // Ensure invite link exists for this user
+        try{
+          await ensureUserInvite(user);
+        }catch(e){
+          showMsg($("afterMsg"), "Could not generate invite link. Check Firestore is enabled.", false);
+        }
+      }else{
+        $("afterLogin").style.display = "none";
+        setTab("register");
+      }
+    });
+
+    $("logout").onclick = async (e) => {
+      e.preventDefault();
+      await auth.signOut();
+    };
+
+    // On first load: save referral and log open
+    (async function init(){
+      persistReferral();
+      await logInviteOpenIfAny();
     })();
-    // ===============================
-// Invitation tracking (COMPAT)
-// ===============================
-
-function getRefFromUrl() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get("ref");
-}
-
-function getVisitorId() {
-  let id = localStorage.getItem("umoja_vid");
-  if (!id) {
-    id = "v_" + Math.random().toString(36).slice(2);
-    localStorage.setItem("umoja_vid", id);
-  }
-  return id;
-}
-
-function logInviteOpen(ref) {
-  if (!ref) return;
-  firebase.firestore().collection("invite_clicks").add({
-    refCode: ref,
-    visitorId: getVisitorId(),
-    ua: navigator.userAgent,
-    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-  });
-}
-
   </script>
 </body>
 </html>
