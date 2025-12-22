@@ -4,6 +4,43 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>UMOJA V2 • Register / Login</title>
+/* ===== UMOJA PREMIUM LOGO ===== */
+.logo-wrap{
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow:
+    0 0 18px rgba(0,180,255,0.35),
+    0 0 42px rgba(0,120,255,0.25),
+    inset 0 0 12px rgba(255,255,255,0.05);
+  backdrop-filter: blur(6px);
+}
+
+.logo-img{
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 0 6px rgba(0,180,255,0.6))
+    drop-shadow(0 0 18px rgba(0,120,255,0.4));
+}
+
+/* Optional hover (desktop only) */
+@media (hover:hover){
+  .logo-wrap:hover{
+    box-shadow:
+      0 0 26px rgba(0,200,255,0.55),
+      0 0 60px rgba(0,120,255,0.35),
+      inset 0 0 14px rgba(255,255,255,0.08);
+    transform: translateY(-1px);
+    transition: all .25s ease;
+  }
+}
 
   <style>
     :root{
