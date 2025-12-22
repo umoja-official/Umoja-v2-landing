@@ -1,778 +1,210 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Umoja V2 – Admin Portal</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="Umoja-logo.png" />
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UMOJA V2 • Admin Dashboard</title>
   <style>
-    :root {
-      --bg: #020617;
-      --bg-soft: #020b1f;
-      --bg-card: #0b1027;
-      --bg-elevated: #020819;
-      --accent1: #1e90ff;
-      --accent2: #00e6ff;
-      --text-main: #f9fafb;
-      --text-muted: #9ca3af;
-      --border-subtle: #1f2937;
-      --danger: #f97373;
-      --success: #34d399;
-      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.55);
-      --radius-lg: 18px;
-      --radius-md: 12px;
-      --radius-pill: 999px;
-      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Segoe UI", sans-serif;
-
-      /* light mode vars */
-      --bg-light: #f3f4f6;
-      --bg-soft-light: #e5e7eb;
-      --bg-card-light: #ffffff;
-      --bg-elevated-light: #f9fafb;
-      --text-main-light: #020617;
-      --text-muted-light: #4b5563;
-      --border-subtle-light: #e5e7eb;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font-main);
-      min-height: 100vh;
-      color: var(--text-main);
-      background: radial-gradient(circle at top, #041428 0, var(--bg) 42%);
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-      animation: bodyFadeIn 0.9s ease-out forwards;
-    }
-
-    body.theme-light { background: var(--bg-light); color: var(--text-main-light); }
-
-    body.theme-light .card { background: var(--bg-card-light); border-color: var(--border-subtle-light); }
-    body.theme-light .muted,
-    body.theme-light .section-label,
-    body.theme-light .brand-text-sub,
-    body.theme-light .status,
-    body.theme-light footer { color: var(--text-muted-light); }
-    body.theme-light .pill,
-    body.theme-light input,
-    body.theme-light textarea {
-      background: var(--bg-elevated-light);
-      border-color: var(--border-subtle-light);
-      color: var(--text-main-light);
-    }
-    body.theme-light .nav-link {
-      background: rgba(255, 255, 255, 0.86);
-      border-color: var(--border-subtle-light);
-      color: var(--text-main-light);
-    }
-
-    @keyframes bodyFadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .app-shell {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 18px 16px 70px;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* WATERMARK */
-    .watermark {
-      position: fixed;
-      right: -80px;
-      top: 55%;
-      transform: translateY(-50%) rotate(-90deg);
-      font-size: 5.2rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: rgba(15, 23, 42, 0.6);
-      opacity: 0.06;
-      pointer-events: none;
-      user-select: none;
-      white-space: nowrap;
-      z-index: 0;
-      animation: watermarkFloat 20s ease-in-out infinite alternate;
-    }
-    body.theme-light .watermark {
-      color: rgba(148, 163, 184, 0.45);
-      opacity: 0.12;
-    }
-
-    @keyframes watermarkFloat {
-      0%   { transform: translateY(-50%) rotate(-90deg) translateX(0); }
-      100% { transform: translateY(-50%) rotate(-90deg) translateX(40px); }
-    }
-
-    /* HEADER */
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 26px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-    }
-
-    .brand-logo {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 0, #4bf3ff 0, #0072ff 40%, #00163d 90%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-      box-shadow:
-        0 10px 25px rgba(0, 0, 0, 0.85),
-        0 0 55px rgba(56, 189, 248, 0.75);
-      transition: transform 0.35s ease, box-shadow 0.35s ease;
-      cursor: pointer;
-    }
-    .brand-logo:hover {
-      transform: translateY(-3px) rotateX(7deg) rotateY(-6deg);
-      box-shadow:
-        0 16px 35px rgba(0, 0, 0, 0.9),
-        0 0 70px rgba(56, 189, 248, 0.95);
-    }
-
-    .brand-logo img {
-      width: 130%;
-      height: 130%;
-      border-radius: 50%;
-      object-fit: cover;
-      transform: translateY(-4%);
-    }
-
-    .brand-text-title {
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-size: 0.9rem;
-    }
-    .brand-text-sub {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-    }
-
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: flex-end;
-      align-items: center;
-    }
-
-    .nav-link {
-      padding: 7px 14px;
-      border-radius: var(--radius-pill);
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: 0.2s ease;
-      backdrop-filter: blur(18px);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .nav-link:hover {
-      color: var(--text-main);
-      border-color: var(--accent1);
-      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4);
-    }
-
-    .theme-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.75rem;
-      padding: 5px 10px;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      background: rgba(15, 23, 42, 0.8);
-      cursor: pointer;
-      color: var(--text-muted);
-    }
-    .theme-toggle-thumb {
-      width: 18px;
-      height: 18px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #facc15, #f97316);
-    }
-    body.theme-light .theme-toggle-thumb {
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-    }
-
-    /* CARDS */
-    .card {
-      background: radial-gradient(circle at top left, #111827 0, var(--bg-card) 55%);
-      border-radius: var(--radius-lg);
-      border: 1px solid rgba(55, 65, 81, 0.85);
-      padding: 20px 22px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: var(--shadow-soft);
-      margin-bottom: 18px;
-    }
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: -40%;
-      background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.18), transparent 60%);
-      opacity: 0.6;
-      pointer-events: none;
-    }
-    .card-inner { position: relative; z-index: 1; }
-
-    .section-label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--accent2);
-      margin-bottom: 6px;
-    }
-
-    h1, h2, h3 { font-weight: 700; letter-spacing: 0.02em; }
-    h1 { font-size: clamp(1.7rem, 3vw, 2.1rem); margin-bottom: 8px; }
-    h2 { font-size: 1.18rem; margin-bottom: 8px; }
-
-    .muted { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
-
-    /* BUTTONS */
-    .btn-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
-    .btn {
-      border-radius: var(--radius-pill);
-      border: none;
-      padding: 11px 18px;
-      font-size: 0.86rem;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      cursor: pointer;
-      transition: 0.2s ease;
-      white-space: nowrap;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent1), var(--accent2));
-      color: #020617;
-      box-shadow: 0 16px 30px rgba(37, 99, 235, 0.55);
-    }
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 20px 36px rgba(37, 99, 235, 0.72);
-      filter: brightness(1.04);
-    }
-    .btn-ghost {
-      background: transparent;
-      border: 1px solid rgba(148, 163, 184, 0.55);
-      color: var(--text-muted);
-    }
-    .btn-ghost:hover { border-color: var(--accent1); color: var(--text-main); }
-
-    .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-    .pill {
-      font-size: 0.75rem;
-      padding: 7px 11px;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      color: var(--text-muted);
-      background: rgba(15, 23, 42, 0.85);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    /* ADMIN LOCK */
-    .admin-lock {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    label { font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 4px; }
-    input {
-      width: 100%;
-      border-radius: 10px;
-      border: 1px solid rgba(55, 65, 81, 0.96);
-      padding: 9px 10px;
-      background: rgba(15, 23, 42, 0.96);
-      color: var(--text-main);
-      font-size: 0.82rem;
-      outline: none;
-      transition: 0.17s ease;
-    }
-    input:focus {
-      border-color: var(--accent1);
-      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.68);
-    }
-
-    .status { font-size: 0.8rem; margin-top: 6px; color: var(--text-muted); }
-    .status-success { color: var(--success); }
-    .status-error { color: var(--danger); }
-
-    /* TABLE */
-    .table-wrap { overflow-x: auto; max-height: 340px; border-radius: 14px; border: 1px solid rgba(55,65,81,.7); }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.76rem;
-      min-width: 860px;
-      background: rgba(2, 8, 25, 0.35);
-    }
-    th, td {
-      border-bottom: 1px solid rgba(30, 41, 59, 0.9);
-      padding: 8px 8px;
-      text-align: left;
-      vertical-align: top;
-    }
-    th {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--text-muted);
-      position: sticky;
-      top: 0;
-      background: rgba(2, 6, 23, 0.92);
-      backdrop-filter: blur(10px);
-      z-index: 2;
-    }
-    tbody tr:hover { background: rgba(15, 23, 42, 0.65); }
-
-    .empty-state { font-size: 0.82rem; color: var(--text-muted); margin-top: 10px; }
-
-    footer {
-      margin-top: 22px;
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      border-top: 1px solid rgba(15, 23, 42, 0.9);
-      padding-top: 12px;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    @media (max-width: 640px) {
-      header { flex-direction: column; align-items: center; text-align: center; }
-      nav { justify-content: center; width: 100%; }
-      table { min-width: 760px; }
-    }
+    :root{--bg:#061214;--card:rgba(255,255,255,.06);--stroke:rgba(255,255,255,.10);--text:#eaf6f5;--muted:rgba(234,246,245,.70);--accent:#32d0b2;--danger:#ff5c5c;}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);padding:18px}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+    .btn{border:none;background:rgba(255,255,255,.10);color:var(--text);padding:10px 12px;border-radius:12px;cursor:pointer;font-weight:800}
+    .danger{background:rgba(255,92,92,.14);border:1px solid rgba(255,92,92,.25)}
+    .grid{display:grid;grid-template-columns:1fr;gap:12px}
+    @media(min-width:980px){.grid{grid-template-columns:1fr 1fr}}
+    .card{background:var(--card);border:1px solid var(--stroke);border-radius:16px;padding:14px}
+    h1{margin:0;font-size:18px}
+    h2{margin:0 0 10px;font-size:15px;color:rgba(234,246,245,.9)}
+    .muted{color:var(--muted);font-size:13px}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:top;text-align:left}
+    th{color:rgba(234,246,245,.85);font-size:12px;letter-spacing:.4px;text-transform:uppercase}
+    .pill{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(50,208,178,.16);border:1px solid rgba(120,255,223,.20);font-weight:800;font-size:12px}
+    .bad{background:rgba(255,92,92,.12);border:1px solid rgba(255,92,92,.22)}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;word-break:break-all}
+    .msg{margin-top:10px;padding:10px 12px;border-radius:14px;border:1px solid var(--stroke);background:rgba(0,0,0,.16);display:none}
   </style>
 </head>
-
 <body>
-  <div class="watermark">ADMIN</div>
-
-  <div class="app-shell">
-    <!-- HEADER -->
-    <header>
-      <div class="brand">
-        <div class="brand-logo" id="logoHome">
-          <img src="Umoja-logo.png" alt="Umoja Logo" />
-        </div>
-        <div class="brand-text">
-          <div class="brand-text-title">UMOJA V2</div>
-          <div class="brand-text-sub">Admin portal • Local dashboard</div>
-        </div>
-      </div>
-
-      <nav>
-        <a class="nav-link" href="index.html">← Back to Invitations</a>
-        <button id="themeToggle" class="theme-toggle" type="button">
-          <span class="theme-toggle-thumb"></span>
-          <span>Theme</span>
-        </button>
-      </nav>
-    </header>
-
-    <!-- ADMIN INTRO -->
-    <div class="card">
-      <div class="card-inner">
-        <div class="section-label">Admin portal</div>
-        <h1>Track invitation activity (local demo)</h1>
-        <p class="muted">
-          This admin portal reads invitation records stored in <strong>this browser</strong> under
-          <span style="font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Courier New', monospace;">localStorage</span>.
-          If you open this on a different device/browser, it will show different data.
-        </p>
-
-        <div class="pill-row">
-          <div class="pill">Data source: <strong>localStorage</strong></div>
-          <div class="pill">Key: <strong>umojaInvitations</strong></div>
-          <div class="pill">Mode: <strong>demo</strong></div>
-        </div>
-      </div>
+  <div class="top">
+    <div>
+      <h1>UMOJA V2 • Admin Dashboard</h1>
+      <div class="muted">Manage users, referral codes, and invitation link activity.</div>
     </div>
-
-    <!-- ADMIN LOCK (DEMO) -->
-    <div class="card">
-      <div class="card-inner">
-        <div class="section-label">Access</div>
-        <h2>Unlock dashboard</h2>
-        <p class="muted">
-          This is a <strong>front-end demo lock</strong> (not secure). For real security, use a backend (Firebase/Supabase).
-        </p>
-
-        <form id="adminLoginForm" class="admin-lock" autocomplete="off">
-          <div>
-            <label for="admin-password">Admin passphrase <span style="color:var(--accent2)">*</span></label>
-            <input id="admin-password" type="password" required placeholder="Enter passphrase" minlength="4" />
-          </div>
-
-          <div class="btn-row">
-            <button type="submit" class="btn btn-primary">Unlock</button>
-            <button type="button" id="adminLockBtn" class="btn btn-ghost">Lock</button>
-          </div>
-
-          <div id="adminStatus" class="status"></div>
-        </form>
-      </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button id="btnBack" class="btn" type="button">Back to Main</button>
+      <button id="btnLogout" class="btn danger" type="button">Logout</button>
     </div>
-
-    <!-- DASHBOARD -->
-    <div class="card" id="dashboardCard" style="display:none;">
-      <div class="card-inner">
-        <div class="section-label">Dashboard</div>
-        <h2>Saved invitations</h2>
-        <p class="muted" style="margin-bottom:8px;">
-          Total invitations: <strong id="invitationCount">0</strong>
-        </p>
-
-        <div class="btn-row" style="margin-top:6px;">
-          <button type="button" id="refreshBtn" class="btn btn-ghost">Refresh</button>
-          <button type="button" id="exportCsvBtn" class="btn btn-ghost">Export CSV</button>
-          <button type="button" id="clearAllInvitationsBtn" class="btn btn-ghost">Clear all (local)</button>
-        </div>
-
-        <div class="empty-state" id="adminEmptyState" style="display:none;">
-          No invitations saved yet. Go to <strong>index.html</strong> and submit an invitation.
-        </div>
-
-        <div class="table-wrap" style="margin-top:12px;">
-          <table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Created at</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Country</th>
-                <th>Amount (USD)</th>
-                <th>Wallet</th>
-                <th>Referral code</th>
-                <th>Contact</th>
-                <th>Notes</th>
-              </tr>
-            </thead>
-            <tbody id="invitationTableBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- REFERRAL SUMMARY -->
-    <div class="card" id="summaryCard" style="display:none;">
-      <div class="card-inner">
-        <div class="section-label">Analytics</div>
-        <h2>Referral performance summary</h2>
-        <p class="muted" style="margin-bottom:8px;">
-          Total investors &amp; total volume per referral code (from local data).
-        </p>
-
-        <div class="empty-state" id="referralSummaryEmpty">
-          No data yet. When invitations are saved, you’ll see totals per code here.
-        </div>
-
-        <div class="table-wrap" style="margin-top:12px;">
-          <table id="referralSummaryTable" style="display:none; min-width:560px;">
-            <thead>
-              <tr>
-                <th>Referral code</th>
-                <th>Investors</th>
-                <th>Total amount (USD)</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <footer>
-      <div>
-        Umoja V2 • Admin Portal (demo).<br />
-        This is not financial advice. Verify all official details through trusted Umoja channels.
-      </div>
-      <div>
-        Tip: Keep <strong>index.html</strong> and <strong>admin.html</strong> in the same GitHub Pages folder.
-      </div>
-    </footer>
   </div>
 
+  <div id="msg" class="msg"></div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Admins only</h2>
+      <div class="muted">
+        This page is separated from the main HTML. Access is allowed only to emails you list in the code.
+      </div>
+      <div style="height:10px"></div>
+      <div class="muted">
+        Logged in as: <span id="who" class="mono">—</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Quick stats</h2>
+      <div class="muted">Totals (approx):</div>
+      <div style="height:10px"></div>
+      <div class="muted">Users: <span id="statUsers" class="pill">0</span></div>
+      <div style="height:6px"></div>
+      <div class="muted">Invite events: <span id="statEvents" class="pill">0</span></div>
+    </div>
+
+    <div class="card">
+      <h2>Recent invite events</h2>
+      <div class="muted">Shows link opens + copy/share actions.</div>
+      <div style="height:10px"></div>
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Ref</th>
+            <th>UID</th>
+            <th>When</th>
+          </tr>
+        </thead>
+        <tbody id="eventsBody"></tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Users</h2>
+      <div class="muted">Includes each user’s referral code and who referred them.</div>
+      <div style="height:10px"></div>
+      <table>
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Ref Code</th>
+            <th>Referred By</th>
+            <th>Created</th>
+          </tr>
+        </thead>
+        <tbody id="usersBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Firebase Compat -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
+
   <script>
-    // Theme sync (shares the same key as index.html)
-    const THEME_KEY = "umojaTheme";
-    const themeToggle = document.getElementById("themeToggle");
+    // Same Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyCbQ9fNYrq-qko-GUhKi3xSMkb_IKhrBBo",
+      authDomain: "umoja-v2-landing.firebaseapp.com",
+      projectId: "umoja-v2-landing",
+      storageBucket: "umoja-v2-landing.firebasestorage.app",
+      messagingSenderId: "964715983746",
+      appId: "1:964715983746:web:b4bb1615f35d773ae7159b"
+    };
 
-    function applyTheme(theme) {
-      if (theme === "light") document.body.classList.add("theme-light");
-      else document.body.classList.remove("theme-light");
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    const $ = (id) => document.getElementById(id);
+    function show(text, ok=true){
+      const el = $("msg");
+      el.style.display="block";
+      el.style.borderColor = ok ? "rgba(120,255,223,.25)" : "rgba(255,92,92,.25)";
+      el.textContent = text;
     }
 
-    const savedTheme = localStorage.getItem(THEME_KEY);
-    if (savedTheme) applyTheme(savedTheme);
+    // ✅ Put YOUR admin emails here (only these can view dashboard)
+    const ADMIN_EMAILS = [
+      "tonnyfils@gmail.com"
+      // add more if needed:
+      // "anotheradmin@gmail.com"
+    ].map(x => x.toLowerCase());
 
-    themeToggle.addEventListener("click", () => {
-      const next = document.body.classList.contains("theme-light") ? "dark" : "light";
-      applyTheme(next);
-      localStorage.setItem(THEME_KEY, next);
-    });
-
-    // Admin demo lock (NOT secure)
-    // NOTE: Not hardcoding a password in the source. This is a "passphrase gate" stored in this browser only.
-    const ADMIN_GATE_KEY = "umojaAdminGateHash";
-    const INV_KEY = "umojaInvitations";
-
-    const adminLoginForm = document.getElementById("adminLoginForm");
-    const adminStatus = document.getElementById("adminStatus");
-    const dashboardCard = document.getElementById("dashboardCard");
-    const summaryCard = document.getElementById("summaryCard");
-
-    const invitationCount = document.getElementById("invitationCount");
-    const invitationTableBody = document.getElementById("invitationTableBody");
-    const adminEmptyState = document.getElementById("adminEmptyState");
-
-    const refreshBtn = document.getElementById("refreshBtn");
-    const exportCsvBtn = document.getElementById("exportCsvBtn");
-    const clearAllInvitationsBtn = document.getElementById("clearAllInvitationsBtn");
-    const adminLockBtn = document.getElementById("adminLockBtn");
-
-    const referralSummaryTable = document.getElementById("referralSummaryTable");
-    const referralSummaryBody = referralSummaryTable.querySelector("tbody");
-    const referralSummaryEmpty = document.getElementById("referralSummaryEmpty");
-
-    let adminUnlocked = false;
-
-    function loadInvitations() {
-      try { return JSON.parse(localStorage.getItem(INV_KEY)) || []; }
-      catch { return []; }
+    function formatTime(ts){
+      if (!ts) return "—";
+      const d = ts.toDate ? ts.toDate() : new Date(ts);
+      return d.toLocaleString();
     }
 
-    function saveInvitations(list) {
-      localStorage.setItem(INV_KEY, JSON.stringify(list));
-    }
+    async function loadUsers(){
+      const snap = await db.collection("users").orderBy("createdAt","desc").limit(50).get();
+      $("statUsers").textContent = snap.size;
 
-    function formatMoney(n) {
-      const num = Number(n);
-      if (!isFinite(num)) return "0";
-      return num.toLocaleString(undefined, { maximumFractionDigits: 2 });
-    }
-
-    function renderReferralSummary(list) {
-      if (!list.length) {
-        referralSummaryBody.innerHTML = "";
-        referralSummaryTable.style.display = "none";
-        referralSummaryEmpty.style.display = "block";
-        return;
-      }
-
-      const statsByCode = {};
-      list.forEach(inv => {
-        const code = inv.referralCode && inv.referralCode.trim() ? inv.referralCode.trim() : "—";
-        const amount = parseFloat(inv.amount || 0) || 0;
-        if (!statsByCode[code]) statsByCode[code] = { count: 0, total: 0 };
-        statsByCode[code].count += 1;
-        statsByCode[code].total += amount;
-      });
-
-      referralSummaryBody.innerHTML = "";
-      Object.entries(statsByCode)
-        .sort((a, b) => b[1].total - a[1].total)
-        .forEach(([code, stats]) => {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${code}</td>
-            <td>${stats.count}</td>
-            <td>${formatMoney(stats.total)}</td>
-          `;
-          referralSummaryBody.appendChild(tr);
-        });
-
-      referralSummaryTable.style.display = "table";
-      referralSummaryEmpty.style.display = "none";
-    }
-
-    function renderInvitationTable() {
-      const list = loadInvitations();
-      invitationTableBody.innerHTML = "";
-
-      invitationCount.textContent = String(list.length);
-
-      if (!list.length) {
-        adminEmptyState.style.display = "block";
-        renderReferralSummary([]);
-        return;
-      }
-
-      adminEmptyState.style.display = "none";
-
-      list.forEach((inv, idx) => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${idx + 1}</td>
-          <td>${inv.createdAt ? new Date(inv.createdAt).toLocaleString() : ""}</td>
-          <td>${inv.name || ""}</td>
-          <td>${inv.email || ""}</td>
-          <td>${inv.country || ""}</td>
-          <td>${inv.amount || ""}</td>
-          <td>${inv.wallet || ""}</td>
-          <td>${inv.referralCode || ""}</td>
-          <td>${inv.contact || ""}</td>
-          <td>${inv.notes || ""}</td>
+      const rows = snap.docs.map(doc => {
+        const u = doc.data() || {};
+        return `
+          <tr>
+            <td class="mono">${doc.id}<br><span class="muted">${(u.emailOrPhone||u.authEmail||"—")}</span></td>
+            <td class="mono">${u.refCode || "—"}</td>
+            <td class="mono">${u.referredBy || "—"}</td>
+            <td>${formatTime(u.createdAt)}</td>
+          </tr>
         `;
-        invitationTableBody.appendChild(tr);
-      });
-
-      renderReferralSummary(list);
+      }).join("");
+      $("usersBody").innerHTML = rows || `<tr><td colspan="4" class="muted">No users yet.</td></tr>`;
     }
 
-    function showDashboard(show) {
-      dashboardCard.style.display = show ? "block" : "none";
-      summaryCard.style.display = show ? "block" : "none";
+    async function loadEvents(){
+      const snap = await db.collection("inviteEvents").orderBy("createdAt","desc").limit(80).get();
+      $("statEvents").textContent = snap.size;
+
+      const rows = snap.docs.map(doc => {
+        const e = doc.data() || {};
+        const pill = `<span class="pill ${e.type==='open'?'':'bad'}">${e.type || "event"}</span>`;
+        return `
+          <tr>
+            <td>${pill}</td>
+            <td class="mono">${e.ref || "—"}</td>
+            <td class="mono">${e.uid || "—"}</td>
+            <td>${formatTime(e.createdAt)}</td>
+          </tr>
+        `;
+      }).join("");
+      $("eventsBody").innerHTML = rows || `<tr><td colspan="4" class="muted">No events yet.</td></tr>`;
     }
 
-    // Very simple demo gate: store a hash-like string derived from the passphrase in localStorage
-    // (still NOT secure; just hides the dashboard UI from casual viewers on the same device)
-    function simpleHash(str) {
-      let h = 0;
-      for (let i = 0; i < str.length; i++) {
-        h = (h << 5) - h + str.charCodeAt(i);
-        h |= 0;
-      }
-      return String(h);
-    }
-
-    function unlock(passphrase) {
-      const hash = simpleHash(passphrase.trim());
-      localStorage.setItem(ADMIN_GATE_KEY, hash);
-      adminUnlocked = true;
-      showDashboard(true);
-      adminStatus.textContent = "Dashboard unlocked (demo).";
-      adminStatus.className = "status status-success";
-      renderInvitationTable();
-    }
-
-    function lock() {
-      adminUnlocked = false;
-      showDashboard(false);
-      adminStatus.textContent = "Dashboard locked.";
-      adminStatus.className = "status";
-    }
-
-    adminLoginForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const pwd = document.getElementById("admin-password").value || "";
-      if (pwd.trim().length < 4) {
-        adminStatus.textContent = "Passphrase must be at least 4 characters.";
-        adminStatus.className = "status status-error";
+    auth.onAuthStateChanged(async (user) => {
+      if (!user){
+        show("You must be logged in to view this admin dashboard.", false);
+        $("who").textContent = "Not logged in";
         return;
       }
-      unlock(pwd);
-      adminLoginForm.reset();
-    });
 
-    adminLockBtn.addEventListener("click", lock);
+      $("who").textContent = user.email || user.uid;
 
-    refreshBtn.addEventListener("click", () => {
-      if (!adminUnlocked) return;
-      renderInvitationTable();
-      adminStatus.textContent = "Refreshed.";
-      adminStatus.className = "status";
-    });
+      // IMPORTANT: Firebase auth email is the authEmail (for phone it becomes +1...@umoja.local)
+      const email = (user.email || "").toLowerCase();
 
-    exportCsvBtn.addEventListener("click", () => {
-      if (!adminUnlocked) return;
-      const list = loadInvitations();
-      if (!list.length) {
-        adminStatus.textContent = "No invitations to export.";
-        adminStatus.className = "status status-error";
+      if (!ADMIN_EMAILS.includes(email)){
+        show("Access denied. Your account is not an admin.", false);
+        // optional: auto logout
+        // await auth.signOut();
         return;
       }
-      const header = [
-        "Index","CreatedAt","Name","Email","Country","AmountUSD",
-        "Wallet","ReferralCode","Contact","Notes"
-      ];
-      const rows = list.map((inv, idx) => [
-        idx + 1,
-        inv.createdAt || "",
-        inv.name || "",
-        inv.email || "",
-        inv.country || "",
-        inv.amount || "",
-        inv.wallet || "",
-        inv.referralCode || "",
-        inv.contact || "",
-        inv.notes || ""
-      ]);
-      const csv = [header, ...rows]
-        .map(row => row.map(v => `"${String(v ?? "").replace(/"/g, '""')}"`).join(","))
-        .join("\n");
-      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "umoja-invitations.csv";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
 
-      adminStatus.textContent = "CSV exported.";
-      adminStatus.className = "status status-success";
+      show("✅ Admin access granted.", true);
+
+      try{
+        await Promise.all([loadUsers(), loadEvents()]);
+      }catch(e){
+        show("Error loading admin data. Make sure Firestore is enabled and rules allow admin reads.", false);
+        console.warn(e);
+      }
     });
 
-    clearAllInvitationsBtn.addEventListener("click", () => {
-      if (!adminUnlocked) return;
-      if (!confirm("Clear all saved invitations from this browser?")) return;
-      saveInvitations([]);
-      renderInvitationTable();
-      adminStatus.textContent = "All local invitations cleared.";
-      adminStatus.className = "status status-success";
-    });
-
-    // Auto-unlock if already unlocked in this browser (demo)
-    if (localStorage.getItem(ADMIN_GATE_KEY)) {
-      adminUnlocked = true;
-      showDashboard(true);
-      adminStatus.textContent = "Dashboard auto-unlocked (demo).";
-      adminStatus.className = "status";
-      renderInvitationTable();
-    } else {
-      showDashboard(false);
-    }
-
-    // Clicking logo returns to index
-    document.getElementById("logoHome").addEventListener("click", () => {
-      window.location.href = "index.html";
-    });
+    $("btnLogout").onclick = async () => { await auth.signOut(); location.href="index.html"; };
+    $("btnBack").onclick = () => { location.href="index.html"; };
   </script>
 </body>
 </html>
