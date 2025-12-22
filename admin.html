@@ -1,307 +1,103 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>UMOJA • Admin Dashboard</title>
-
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>UMOJA V2 • Admin</title>
   <style>
-    :root{
-      --bg:#061314;
-      --card: rgba(255,255,255,.07);
-      --stroke: rgba(255,255,255,.12);
-      --text:#eaf6f5;
-      --muted: rgba(234,246,245,.72);
-      --brand:#23c7a7;
-      --shadow: 0 18px 50px rgba(0,0,0,.35);
-      --radius: 18px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(1000px 600px at 50% -50%, rgba(35,199,167,.25), transparent 60%),
-        linear-gradient(180deg, #0a2a2c 0%, var(--bg) 100%);
-      min-height:100svh;
-      padding:18px;
-    }
-    .wrap{max-width:1100px; margin:0 auto}
-    .head{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap}
-    h1{margin:6px 0; font-size:22px; letter-spacing:.06em}
-    .pill{
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.05);
-      padding:10px 12px;
-      border-radius:999px;
-      color:var(--muted);
-      font-weight:700;
-    }
-    .btn{
-      border:none;
-      background: linear-gradient(180deg, var(--brand) 0%, #1aa68b 100%);
-      color:#06201b;
-      font-weight:900;
-      padding:10px 14px;
-      border-radius:14px;
-      cursor:pointer;
-    }
-    .card{
-      margin-top:14px;
-      background: var(--card);
-      border:1px solid var(--stroke);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding:14px;
-      backdrop-filter: blur(10px);
-    }
-    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-    input{
-      width:280px;
-      max-width:100%;
-      padding:12px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.18);
-      color:var(--text);
-      outline:none;
-    }
-    table{
-      width:100%;
-      border-collapse:collapse;
-      margin-top:10px;
-      overflow:hidden;
-      border-radius:14px;
-    }
-    th, td{
-      text-align:left;
-      padding:10px 10px;
-      border-bottom:1px solid rgba(255,255,255,.10);
-      font-size:14px;
-      vertical-align:top;
-    }
-    th{color:rgba(234,246,245,.85); font-size:13px; letter-spacing:.06em; text-transform:uppercase}
-    .muted{color:var(--muted)}
-    .msg{margin-top:10px; color:var(--muted)}
-    .err{color:#ffd1d8}
-    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace}
+    body{margin:0;font-family:system-ui;background:#07181a;color:#eaf6f5;padding:18px}
+    .card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:16px;margin-bottom:14px}
+    h1{margin:0 0 10px}
+    table{width:100%;border-collapse:collapse}
+    td,th{padding:10px;border-bottom:1px solid rgba(255,255,255,.10);text-align:left}
+    .muted{color:rgba(234,246,245,.7)}
+    .btn{padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.08);color:#eaf6f5;cursor:pointer;font-weight:800}
   </style>
 </head>
-
 <body>
-  <div class="wrap">
-    <div class="head">
-      <div>
-        <h1>UMOJA • Admin Dashboard</h1>
-        <div class="pill" id="statusPill">Checking access…</div>
-      </div>
-      <div class="row">
-        <button class="btn" id="btnLogout" style="display:none">Logout</button>
-      </div>
-    </div>
+  <h1>Admin Dashboard</h1>
+  <p class="muted">Invitation activity (opens + registrations)</p>
 
-    <div class="card" id="loginCard">
-      <div class="row">
-        <input id="email" placeholder="Admin Email or Phone">
-        <input id="pass" placeholder="Password" type="password">
-        <button class="btn" id="btnLogin">Login</button>
-      </div>
-      <div class="msg" id="loginMsg"></div>
-      <div class="msg muted">Admin access requires Firestore: <span class="mono">admins/{UID}</span> with <span class="mono">role="admin"</span>.</div>
-    </div>
+  <div class="card" id="authBox">Checking admin access…</div>
 
-    <div class="card" id="dashCard" style="display:none">
-      <div class="row">
-        <div class="pill">Recent Invitation Opens/Clicks</div>
-        <button class="btn" id="btnRefresh">Refresh</button>
-      </div>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Time</th>
-            <th>Ref Code</th>
-            <th>User UID</th>
-            <th>URL</th>
-          </tr>
-        </thead>
-        <tbody id="clickRows"></tbody>
-      </table>
-
-      <div class="msg muted" style="margin-top:14px">Recent Registrations (with referredBy)</div>
-      <table>
-        <thead>
-          <tr>
-            <th>Created</th>
-            <th>Email/Phone</th>
-            <th>My Ref</th>
-            <th>Referred By</th>
-            <th>UID</th>
-          </tr>
-        </thead>
-        <tbody id="userRows"></tbody>
-      </table>
-    </div>
+  <div class="card" id="summary" style="display:none">
+    <button class="btn" id="back">Back to site</button>
+    <button class="btn" id="logout">Logout</button>
   </div>
 
-  <!-- Firebase compat SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
+  <div class="card" id="clicksCard" style="display:none">
+    <h3>Latest Invite Opens</h3>
+    <table>
+      <thead><tr><th>Ref</th><th>Time</th><th>User Agent</th></tr></thead>
+      <tbody id="clicksRows"></tbody>
+    </table>
+  </div>
 
-  <script>
-    const firebaseConfig = {
-  apiKey: "AIzaSyCbQ9fNYrq_qko-GUhKi3xSMkb_IKhrBB0",
-  authDomain: "umoja-v2-landing.firebaseapp.com",
-  projectId: "umoja-v2-landing",
-  storageBucket: "umoja-v2-landing.firebasestorage.app",
-  messagingSenderId: "964715983746",
-  appId: "1:964715983746:web:b4bb1615f35d773ae7159b"
-};
+  <div class="card" id="usersCard" style="display:none">
+    <h3>Latest Registrations</h3>
+    <table>
+      <thead><tr><th>Email</th><th>Referred By</th><th>Created</th></tr></thead>
+      <tbody id="usersRows"></tbody>
+    </table>
+  </div>
 
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { getFirestore, doc, getDoc, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
-    function normalizeEmailOrPhone(v){
-      v = (v || '').trim();
-      if(!v) return null;
-      if(v.includes('@')) return v.toLowerCase();
-      const phone = v.replace(/\s+/g,'');
-      return phone + "@phone.umoja";
+    const firebaseConfig = PASTE_YOUR_FIREBASE_CONFIG_HERE;
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const authBox = document.getElementById("authBox");
+    const summary = document.getElementById("summary");
+    const clicksCard = document.getElementById("clicksCard");
+    const usersCard = document.getElementById("usersCard");
+
+    document.getElementById("back").onclick = ()=> location.href = "index.html";
+    document.getElementById("logout").onclick = ()=> signOut(auth);
+
+    function tsToText(ts){
+      if(!ts) return "";
+      const d = ts.toDate ? ts.toDate() : new Date(ts);
+      return d.toLocaleString();
     }
 
-    const statusPill = document.getElementById('statusPill');
-    const loginCard  = document.getElementById('loginCard');
-    const dashCard   = document.getElementById('dashCard');
-    const btnLogout  = document.getElementById('btnLogout');
-
-    async function isAdmin(uid){
-      const doc = await db.collection('admins').doc(uid).get();
-      return doc.exists && (doc.data().role === 'admin');
-    }
-
-    function fmtTs(ts){
-      try{
-        if(!ts) return '';
-        const d = ts.toDate();
-        return d.toLocaleString();
-      }catch(e){
-        return '';
-      }
-    }
-
-    async function loadClicks(){
-      const tbody = document.getElementById('clickRows');
-      tbody.innerHTML = '';
-      const snap = await db.collection('inviteClicks')
-        .orderBy('createdAt','desc')
-        .limit(50)
-        .get();
-
-      snap.forEach(doc=>{
-        const x = doc.data();
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td class="muted">${fmtTs(x.createdAt)}</td>
-          <td class="mono">${x.ref || ''}</td>
-          <td class="mono">${x.uid || ''}</td>
-          <td class="muted" style="word-break:break-all">${x.url || ''}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    async function loadUsers(){
-      const tbody = document.getElementById('userRows');
-      tbody.innerHTML = '';
-      const snap = await db.collection('users')
-        .orderBy('createdAt','desc')
-        .limit(50)
-        .get();
-
-      snap.forEach(doc=>{
-        const x = doc.data();
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td class="muted">${fmtTs(x.createdAt)}</td>
-          <td class="mono">${x.emailOrPhone || ''}</td>
-          <td class="mono">${x.myRef || ''}</td>
-          <td class="mono">${x.referredBy || ''}</td>
-          <td class="mono">${doc.id}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    async function loadAll(){
-      await loadClicks();
-      await loadUsers();
-    }
-
-    document.getElementById('btnLogin').onclick = async () => {
-      const m = document.getElementById('loginMsg');
-      m.textContent = '';
-      m.className = 'msg';
-
-      const email = normalizeEmailOrPhone(document.getElementById('email').value);
-      const pass  = (document.getElementById('pass').value || '').trim();
-
-      if(!email || !pass){
-        m.textContent = "Enter admin email/phone and password.";
-        m.className = "msg err";
-        return;
-      }
-
-      try{
-        await auth.signInWithEmailAndPassword(email, pass);
-      }catch(e){
-        m.textContent = e.message || "Login failed.";
-        m.className = "msg err";
-      }
-    };
-
-    btnLogout.onclick = async ()=> auth.signOut();
-
-    document.getElementById('btnRefresh').onclick = async ()=>{
-      statusPill.textContent = "Refreshing…";
-      await loadAll();
-      statusPill.textContent = "Admin Access ✅";
-    };
-
-    auth.onAuthStateChanged(async (user)=>{
+    onAuthStateChanged(auth, async (user)=>{
       if(!user){
-        statusPill.textContent = "Not logged in";
-        loginCard.style.display = "block";
-        dashCard.style.display = "none";
-        btnLogout.style.display = "none";
+        authBox.textContent = "❌ Not logged in. Please login on the main site first.";
         return;
       }
 
-      statusPill.textContent = "Checking admin…";
-      btnLogout.style.display = "inline-block";
-
-      try{
-        const ok = await isAdmin(user.uid);
-        if(!ok){
-          statusPill.textContent = "Access denied ❌";
-          loginCard.style.display = "block";
-          dashCard.style.display = "none";
-          document.getElementById('loginMsg').textContent = "This account is not in Firestore admins collection.";
-          document.getElementById('loginMsg').className = "msg err";
-          return;
-        }
-
-        statusPill.textContent = "Admin Access ✅";
-        loginCard.style.display = "none";
-        dashCard.style.display = "block";
-        await loadAll();
-      }catch(e){
-        statusPill.textContent = "Error";
-        document.getElementById('loginMsg').textContent = e.message || "Error checking admin.";
-        document.getElementById('loginMsg').className = "msg err";
+      const adminSnap = await getDoc(doc(db, "admins", user.uid));
+      if(!adminSnap.exists()){
+        authBox.textContent = "❌ Access denied. You are not an admin.";
+        return;
       }
+
+      authBox.textContent = "✅ Admin access granted.";
+      summary.style.display = "";
+      clicksCard.style.display = "";
+      usersCard.style.display = "";
+
+      // Load latest clicks
+      const clicksQ = query(collection(db, "inviteClicks"), orderBy("createdAt", "desc"), limit(25));
+      const clicksSnap = await getDocs(clicksQ);
+      document.getElementById("clicksRows").innerHTML = clicksSnap.docs.map(d=>{
+        const x = d.data();
+        return `<tr><td>${x.ref || ""}</td><td>${tsToText(x.createdAt)}</td><td style="max-width:420px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(x.ua||"")}</td></tr>`;
+      }).join("");
+
+      // Load latest users
+      const usersQ = query(collection(db, "users"), orderBy("createdAt", "desc"), limit(25));
+      const usersSnap = await getDocs(usersQ);
+      document.getElementById("usersRows").innerHTML = usersSnap.docs.map(d=>{
+        const x = d.data();
+        return `<tr><td>${x.email || ""}</td><td>${x.referredBy || ""}</td><td>${tsToText(x.createdAt)}</td></tr>`;
+      }).join("");
     });
   </script>
 </body>
