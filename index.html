@@ -23,25 +23,25 @@
       margin:0;
       min-height:100vh;
       font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
-      background: radial-gradient(1200px 700px at 15% 10%, rgba(47,208,166,.25), transparent 60%),
-                  radial-gradient(900px 600px at 80% 20%, rgba(199,176,138,.18), transparent 55%),
-                  linear-gradient(180deg, #051214 0%, #07181a 60%, #061316 100%);
+      background:
+        radial-gradient(1200px 700px at 15% 10%, rgba(47,208,166,.25), transparent 60%),
+        radial-gradient(900px 600px at 80% 20%, rgba(199,176,138,.18), transparent 55%),
+        linear-gradient(180deg, #051214 0%, #07181a 60%, #061316 100%);
       color: var(--text);
       padding: 28px 14px 60px;
     }
-    .wrap{max-width: 860px; margin: 0 auto;}
+    .wrap{max-width: 900px; margin: 0 auto;}
     .top{
       display:flex; gap:14px; align-items:center; justify-content:space-between;
       margin-bottom: 16px;
     }
-    .brand{
-      display:flex; gap:12px; align-items:center;
-    }
+    .brand{display:flex; gap:12px; align-items:center;}
     .logo{
       width:54px; height:54px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 25%, rgba(47,208,166,.55), transparent 55%),
-                  radial-gradient(circle at 70% 65%, rgba(199,176,138,.45), transparent 58%),
-                  rgba(255,255,255,.06);
+      background:
+        radial-gradient(circle at 30% 25%, rgba(47,208,166,.55), transparent 55%),
+        radial-gradient(circle at 70% 65%, rgba(199,176,138,.45), transparent 58%),
+        rgba(255,255,255,.06);
       border:1px solid var(--stroke);
       box-shadow: var(--shadow);
     }
@@ -62,10 +62,11 @@
     }
     .tab{
       cursor:pointer;
-      font-weight:600;
+      font-weight:700;
       color: var(--muted);
       padding: 10px 6px;
       border-bottom: 2px solid transparent;
+      user-select:none;
     }
     .tab.active{
       color: var(--text);
@@ -87,13 +88,13 @@
       color: var(--text);
       font-size: 16px;
     }
-    .hint{color: var(--muted); font-size: 12px; margin: 8px 2px 0}
+    .hint{color: var(--muted); font-size: 12px; margin: 8px 2px 0; line-height: 1.45;}
     .btn{
       width:100%;
       border:none;
       border-radius: 14px;
       padding: 14px 14px;
-      font-weight: 700;
+      font-weight: 800;
       font-size: 15px;
       cursor:pointer;
       background: linear-gradient(90deg, rgba(47,208,166,.9), rgba(47,208,166,.65));
@@ -104,6 +105,23 @@
       background: rgba(255,255,255,.08);
       color: var(--text);
       border: 1px solid rgba(255,255,255,.12);
+      font-weight: 750;
+    }
+    .pill{
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      cursor:pointer;
+      font-weight:800;
+      font-size: 13px;
+      user-select:none;
+    }
+    .pill.green{
+      background: rgba(47,208,166,.18);
+      border-color: rgba(47,208,166,.25);
     }
     .msg{
       margin: 10px 0 0;
@@ -113,6 +131,7 @@
       background: rgba(255,255,255,.06);
       color: var(--muted);
       font-size: 13px;
+      white-space: pre-line;
     }
     .msg.good{border-color: rgba(47,208,166,.35); color: rgba(234,246,245,.92)}
     .msg.bad{border-color: rgba(255,91,91,.35); color: rgba(255,91,91,.95)}
@@ -123,21 +142,6 @@
       padding: 16px 18px;
       border-bottom: 1px solid rgba(255,255,255,.08);
     }
-    .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      cursor:pointer;
-      font-weight:700;
-      font-size: 13px;
-    }
-    .pill.green{
-      background: rgba(47,208,166,.18);
-      border-color: rgba(47,208,166,.25);
-    }
     .section{padding: 16px 18px}
     .hero{
       border-radius: 18px;
@@ -147,7 +151,11 @@
     }
     .hero h2{margin:0 0 6px; font-size: 28px; letter-spacing:.2px}
     .hero p{margin:0; color: var(--muted); line-height: 1.5}
-    .grid{display:grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 12px;}
+    .grid{
+      display:grid; gap: 12px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 12px;
+    }
     @media (max-width: 640px){ .grid{grid-template-columns: 1fr;} }
     .box{
       border-radius: 18px;
@@ -166,8 +174,8 @@
       color: rgba(234,246,245,.92);
       font-size: 12px;
     }
-    .small{color: var(--muted); font-size: 12px; line-height: 1.4}
-    a.link{color: rgba(47,208,166,.95); text-decoration: none; font-weight: 700}
+    .small{color: var(--muted); font-size: 12px; line-height: 1.45}
+    a.link{color: rgba(47,208,166,.95); text-decoration: none; font-weight: 800}
   </style>
 </head>
 
@@ -199,21 +207,22 @@
           </div>
 
           <div class="field">
-            <input id="password" type="password" placeholder="Password" autocomplete="current-password" />
+            <input id="password" type="password" placeholder="Password (min 6 chars)" autocomplete="current-password" />
             <button id="togglePw" class="pill" type="button" style="padding:8px 12px;">Show</button>
           </div>
         </div>
 
         <div class="hint">
-          ✅ Email works as normal. <br/>
-          ✅ Phone works too (no SMS): we store it internally and let the user login with the same phone + password.
+          ✅ Email works normally.<br/>
+          ✅ Phone works too (no SMS): user can login using the same phone + password.
         </div>
 
         <button id="primaryBtn" class="btn">Create Account</button>
         <button id="forgotBtn" class="btn secondary" style="display:none">Forgot Password (Email only)</button>
 
         <div class="hint" style="margin-top:12px">
-          By continuing you agree to the <a class="link" href="#" onclick="alert('Add your Registration Agreement link here'); return false;">Registration Agreement</a>.
+          By continuing you agree to the
+          <a class="link" href="#" onclick="alert('Add your Registration Agreement link here'); return false;">Registration Agreement</a>.
         </div>
       </div>
     </div>
@@ -222,14 +231,15 @@
     <div id="appCard" class="card" style="display:none; margin-top:16px;">
       <div class="appHeader">
         <div style="display:flex; flex-direction:column; gap:4px;">
-          <div style="font-weight:800; letter-spacing:.3px;">Welcome ✅</div>
-          <div class="small">Logged in as: <span id="whoami" class="mono" style="display:inline-block; padding:6px 10px;"></span></div>
+          <div style="font-weight:900; letter-spacing:.3px;">Welcome ✅</div>
+          <div class="small">
+            Logged in as:
+            <span id="whoami" class="mono" style="display:inline-block; padding:6px 10px;"></span>
+          </div>
         </div>
-
         <button id="logoutBtn" class="pill">Logout</button>
       </div>
 
-      <!-- These are the sections you said: “Once I login I want these to appear next” -->
       <div class="section">
         <div class="hero">
           <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
@@ -289,7 +299,7 @@
             </div>
             <div class="mono" id="inviteOut" style="margin-top:10px;">Enter a code, then click Generate Link</div>
             <div class="small" style="margin-top:10px;">
-              Next step: We can connect this to Firestore so every signup is stored under the referrer automatically.
+              Next step: connect this to Firestore so every signup is stored under the referrer automatically.
             </div>
           </div>
         </div>
@@ -308,15 +318,16 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth-compat.js"></script>
 
   <script>
-    // ✅ Put your REAL Firebase config here
- const firebaseConfig = {
-  apiKey: "AIzaSyCbQ9fNYrq_qko-GUhKi3xSMkb_IKhrBB0",
-  authDomain: "umoja-v2-landing.firebaseapp.com",
-  projectId: "umoja-v2-landing",
-  storageBucket: "umoja-v2-landing.firebasestorage.app",
-  messagingSenderId: "964715983746",
-  appId: "1:964715983746:web:f57c75d7d2bb9aefe7159b"
-};
+    // ✅ Use your REAL Firebase config (from Firebase Console → Project settings → Web app)
+    // Your earlier correct config looked like this:
+    const firebaseConfig = {
+      apiKey: "AIzaSyCbQ9fNYrq-qko-GUhKi3xSMkb_IKhrBBo",
+      authDomain: "umoja-v2-landing.firebaseapp.com",
+      projectId: "umoja-v2-landing",
+      storageBucket: "umoja-v2-landing.firebasestorage.app",
+      messagingSenderId: "964715983746",
+      appId: "1:964715983746:web:b4bb1615f35d773ae7159b"
+    };
 
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
@@ -348,17 +359,17 @@
       authMsg.className = "msg";
     }
 
-    // ✅ Email OR Phone (no SMS):
-    // If user enters a phone, we convert it into a "pseudo email" so it can work with Email/Password auth.
-    // They will still login using the same phone + password.
+    // Email OR Phone (NO SMS):
+    // If user enters phone, we convert it into a pseudo email.
+    // They still login using the same phone + password.
     function normalizeIdentifierToEmail(raw){
       const v = (raw || "").trim();
       if (!v) return "";
       if (v.includes("@")) return v.toLowerCase();
 
-      // phone -> keep digits only
+      // phone -> digits only
       const digits = v.replace(/[^\d]/g, "");
-      if (digits.length < 7) return ""; // too short
+      if (digits.length < 7) return "";
       return `${digits}@umoja.local`;
     }
 
@@ -389,7 +400,7 @@
       clearMsg();
       const raw = identifierEl.value.trim();
       if (!raw || !isEmail(raw)) {
-        setMsg("Password reset works for EMAIL only. Enter your email above.", "bad");
+        setMsg("Password reset works for EMAIL only.\nEnter your email above.", "bad");
         return;
       }
       try{
@@ -421,8 +432,7 @@
           setMsg("✅ Logged in.", "good");
         }
       } catch(e){
-        // Most common fix:
-        // "operation-not-allowed" => enable Email/Password provider in Firebase Console
+        // Most common: enable Email/Password provider in Firebase Console
         setMsg(e.message || "Auth failed.", "bad");
       }
     });
@@ -460,7 +470,6 @@
 
     function openBscScan(){
       const addr = document.getElementById('contract').textContent.trim();
-      // Replace if you want mainnet URL format specific to your chain
       window.open(`https://bscscan.com/address/${addr}`, "_blank");
     }
     window.openBscScan = openBscScan;
