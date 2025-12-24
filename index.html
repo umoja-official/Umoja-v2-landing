@@ -698,10 +698,17 @@ a.smallBtn{
  // Invest: Open DEXTools
 const DEXTOOLS_URL = "https://www.dextools.io/app/en/meme-board";
 
+// Invest: Open DEXTools (wired)
+const DEXTOOLS_URL = "https://www.dextools.io/app/en/meme-board";
+
 qs("btnDex").addEventListener("click", () => {
-  qs("dashMsg").textContent = "🚀 Opening DEXTools…";
+  // Open in a new tab safely
   window.open(DEXTOOLS_URL, "_blank", "noopener,noreferrer");
+  // Optional message (no popup)
+  const msg = qs("dashMsg");
+  if (msg) msg.textContent = "✅ Opening DEXTools…";
 });
+
 
   }
 
