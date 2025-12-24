@@ -641,24 +641,27 @@ a.smallBtn{
       }
     });
 
-    qs("btnLogin").addEventListener("click", async () => {
-      if(!configOk) return;
+    qs("btnLogin").addEventListener("click", async (e) => {
+  e.preventDefault();
 
-      clearError();
-      const email = (qs("loginEmail").value || "").trim();
-      const pw = (qs("loginPassword").value || "").trim();
+  const email = qs("email").value.trim();
+  const pass  = qs("password").value;
 
-      if(!email || !pw){
-        showError("Please enter email and password.");
-        return;
-      }
-      try{
-        await signInWithEmailAndPassword(auth, email, pw);
-        // onAuthStateChanged will switch UI
-      }catch(e){
-        showError(e.message || "Login failed.");
-      }
-    });
+  if (!email || !pass) {
+    showError("Enter your email and password.");
+    return;
+  }
+
+  setBusy(true, "Signing in…");
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+    // onAuthStateChanged should handle showing the dashboard
+  } catch (err) {
+    showError(err?.message || "Login failed. Check email/password.");
+  } finally {
+    setBusy(false);
+  }
+});
 
     qs("btnLogout").addEventListener("click", async () => {
       if(!configOk) return;
