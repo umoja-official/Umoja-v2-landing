@@ -678,5 +678,32 @@
       refCode.value = incomingRef;
     }
   </script>
+  <script>
+  // ===== UMOJA V2 CONFIG =====
+  const OFFICIAL_CONTRACT = "0x8D6A79567a701FCe55b62C15d0fbB765913ac84a";
+  const PANCAKESWAP_URL = "https://www.dextools.io/app/en/meme-board";
+
+  // ===== Helper =====
+  const qs = (id) => document.getElementById(id);
+
+  // ===== Open DEX Button =====
+  const openDexBtn = qs("openDex");
+  if (openDexBtn) {
+    openDexBtn.addEventListener("click", () => {
+      window.open(PANCAKESWAP_URL, "_blank");
+    });
+  }
+
+  // ===== Copy Contract =====
+  const copyContractBtn = qs("copyContract");
+  if (copyContractBtn) {
+    copyContractBtn.addEventListener("click", async () => {
+      await navigator.clipboard.writeText(OFFICIAL_CONTRACT);
+      copyContractBtn.innerText = "Copied ✓";
+      setTimeout(() => (copyContractBtn.innerText = "Copy Contract"), 1500);
+    });
+  }
+</script>
+
 </body>
 </html>
