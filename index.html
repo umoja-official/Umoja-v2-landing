@@ -729,6 +729,18 @@
       setTimeout(() => (copyBtn.innerText = "Copy Contract"), 1500);
     };
   }
+  // ===============================
+// DEXtools link wiring (FINAL)
+// ===============================
+const DEXTOOLS_URL = "https://www.dextools.io/app/en/meme-board";
+
+const btnDex = document.getElementById("btnDex");
+if (btnDex) {
+  btnDex.onclick = () => {
+    window.open(DEXTOOLS_URL, "_blank");
+  };
+}
+
 </script>
 
 </body>
