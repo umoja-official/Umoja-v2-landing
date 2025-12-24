@@ -179,23 +179,28 @@ h1 {
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
-<script>
-  // Your Firebase configuration (THIS is correct)
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { 
+    getAuth,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
   const firebaseConfig = {
-    apiKey: "AIzaSyCbQ9fNYrq-qko-GUhKi3xSMkb_IKhrBBo",
+    apiKey: "AIzaSyCbQ9fNYrq_qko-GUhKi3xSMkb_IKhrBB0",
     authDomain: "umoja-v2-landing.firebaseapp.com",
     projectId: "umoja-v2-landing",
-    storageBucket: "umoja-v2-landing.firebasestorage.app",
+    storageBucket: "umoja-v2-landing.appspot.com",
     messagingSenderId: "964715983746",
     appId: "1:964715983746:web:b4bb1615f35d773ae7159b"
   };
 
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-
-  // Initialize Auth
-  const auth = firebase.auth();
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 </script>
+
 
 
 </body>
