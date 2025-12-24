@@ -374,14 +374,16 @@
 
       <div class="brand">
         <div class="logoWrap">
-          <div class="logo">
-            <!-- Put your real PNG file in your repo and set the src below -->
-            <img id="umojaLogoImg" src="assets/umoja-logo.png" ...
+         <div class="logo">
+  <img
+    id="umojaLogoImg"
+    src="./assets/umoja-logo.png"
+    alt="UMOJA Logo"
+    onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';"
+  />
+  <div id="logoFallback" class="logoFallback" style="display:none;">U</div>
+</div>
 
-                 onerror="this.remove(); document.getElementById('logoFallback').style.display='block';" />
-            <div id="logoFallback" class="logoFallback" style="display:none;">U</div>
-          </div>
-        </div>
         <h1>UMOJA V2</h1>
         <div class="sub">Official Landing • Verify • Invest • Invite</div>
       </div>
