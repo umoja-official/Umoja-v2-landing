@@ -150,6 +150,13 @@
       font-weight: 700;
     }
     .smallBtn:hover{ background: rgba(255,255,255,.12); }
+/* Make <a class="smallBtn"> look like your button */
+a.smallBtn{
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 
     .btn{
       width:100%;
@@ -378,7 +385,12 @@
           <div class="muted" style="margin-bottom:8px;"><strong>Token Import</strong> (copy contract):</div>
           <div class="row2">
             <button class="smallBtn" id="btnCopyContract2" type="button">Copy Contract</button>
-            <button class="smallBtn" id="btnDex" type="button">Open DEX (set link)</button>
+            <a class="smallBtn" id="btnDex"
+   href="https://www.dextools.io/app/en/meme-board"
+   target="_blank" rel="noopener noreferrer">
+  Open DEXTools
+</a>
+
           </div>
           <p class="muted" style="margin:10px 0 0;">
             Tell me your exact PancakeSwap/DEX link and I’ll wire it to the “Open DEX” button.
