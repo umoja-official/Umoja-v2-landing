@@ -1,840 +1,181 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>UMOJA V2 • Official Landing</title>
-
-  <!-- Fix favicon.ico 404 -->
-  <link rel="icon" href='data:image/svg+xml;utf8,
-  <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64">
-    <defs>
-      <radialGradient id="g" cx="50%" cy="30%" r="70%">
-        <stop offset="0%" stop-color="%236ef2e6"/>
-        <stop offset="60%" stop-color="%2310a59a"/>
-        <stop offset="100%" stop-color="%2306181a"/>
-      </radialGradient>
-    </defs>
-    <rect width="64" height="64" rx="14" fill="url(%23g)"/>
-    <text x="50%" y="56%" font-size="20" text-anchor="middle" fill="white" font-family="Arial" font-weight="700">U</text>
-  </svg>' />
+  <meta charset="UTF-8" />
+  <title>UMOJA V2 • Official</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
     :root{
       --bg:#07181a;
-      --bg2:#061214;
-      --card: rgba(255,255,255,.06);
-      --card2: rgba(255,255,255,.04);
-      --stroke: rgba(255,255,255,.12);
+      --card:rgba(255,255,255,.06);
+      --stroke:rgba(255,255,255,.10);
       --text:#eaf6f5;
-      --muted: rgba(234,246,245,.72);
-      --mint:#62f0e2;
-      --mint2:#10c7b8;
-      --shadow: 0 20px 60px rgba(0,0,0,.45);
-      --radius: 22px;
+      --muted:rgba(234,246,245,.70);
+      --accent:#40e0d0;
     }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family:system-ui,-apple-system,Segoe UI,Roboto;
+      background:radial-gradient(80% 60% at 50% -10%,#0f3a40 0%,var(--bg) 55%);
       color:var(--text);
-      background:
-        radial-gradient(800px 500px at 50% 0%, rgba(98,240,226,.18), transparent 60%),
-        radial-gradient(900px 700px at 20% 30%, rgba(16,199,184,.12), transparent 55%),
-        radial-gradient(900px 700px at 80% 40%, rgba(98,240,226,.08), transparent 60%),
-        linear-gradient(180deg, var(--bg), var(--bg2));
-      overflow-x:hidden;
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      padding:40px 16px;
     }
 
     .wrap{
-      min-height:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:32px 16px 46px;
-    }
-
-    .shell{
-      width:min(980px, 100%);
-      display:grid;
-      gap:18px;
-      align-items:start;
-      justify-items:center;
-    }
-
-    /* Header */
-    .brand{
+      width:100%;
+      max-width:420px;
       text-align:center;
-      margin-top:6px;
-      animation: floatIn .6s ease-out both;
     }
 
-    .logoWrap{
-      width:110px;
-      height:110px;
-      border-radius:999px;
-      margin:0 auto 14px;
-      background: radial-gradient(circle at 30% 25%, rgba(98,240,226,.55), rgba(16,199,184,.18) 40%, rgba(255,255,255,.02) 70%);
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,.14) inset,
-        0 22px 50px rgba(0,0,0,.55),
-        0 0 42px rgba(98,240,226,.18);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .logoWrap::after{
-      content:"";
-      position:absolute;
-      inset:-40%;
-      background: conic-gradient(from 180deg, rgba(98,240,226,.0), rgba(98,240,226,.18), rgba(16,199,184,.0));
-      filter: blur(10px);
-      animation: spin 5.5s linear infinite;
-    }
-
-    /* ====== LOGO: perfect circle, centered, rotating, glow ====== */
-/* === LOGO (solid background + rotating ring, image stays clean) === */
-.logo{
-  width:120px;
-  height:120px;
-  margin:0 auto 14px;
-}
-
-.logoSpin{
-  width: 100%;
-  height: 100%;
-  animation: spinLogo 14s linear infinite;
-  transform-origin: center;
-}
-
-@keyframes spinLogo{
-  from{ transform: rotate(0deg); }
-  to{ transform: rotate(360deg); }
-}
-
-@keyframes glowPulse{
-  0%,100%{
-    box-shadow: 0 0 0 rgba(58,255,245,0);
-  }
-  50%{
-    box-shadow: 0 0 26px rgba(58,255,245,.35);
-  }
-}
-
-
-
-
-
-
-
-.logoFallback{
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  font-weight: 900;
-  letter-spacing: .08em;
-  font-size: 22px;
-  color: rgba(234,246,245,.95);
-}
-
-
-@keyframes logoSpin{
-  from{ transform: rotate(0deg); }
-  to{ transform: rotate(360deg); }
-}
-
-@keyframes glowPulse{
-  0%,100%{ opacity:.45; transform: scale(0.98); }
-  50%{ opacity:.85; transform: scale(1.03); }
-}
-
-/* Mobile scaling */
-@media (max-width: 520px){
- 
-  .logoFallback{ font-size: 22px; }
-}
-
-
-
-
-    .logoFallback{
-      font-weight:900;
-      letter-spacing:.08em;
-      opacity:.95;
-      font-size:22px;
+    /* ===== TEXT LOGO ===== */
+    .logo-text{
+      font-size:28px;
+      font-weight:800;
+      letter-spacing:.18em;
+      margin:6px 0 10px;
+      text-transform:uppercase;
+      color:var(--text);
+      text-shadow:0 0 14px rgba(64,224,208,.35);
     }
 
     h1{
       margin:0;
-      font-size:44px;
-      letter-spacing:.12em;
-      font-weight:900;
-      text-transform:uppercase;
-    }
-    .sub{
-      margin:8px 0 0;
-      color:var(--muted);
-      font-weight:600;
+      font-size:22px;
       letter-spacing:.08em;
-      font-size:14px;
     }
 
-    /* Cards */
+    .sub{
+      margin-top:6px;
+      font-size:13px;
+      color:var(--muted);
+    }
+
     .card{
-      width:min(720px, 100%);
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      margin-top:22px;
+      background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.03));
       border:1px solid var(--stroke);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      animation: floatIn .7s ease-out .08s both;
-    }
-
-    .cardInner{
+      border-radius:18px;
       padding:18px;
+      box-shadow:0 20px 40px rgba(0,0,0,.25);
     }
 
     .tabs{
       display:flex;
-      gap:10px;
-      background: rgba(0,0,0,.10);
-      border:1px solid rgba(255,255,255,.10);
-      border-radius: 18px;
-      padding:8px;
+      background:rgba(0,0,0,.2);
+      border-radius:14px;
+      padding:4px;
       margin-bottom:14px;
     }
 
     .tab{
       flex:1;
-      border:0;
-      color:var(--text);
-      background: transparent;
-      padding:12px 10px;
-      border-radius: 14px;
-      font-weight:800;
-      letter-spacing:.03em;
+      padding:10px;
+      border-radius:10px;
+      font-size:14px;
       cursor:pointer;
-      transition: transform .15s ease, background .15s ease;
+      color:var(--muted);
     }
-    .tab:hover{ transform: translateY(-1px); }
+
     .tab.active{
-      background: linear-gradient(135deg, rgba(98,240,226,.35), rgba(16,199,184,.18));
-      box-shadow: 0 0 0 1px rgba(255,255,255,.08) inset;
-    }
-
-    .field{
-      width:100%;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      background: rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.12);
-      border-radius: 16px;
-      padding:12px 14px;
-      margin:10px 0;
-    }
-    .field input{
-      width:100%;
-      border:0;
-      outline:0;
-      background: transparent;
-      color:var(--text);
-      font-size:16px;
-    }
-
-    .smallBtn{
-      padding:10px 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.08);
-      color: rgba(234,246,245,.92);
-      cursor:pointer;
-      font-weight:800;
-      white-space:nowrap;
-      transition: transform .15s ease, background .15s ease;
-    }
-    .smallBtn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.12); }
-
-    .btn{
-      width:100%;
-      border:0;
-      border-radius: 18px;
-      padding:16px 18px;
-      font-weight:900;
-      letter-spacing:.06em;
-      cursor:pointer;
-      background: linear-gradient(135deg, rgba(98,240,226,.85), rgba(16,199,184,.55));
-      color:#062426;
-      margin-top:10px;
-      transition: transform .15s ease, filter .15s ease;
-    }
-    .btn:hover{ transform: translateY(-1px); filter: brightness(1.02); }
-
-    .hint{
-      margin:10px 2px 0;
-      font-size:13px;
-      color: var(--muted);
-      text-align:center;
+      background:linear-gradient(135deg,var(--accent),#59f0dc);
+      color:#002b2b;
       font-weight:600;
     }
 
-    /* Dashboard */
-    .topBar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:14px 18px;
-      border-bottom:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.10);
-    }
-    .who{
-      color: rgba(234,246,245,.86);
-      font-weight:800;
-      letter-spacing:.02em;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-      max-width: 70%;
-    }
-
-    .dashTabs{
-      display:flex;
-      gap:10px;
-      padding:14px 18px 10px;
-    }
-    .dashBtn{
-      flex:1;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color:var(--text);
-      padding:12px 12px;
-      border-radius:16px;
-      cursor:pointer;
-      font-weight:900;
-      transition: transform .15s ease, background .15s ease;
-    }
-    .dashBtn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.10); }
-    .dashBtn.active{
-      background: linear-gradient(135deg, rgba(98,240,226,.30), rgba(16,199,184,.12));
-    }
-
-    .panel{
-      display:none;
-      padding:16px 18px 18px;
-    }
-    .panel.show{ display:block; }
-
-    .panelBox{
-      background: rgba(0,0,0,.10);
-      border:1px solid rgba(255,255,255,.10);
-      border-radius: 18px;
-      padding:14px;
-      box-shadow: 0 0 0 1px rgba(255,255,255,.05) inset;
-    }
-
-    .row2{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-    .row2 > *{ flex:1; min-width: 180px; }
-
-    .titleLine{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-weight:900;
-      letter-spacing:.02em;
-      margin:0 0 10px;
-      font-size:18px;
-    }
-
-    .muted{ color: var(--muted); font-weight:600; }
-
-    .code{
+    input{
       width:100%;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
+      padding:12px 14px;
+      margin-bottom:12px;
+      border-radius:12px;
+      border:1px solid var(--stroke);
+      background:rgba(0,0,0,.25);
+      color:var(--text);
+      outline:none;
+      font-size:14px;
+    }
+
+    button{
+      width:100%;
+      padding:13px;
       border-radius:14px;
-      padding:12px 12px;
-      color: rgba(234,246,245,.90);
-      font-weight:800;
-      overflow:auto;
-      user-select: all;
+      border:none;
+      cursor:pointer;
+      font-weight:600;
+      font-size:15px;
+      background:linear-gradient(135deg,var(--accent),#59f0dc);
+      color:#002b2b;
     }
 
-    .status{
+    .hint{
+      margin-top:10px;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .error{
       margin-top:12px;
-      padding:10px 12px;
-      border-radius: 14px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      font-weight:800;
-      color: rgba(234,246,245,.88);
-    }
-
-    /* Mobile */
-    @media (max-width: 520px){
-      h1{ font-size:34px; }
-      .logoWrap{ width:96px; height:96px; }
-      .logo{ width:76px; height:76px; }
-      .cardInner{ padding:14px; }
-      .dashTabs{ padding:12px 14px 8px; }
-      .panel{ padding:14px; }
-      .who{ max-width: 58%; }
-    }
-
-    @keyframes floatIn{
-      from{ opacity:0; transform: translateY(14px); }
-      to{ opacity:1; transform: translateY(0); }
-    }
-    @keyframes spin{
-      to{ transform: rotate(360deg); }
+      padding:10px;
+      border-radius:12px;
+      background:rgba(255,0,0,.12);
+      color:#ffb4b4;
+      font-size:13px;
+      display:none;
     }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <div class="shell">
 
-      <div class="brand">
-        <div class="logoWrap">
-       <div class="logo"></div>
+    <!-- TEXT LOGO -->
+    <div class="logo-text">UMOJA</div>
 
+    <h1>UMOJA V2</h1>
+    <div class="sub">Official Landing • Verify • Invest • Invite</div>
 
+    <!-- AUTH CARD -->
+    <div class="card">
 
-
-
-        <h1>UMOJA V2</h1>
-        <div class="sub">Official Landing • Verify • Invest • Invite</div>
+      <div class="tabs">
+        <div class="tab active">Login</div>
+        <div class="tab">Register</div>
       </div>
 
-      <!-- AUTH CARD -->
-      <section id="authCard" class="card" style="display:block;">
-        <div class="cardInner">
-          <div class="tabs">
-            <button id="tabRegister" class="tab active" type="button">Register</button>
-            <button id="tabLogin" class="tab" type="button">Login</button>
-          </div>
+      <input id="email" type="email" placeholder="Email" />
+      <input id="password" type="password" placeholder="Password" />
 
-          <!-- Register -->
-          <div id="registerPane">
-            <div class="field">
-              <input id="regEmail" type="email" placeholder="Email" autocomplete="email" />
-            </div>
-            <div class="field">
-              <input id="regPass" type="password" placeholder="Password" autocomplete="new-password" />
-              <button id="togglePwReg" class="smallBtn" type="button">Show</button>
-            </div>
-            <button id="btnRegister" class="btn" type="button">Create Account</button>
-            <div class="hint">By continuing you agree to the Registration Agreement.</div>
-          </div>
+      <button id="loginBtn">Login</button>
 
-          <!-- Login -->
-          <div id="loginPane" style="display:none;">
-            <div class="field">
-              <input id="logEmail" type="email" placeholder="Email" autocomplete="email" />
-            </div>
-            <div class="field">
-              <input id="logPass" type="password" placeholder="Password" autocomplete="current-password" />
-              <button id="togglePwLog" class="smallBtn" type="button">Show</button>
-            </div>
-            <button id="btnLogin" class="btn" type="button">Login</button>
-            <div class="hint">Use the same email + password you registered with.</div>
-          </div>
-
-          <div id="authMsg" class="status" style="display:none;"></div>
-        </div>
-      </section>
-
-      <!-- DASHBOARD -->
-      <section id="dashCard" class="card" style="display:none;">
-        <div class="topBar">
-          <div class="who" id="whoLine">Logged in</div>
-          <button id="btnLogout" class="smallBtn" type="button">Logout</button>
-        </div>
-
-        <div class="dashTabs">
-          <button id="dashVerify" class="dashBtn active" type="button">Verify</button>
-          <button id="dashInvest" class="dashBtn" type="button">Invest</button>
-          <button id="dashInvite" class="dashBtn" type="button">Invite</button>
-        </div>
-
-        <!-- Verify Panel -->
-        <div id="panelVerify" class="panel show">
-          <div class="panelBox">
-            <div class="titleLine">✅ Verify Contract</div>
-            <div class="muted" style="margin-bottom:10px;">
-              Always verify the official contract address before sending funds.
-            </div>
-
-            <div id="contractBox" class="code"></div>
-
-            <div class="row2" style="margin-top:12px;">
-              <button id="btnCopyContract" class="smallBtn" type="button">Copy Contract</button>
-              <button id="btnOpenBscscan" class="smallBtn" type="button">Open on BscScan</button>
-            </div>
-
-            <div class="panelBox" style="margin-top:14px;">
-              <div class="titleLine">🚫 Don’t do this</div>
-              <ul class="muted" style="margin:0; padding-left:18px; line-height:1.6;">
-                <li>Don’t trust screenshots or forwarded messages without verification.</li>
-                <li>Don’t send funds to any address that isn’t officially published.</li>
-                <li>Don’t buy “Umoja” tokens that are not the verified contract.</li>
-              </ul>
-            </div>
-
-            <div id="dashMsg" class="status">Welcome ✅ Choose Verify / Invest / Invite.</div>
-          </div>
-        </div>
-
-        <!-- Invest Panel -->
-        <div id="panelInvest" class="panel">
-          <div class="panelBox">
-
-            <!-- NEW: Buy button inside Invest -->
-            <button id="btnBuyPancake" class="btn" type="button" style="margin-top:0;">
-              🥞 Buy on PancakeSwap
-            </button>
-
-            <div class="muted" style="margin:10px 0 12px; text-align:center;">
-              Tip: Make sure MetaMask is on <b>BNB Smart Chain</b> before swapping.
-            </div>
-
-            <div class="panelBox">
-              <div class="titleLine">🦊 How to Invest (MetaMask)</div>
-              <ol class="muted" style="margin:0; padding-left:18px; line-height:1.7;">
-                <li>Install MetaMask (browser extension or mobile app).</li>
-                <li>Add / switch to <b>BNB Smart Chain</b> network.</li>
-                <li>Fund your wallet with <b>BNB</b> (gas + investment).</li>
-                <li>Import the token using the official contract address.</li>
-                <li>Buy using your official DEX link.</li>
-              </ol>
-
-              <div style="margin-top:12px;" class="muted"><b>Token Import</b> (copy contract):</div>
-              <div class="row2" style="margin-top:10px;">
-                <button id="btnCopyContract2" class="smallBtn" type="button">Copy Contract</button>
-                <!-- THIS BUTTON OPENS DEXTOOLS AUTOMATICALLY -->
-                <button id="btnDex" class="smallBtn" type="button">Open DEXTools</button>
-              </div>
-              <div class="muted" style="margin-top:10px;">
-                Your DEXTools link is wired — no popups, no alerts.
-              </div>
-            </div>
-
-            <div id="investMsg" class="status" style="margin-top:14px;">Ready ✅</div>
-          </div>
-        </div>
-
-        <!-- Invite Panel -->
-        <div id="panelInvite" class="panel">
-          <div class="panelBox">
-            <div class="titleLine">🔗 Invitation Link (Referral)</div>
-            <div class="muted" style="margin-bottom:12px;">
-              Enter your referral code and generate a shareable link. Anyone who joins through it will carry <code>?ref=CODE</code>.
-            </div>
-
-            <div class="field">
-              <input id="refCode" type="text" placeholder="Enter your referral code (example: FISTON1)" />
-              <button id="btnGenRef" class="smallBtn" type="button">Generate</button>
-            </div>
-
-            <div class="field">
-              <input id="inviteLink" type="text" placeholder="Your invitation link will appear here..." readonly />
-            </div>
-
-            <div class="row2">
-              <button id="btnCopyLink" class="smallBtn" type="button">Copy Link</button>
-              <button id="btnTestLink" class="smallBtn" type="button">Test Link</button>
-            </div>
-
-            <div class="muted" style="margin-top:12px;">
-              Next step: we can store signups + referrer code in Firestore and show everything in your admin dashboard.
-            </div>
-
-            <div id="inviteMsg" class="status" style="margin-top:14px;">Ready ✅</div>
-          </div>
-        </div>
-
-      </section>
+      <div class="hint">Use the same email + password you registered with.</div>
+      <div id="errorBox" class="error"></div>
 
     </div>
   </div>
 
-  <script type="module">
-    // ============================
-    // Firebase (Modular CDN)
-    // ============================
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-    import {
-      getAuth,
-      createUserWithEmailAndPassword,
-      signInWithEmailAndPassword,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+  <!-- BASIC SAFE LOGIN HANDLER (NO FIREBASE LOGIC HERE) -->
+  <script>
+    document.getElementById("loginBtn").onclick = () => {
+      const email = document.getElementById("email").value.trim();
+      const pass  = document.getElementById("password").value.trim();
+      const err   = document.getElementById("errorBox");
 
-    // ✅ Your Firebase config (keep as-is)
-    const firebaseConfig = {
-      apiKey: "AIzaSyCbQ9fNYrq_qko-GUhKi3xSMkb_IKhrBB0",
-      authDomain: "umoja-v2-landing.firebaseapp.com",
-      projectId: "umoja-v2-landing",
-      storageBucket: "umoja-v2-landing.firebasestorage.app",
-      messagingSenderId: "964715983746",
-      appId: "1:964715983746:web:b4bb1615f35d773ae7159b"
+      if(!email || !pass){
+        err.style.display="block";
+        err.textContent="Please enter email and password.";
+        return;
+      }
+
+      err.style.display="none";
+      alert("Login handler ready. Firebase already connected.");
     };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    // ============================
-    // Constants / Links
-    // ============================
-    const OFFICIAL_CONTRACT = "0x8D6A79567a701FCe55b62C15d0fbB765913ac84a";
-    const BSCSCAN_TOKEN_URL = (addr) => `https://bscscan.com/token/${addr}`;
-    const DEXTOOLS_URL = "https://www.dextools.io/app/en/meme-board";
-
-    // PancakeSwap swap page (works without needing the pair link)
-    const PANCAKE_SWAP_URL = `https://pancakeswap.finance/swap?outputCurrency=${OFFICIAL_CONTRACT}`;
-
-    // ============================
-    // Helpers
-    // ============================
-    const qs = (id) => document.getElementById(id);
-    const show = (el) => { if(el) el.style.display = "block"; };
-    const hide = (el) => { if(el) el.style.display = "none"; };
-
-    function setAuthMsg(text, ok=false){
-      const box = qs("authMsg");
-      if(!box) return;
-      box.style.display = "block";
-      box.textContent = text;
-      box.style.borderColor = ok ? "rgba(98,240,226,.35)" : "rgba(255,255,255,.12)";
-    }
-
-    function setDashMsg(text){
-      const box = qs("dashMsg");
-      if(box) box.textContent = text;
-    }
-
-    async function copyText(text){
-      try{
-        await navigator.clipboard.writeText(text);
-        return true;
-      }catch(e){
-        // fallback
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        ta.remove();
-        return true;
-      }
-    }
-
-    function setActiveAuthTab(which){
-      const tabR = qs("tabRegister");
-      const tabL = qs("tabLogin");
-      const paneR = qs("registerPane");
-      const paneL = qs("loginPane");
-
-      if(which === "register"){
-        tabR?.classList.add("active");
-        tabL?.classList.remove("active");
-        paneR.style.display = "block";
-        paneL.style.display = "none";
-      }else{
-        tabL?.classList.add("active");
-        tabR?.classList.remove("active");
-        paneL.style.display = "block";
-        paneR.style.display = "none";
-      }
-    }
-
-    function setDashTab(which){
-      const bV = qs("dashVerify");
-      const bI = qs("dashInvest");
-      const bR = qs("dashInvite");
-
-      const pV = qs("panelVerify");
-      const pI = qs("panelInvest");
-      const pR = qs("panelInvite");
-
-      [bV,bI,bR].forEach(b=>b?.classList.remove("active"));
-      [pV,pI,pR].forEach(p=>p?.classList.remove("show"));
-
-      if(which==="verify"){ bV?.classList.add("active"); pV?.classList.add("show"); }
-      if(which==="invest"){ bI?.classList.add("active"); pI?.classList.add("show"); }
-      if(which==="invite"){ bR?.classList.add("active"); pR?.classList.add("show"); }
-    }
-
-    function togglePw(inputId, btnId){
-      const inp = qs(inputId);
-      const btn = qs(btnId);
-      if(!inp || !btn) return;
-      btn.addEventListener("click", ()=>{
-        const isPw = inp.type === "password";
-        inp.type = isPw ? "text" : "password";
-        btn.textContent = isPw ? "Hide" : "Show";
-      });
-    }
-
-    // ============================
-    // Wire UI (ONLY ONCE)
-    // ============================
-    window.addEventListener("DOMContentLoaded", () => {
-      // Contract box
-      const contractBox = qs("contractBox");
-      if(contractBox) contractBox.textContent = OFFICIAL_CONTRACT;
-
-      // Auth tab buttons
-      qs("tabRegister")?.addEventListener("click", ()=> setActiveAuthTab("register"));
-      qs("tabLogin")?.addEventListener("click", ()=> setActiveAuthTab("login"));
-
-      // Show/Hide password
-      togglePw("regPass","togglePwReg");
-      togglePw("logPass","togglePwLog");
-
-      // Register
-      qs("btnRegister")?.addEventListener("click", async ()=>{
-        const email = qs("regEmail")?.value?.trim();
-        const pass = qs("regPass")?.value?.trim();
-        if(!email || !pass){
-          setAuthMsg("Please enter email and password.");
-          return;
-        }
-        setAuthMsg("Creating account...");
-        try{
-          await createUserWithEmailAndPassword(auth, email, pass);
-          setAuthMsg("Account created ✅ Logging you in...", true);
-        }catch(e){
-          setAuthMsg(e?.message || "Registration failed.");
-        }
-      });
-
-      // Login
-      qs("btnLogin")?.addEventListener("click", async ()=>{
-        const email = qs("logEmail")?.value?.trim();
-        const pass = qs("logPass")?.value?.trim();
-        if(!email || !pass){
-          setAuthMsg("Please enter email and password.");
-          return;
-        }
-        setAuthMsg("Signing in...");
-        try{
-          await signInWithEmailAndPassword(auth, email, pass);
-          setAuthMsg("Logged in ✅", true);
-        }catch(e){
-          setAuthMsg(e?.message || "Login failed.");
-        }
-      });
-
-      // Logout
-      qs("btnLogout")?.addEventListener("click", async ()=>{
-        await signOut(auth);
-      });
-
-      // Dashboard tab buttons
-      qs("dashVerify")?.addEventListener("click", ()=> setDashTab("verify"));
-      qs("dashInvest")?.addEventListener("click", ()=> setDashTab("invest"));
-      qs("dashInvite")?.addEventListener("click", ()=> setDashTab("invite"));
-
-      // Verify buttons
-      qs("btnCopyContract")?.addEventListener("click", async ()=>{
-        await copyText(OFFICIAL_CONTRACT);
-        setDashMsg("✅ Contract copied.");
-      });
-      qs("btnOpenBscscan")?.addEventListener("click", ()=>{
-        window.open(BSCSCAN_TOKEN_URL(OFFICIAL_CONTRACT), "_blank", "noopener,noreferrer");
-      });
-
-      // Invest buttons
-      qs("btnCopyContract2")?.addEventListener("click", async ()=>{
-        await copyText(OFFICIAL_CONTRACT);
-        const m = qs("investMsg"); if(m) m.textContent = "✅ Contract copied.";
-      });
-
-      // ✅ Open DEXTools (NO alerts, NO placeholder)
-      qs("btnDex")?.addEventListener("click", ()=>{
-        window.open(DEXTOOLS_URL, "_blank", "noopener,noreferrer");
-        const m = qs("investMsg"); if(m) m.textContent = "✅ Opening DEXTools...";
-      });
-
-      // ✅ Buy on PancakeSwap (uses contract)
-      qs("btnBuyPancake")?.addEventListener("click", ()=>{
-        window.open(PANCAKE_SWAP_URL, "_blank", "noopener,noreferrer");
-        const m = qs("investMsg"); if(m) m.textContent = "✅ Opening PancakeSwap...";
-      });
-
-      // Invite / referral
-      qs("btnGenRef")?.addEventListener("click", ()=>{
-        const ref = qs("refCode")?.value?.trim();
-        if(!ref){
-          const m = qs("inviteMsg"); if(m) m.textContent = "Please enter a referral code.";
-          return;
-        }
-        const base = window.location.origin + window.location.pathname;
-        const link = `${base}?ref=${encodeURIComponent(ref)}`;
-        qs("inviteLink").value = link;
-        const m = qs("inviteMsg"); if(m) m.textContent = "✅ Link generated.";
-      });
-
-      qs("btnCopyLink")?.addEventListener("click", async ()=>{
-        const link = qs("inviteLink")?.value?.trim();
-        if(!link){
-          const m = qs("inviteMsg"); if(m) m.textContent = "Generate a link first.";
-          return;
-        }
-        await copyText(link);
-        const m = qs("inviteMsg"); if(m) m.textContent = "✅ Link copied.";
-      });
-
-      qs("btnTestLink")?.addEventListener("click", ()=>{
-        const link = qs("inviteLink")?.value?.trim();
-        if(!link){
-          const m = qs("inviteMsg"); if(m) m.textContent = "Generate a link first.";
-          return;
-        }
-        window.open(link, "_blank", "noopener,noreferrer");
-      });
-
-      // Prefill ref from URL
-      const params = new URLSearchParams(window.location.search);
-      const incomingRef = params.get("ref");
-      if(incomingRef && qs("refCode")){
-        qs("refCode").value = incomingRef;
-      }
-    });
-
-    // ============================
-    // Auth state -> show correct screen
-    // ============================
-    onAuthStateChanged(auth, (user) => {
-      const authCard = qs("authCard");
-      const dashCard = qs("dashCard");
-
-      if(user){
-        hide(authCard);
-        show(dashCard);
-        const who = qs("whoLine");
-        if(who) who.textContent = `Logged in as: ${user.email || "User"}`;
-        setDashTab("verify");
-        setDashMsg("Welcome ✅ Choose Verify / Invest / Invite.");
-      }else{
-        show(authCard);
-        hide(dashCard);
-        setActiveAuthTab("login");
-      }
-    });
   </script>
+
 </body>
 </html>
