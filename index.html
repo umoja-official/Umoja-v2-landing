@@ -701,16 +701,22 @@ a.smallBtn{
  // Invest: Open DEXTools
 const DEXTOOLS_URL = "https://www.dextools.io/app/en/meme-board";
 
-// Invest: Open DEXTools (wired)
+
+
+// ===============================
+// Invest: Open DEXTools (direct)
+// ===============================
 const DEXTOOLS_URL = "https://www.dextools.io/app/en/meme-board";
 
-qs("btnDex").addEventListener("click", () => {
-  // Open in a new tab safely
-  window.open(DEXTOOLS_URL, "_blank", "noopener,noreferrer");
-  // Optional message (no popup)
-  const msg = qs("dashMsg");
-  if (msg) msg.textContent = "✅ Opening DEXTools…";
-});
+const btnDexEl = qs("btnDex"); // button id="btnDex"
+if (btnDexEl) {
+  btnDexEl.addEventListener("click", () => {
+    window.open(DEXTOOLS_URL, "_blank", "noopener,noreferrer");
+    const msg = qs("dashMsg");
+    if (msg) msg.textContent = "✅ Opening DEXTools...";
+  });
+}
+
 
 
   }
