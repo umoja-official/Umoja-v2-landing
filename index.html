@@ -8,511 +8,462 @@
   <style>
     :root{
       --bg:#07181a;
+      --bg2:#061316;
       --card: rgba(255,255,255,.06);
       --stroke: rgba(255,255,255,.10);
       --text:#eaf6f5;
       --muted: rgba(234,246,245,.72);
-      --accent:#40e0d0;
-      --accent2:#2aa7a1;
+      --accent:#35d7c6;
+      --accent2:#45e0d1;
       --danger:#ff6b6b;
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
-      --radius: 18px;
+      --ok:#45e06a;
     }
-
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       color:var(--text);
       background:
-        radial-gradient(900px 500px at 50% 10%, rgba(64,224,208,.22), transparent 65%),
-        radial-gradient(900px 700px at 50% 110%, rgba(64,224,208,.14), transparent 60%),
-        linear-gradient(180deg, #041013, #07181a 55%, #061517);
+        radial-gradient(900px 520px at 50% 0%, rgba(53,215,198,.18), transparent 60%),
+        radial-gradient(700px 520px at 0% 100%, rgba(69,224,209,.10), transparent 55%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
       overflow-x:hidden;
     }
-
     .wrap{
       min-height:100%;
       display:flex;
-      align-items:flex-start;
+      align-items:center;
       justify-content:center;
-      padding:28px 14px 44px;
+      padding:34px 16px 44px;
     }
-
-    .container{
-      width:min(920px, 100%);
-    }
-
-    .brand{
+    .shell{
+      width:min(820px, 100%);
       text-align:center;
-      margin:12px 0 18px;
     }
 
+    /* ===== BRAND ===== */
+    .brand{margin-bottom:18px}
     .logoWrap{
       display:flex;
       justify-content:center;
-      margin-bottom:10px;
+      align-items:center;
+      margin:0 auto 10px;
     }
 
-    /* ===== LOGO (NO IMAGE) ===== */
+    /* PERFECT CIRCLE + centered + rotating + glow (TEXT-ONLY LOGO) */
     .logo{
-      width:110px;
-      height:110px;
+      width:120px;
+      height:120px;
       border-radius:999px;
       display:grid;
       place-items:center;
-      background: radial-gradient(circle at 35% 35%, rgba(255,255,255,.20), rgba(255,255,255,.06) 55%, rgba(0,0,0,.16));
-      border:1px solid rgba(255,255,255,.16);
-      box-shadow:
-        0 0 0 1px rgba(64,224,208,.18) inset,
-        0 0 26px rgba(64,224,208,.28),
-        0 18px 60px rgba(0,0,0,.40);
       position:relative;
+      margin:0 auto;
       overflow:hidden;
+      background: radial-gradient(circle at 35% 25%, rgba(69,224,209,.30), rgba(0,0,0,.10));
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.10),
+        0 0 26px rgba(53,215,198,.20),
+        0 0 60px rgba(53,215,198,.12);
+      animation: logoFloat 4.5s ease-in-out infinite;
+    }
+    .logo::before{
+      content:"";
+      position:absolute;
+      inset:-18px;
+      border-radius:999px;
+      background:
+        conic-gradient(from 0deg,
+          rgba(53,215,198,.00),
+          rgba(53,215,198,.45),
+          rgba(255,255,255,.10),
+          rgba(53,215,198,.00));
+      filter: blur(10px);
+      opacity:.55;
+      animation: spin 4.8s linear infinite;
+      pointer-events:none;
     }
     .logo::after{
       content:"";
       position:absolute;
-      inset:-35%;
-      background: conic-gradient(from 180deg, rgba(64,224,208,.0), rgba(64,224,208,.28), rgba(64,224,208,.0));
-      animation: spinGlow 6s linear infinite;
-      filter: blur(10px);
-      opacity:.65;
+      inset:10px;
+      border-radius:999px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.10);
       pointer-events:none;
     }
     .logoText{
       position:relative;
       z-index:2;
       font-weight:900;
-      letter-spacing:.12em;
-      font-size:20px;
+      letter-spacing:.18em;
+      font-size:22px;
       text-transform:uppercase;
-      text-shadow: 0 2px 14px rgba(64,224,208,.20);
-      opacity:.95;
+      color:rgba(234,246,245,.95);
+      text-shadow:
+        0 0 10px rgba(53,215,198,.35),
+        0 0 22px rgba(53,215,198,.18);
+      user-select:none;
     }
-
-    @keyframes spinGlow{
-      to { transform: rotate(360deg); }
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes logoFloat{
+      0%,100%{transform: translateY(0)}
+      50%{transform: translateY(-6px)}
     }
 
     h1{
-      margin:0;
-      font-size:46px;
+      margin:6px 0 6px;
+      font-size: clamp(32px, 5vw, 54px);
       letter-spacing:.12em;
-      text-transform:uppercase;
       font-weight:900;
     }
     .sub{
-      margin-top:8px;
       color:var(--muted);
-      letter-spacing:.06em;
       font-weight:600;
+      letter-spacing:.06em;
+      margin:0 0 18px;
     }
 
+    /* ===== CARDS ===== */
     .card{
+      margin:0 auto;
+      width:min(560px, 100%);
       background: var(--card);
-      border:1px solid var(--stroke);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+      border: 1px solid var(--stroke);
+      border-radius: 22px;
+      box-shadow: 0 18px 70px rgba(0,0,0,.35);
       overflow:hidden;
+      backdrop-filter: blur(10px);
     }
-
-    .cardInner{
-      padding:18px;
-    }
+    .cardInner{padding:18px}
 
     .tabs{
       display:flex;
-      gap:8px;
-      background: rgba(0,0,0,.14);
-      border:1px solid rgba(255,255,255,.08);
-      padding:8px;
-      border-radius: 999px;
+      gap:10px;
+      padding:10px;
+      background: rgba(0,0,0,.16);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 16px;
       margin-bottom:14px;
     }
-
     .tab{
       flex:1;
-      border:0;
       padding:12px 12px;
-      border-radius: 999px;
-      background: transparent;
-      color:var(--muted);
-      font-weight:800;
-      letter-spacing:.04em;
-      cursor:pointer;
-      transition: .18s ease;
-      user-select:none;
-    }
-    .tab.active{
-      background: linear-gradient(90deg, rgba(64,224,208,.30), rgba(64,224,208,.18));
-      color:var(--text);
-      box-shadow: 0 0 0 1px rgba(64,224,208,.25) inset;
-    }
-
-    .row{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:space-between;
-      flex-wrap:wrap;
-    }
-
-    .input{
-      width:100%;
       border-radius: 14px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color:var(--text);
-      padding:14px 14px;
-      outline:none;
-      font-size:15px;
-    }
-
-    .inputWrap{
-      position:relative;
-      width:100%;
-    }
-    .rightBtn{
-      position:absolute;
-      right:10px;
-      top:50%;
-      transform:translateY(-50%);
-      border:1px solid rgba(255,255,255,.16);
-      background: rgba(0,0,0,.18);
-      color:var(--text);
-      padding:8px 12px;
-      border-radius: 999px;
-      font-weight:800;
-      cursor:pointer;
-    }
-
-    .btn{
-      border:0;
-      cursor:pointer;
-      border-radius: 14px;
-      padding:14px 16px;
-      font-weight:900;
-      letter-spacing:.04em;
-      color:#052120;
-      background: linear-gradient(90deg, rgba(64,224,208,.95), rgba(64,224,208,.65));
-      box-shadow: 0 10px 26px rgba(64,224,208,.20);
-      width:100%;
-      transition:.15s ease;
-    }
-    .btn:active{ transform: translateY(1px); }
-
-    .btnGhost{
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color:var(--text);
-      box-shadow:none;
-    }
-
-    .small{
-      font-size:13px;
-      color:var(--muted);
-      margin-top:10px;
-      text-align:center;
-      font-weight:700;
-    }
-
-    .divider{
-      height:1px;
-      background: rgba(255,255,255,.08);
-      margin:14px 0;
-    }
-
-    .panelTop{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-bottom:10px;
-    }
-    .pill{
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      border-radius: 999px;
-      padding:10px 14px;
-      font-weight:800;
-      color:var(--muted);
-      flex:1;
-      min-width: 220px;
-    }
-
-    .logout{
-      width:auto;
-      padding:10px 14px;
-      border-radius: 12px;
-      font-weight:900;
-    }
-
-    .miniTabs{
-      display:flex;
-      gap:10px;
-      margin:10px 0 14px;
-    }
-    .miniTabs button{
-      flex:1;
-      padding:12px;
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.08);
       background: rgba(255,255,255,.04);
       color:var(--muted);
+      font-weight:800;
+      letter-spacing:.04em;
+      cursor:pointer;
+      user-select:none;
+      transition: .18s ease;
+    }
+    .tab.active{
+      color:rgba(0,0,0,.78);
+      background: linear-gradient(90deg, rgba(53,215,198,.92), rgba(69,224,209,.72));
+      border-color: rgba(53,215,198,.50);
+      box-shadow: 0 10px 26px rgba(53,215,198,.20);
+    }
+
+    .field{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      margin:10px 0;
+    }
+    input{
+      width:100%;
+      border:0;
+      outline:0;
+      background:transparent;
+      color:var(--text);
+      font-size:16px;
+      padding:6px 2px;
+    }
+    .miniBtn{
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      padding:10px 14px;
+      border-radius: 14px;
+      font-weight:800;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+    .miniBtn:hover{transform: translateY(-1px)}
+    .primaryBtn{
+      width:100%;
+      padding:14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(53,215,198,.55);
+      background: linear-gradient(90deg, rgba(53,215,198,.92), rgba(69,224,209,.72));
+      color: rgba(0,0,0,.78);
+      font-weight:900;
+      letter-spacing:.06em;
+      cursor:pointer;
+      margin-top:10px;
+      transition:.18s ease;
+    }
+    .primaryBtn:hover{transform: translateY(-1px)}
+    .hint{
+      margin-top:10px;
+      color: var(--muted);
+      font-weight:600;
+      font-size: 13px;
+    }
+    .msg{
+      margin-top:12px;
+      padding:10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.16);
+      color: var(--muted);
+      font-weight:700;
+      text-align:left;
+      min-height: 40px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .msg.ok{border-color: rgba(69,224,106,.45)}
+    .msg.err{border-color: rgba(255,107,107,.50); color: rgba(255,220,220,.95)}
+
+    /* ===== DASH ===== */
+    .rowBetween{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      padding:14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      background: rgba(0,0,0,.10);
+    }
+    .pill{
+      padding:10px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      font-weight:800;
+      cursor:pointer;
+    }
+    .btnRow{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      padding:14px 16px 6px;
+      flex-wrap:wrap;
+    }
+    .segBtn{
+      flex:1;
+      min-width: 140px;
+      padding:12px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
       font-weight:900;
       cursor:pointer;
       transition:.18s ease;
     }
-    .miniTabs button.active{
-      background: linear-gradient(90deg, rgba(64,224,208,.22), rgba(64,224,208,.10));
-      color:var(--text);
-      box-shadow: 0 0 0 1px rgba(64,224,208,.22) inset;
+    .segBtn.active{
+      background: linear-gradient(90deg, rgba(53,215,198,.28), rgba(69,224,209,.12));
+      border-color: rgba(53,215,198,.35);
+      box-shadow: 0 12px 28px rgba(53,215,198,.12);
     }
 
-    .section{
-      display:none;
-      animation: fadeIn .18s ease;
+    .panel{
+      padding:14px 16px 18px;
     }
-    .section.active{ display:block; }
-
-    @keyframes fadeIn{
-      from { opacity:0; transform: translateY(4px); }
-      to { opacity:1; transform: translateY(0); }
-    }
-
-    .box{
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.14);
-      border-radius: 14px;
+    .panelBox{
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.09);
+      background: rgba(0,0,0,.12);
       padding:14px;
+      text-align:left;
     }
-
-    .boxTitle{
-      font-weight:950;
+    .panelTitle{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:900;
       letter-spacing:.02em;
       margin:0 0 8px;
-      display:flex;
-      gap:10px;
-      align-items:center;
       font-size:18px;
     }
-
-    .warn{
-      color: rgba(255,255,255,.92);
+    .panelTitle small{
+      color:var(--muted);
       font-weight:800;
-      margin:0 0 10px;
+      font-size: 13px;
     }
-
     .contract{
-      width:100%;
-      text-align:center;
-      padding:12px 10px;
-      border-radius: 12px;
-      border:1px solid rgba(255,255,255,.10);
+      margin-top:10px;
+      padding:12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.05);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-weight:900;
-      letter-spacing:.02em;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-weight:800;
       overflow:auto;
+      white-space:nowrap;
     }
-
-    .twoBtns{
+    .actionRow{
+      margin-top:10px;
       display:flex;
       gap:10px;
-      margin-top:10px;
       flex-wrap:wrap;
     }
-    .twoBtns button{
-      flex:1;
-      min-width: 220px;
+    .actionRow .pill{flex:1; min-width: 160px; text-align:center}
+    .dangerList{
+      margin:12px 0 0;
+      padding:0 0 0 18px;
+      color: rgba(234,246,245,.92);
+      font-weight:650;
     }
-
-    .dont{
-      margin:0;
-      padding-left:18px;
-      color:rgba(234,246,245,.86);
-      font-weight:750;
-      line-height:1.5;
-    }
-    .dont li{ margin:8px 0; }
-
-    .footerMsg{
-      margin-top:14px;
-      text-align:center;
-      color:var(--muted);
-      font-weight:900;
-      letter-spacing:.02em;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.12);
-      border-radius: 14px;
-      padding:12px;
-    }
-
-    .status{
+    .dangerList li{margin:8px 0}
+    .footerNote{
       margin-top:12px;
-      font-weight:900;
-      color:var(--muted);
       text-align:center;
-      min-height: 22px;
+      color: rgba(234,246,245,.80);
+      font-weight:800;
+      padding:10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.10);
     }
-    .status.error{ color: #ffd1d1; }
-    .status.ok{ color: #bff8f2; }
 
-    /* Mobile tweaks */
-    @media (max-width:520px){
-      h1{ font-size:34px; }
-      .logo{ width:94px; height:94px; }
-      .logoText{ font-size:18px; }
-      .cardInner{ padding:14px; }
-      .pill{ min-width: 100%; }
-      .twoBtns button{ min-width: 100%; }
+    /* ===== MOBILE ===== */
+    @media (max-width: 520px){
+      .logo{width:96px; height:96px}
+      .logoText{font-size:18px}
+      .cardInner{padding:14px}
+      .segBtn{min-width: 120px}
+      .actionRow .pill{min-width: 140px}
     }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <div class="container">
+    <div class="shell">
 
-      <div class="brand">
+      <header class="brand">
         <div class="logoWrap">
+          <!-- TEXT-ONLY LOGO (no image) -->
           <div class="logo" aria-label="UMOJA Logo">
             <div class="logoText">UMOJA</div>
           </div>
         </div>
         <h1>UMOJA V2</h1>
         <div class="sub">Official Landing • Verify • Invest • Invite</div>
-      </div>
+      </header>
 
       <!-- AUTH CARD -->
-      <section id="authCard" class="card" style="display:block;">
+      <section id="authCard" class="card">
         <div class="cardInner">
-          <div class="tabs" role="tablist">
+          <div class="tabs">
             <button id="tabRegister" class="tab active" type="button">Register</button>
             <button id="tabLogin" class="tab" type="button">Login</button>
           </div>
 
-          <input id="email" class="input" type="email" placeholder="Email (example@gmail.com)" autocomplete="email" />
-
-          <div style="height:10px"></div>
-
-          <div class="inputWrap">
-            <input id="password" class="input" type="password" placeholder="Password" autocomplete="current-password" />
-            <button id="btnShowPw" class="rightBtn" type="button">Show</button>
+          <div class="field">
+            <input id="email" type="email" placeholder="Email (example@gmail.com)" autocomplete="email" />
           </div>
 
-          <div style="height:12px"></div>
+          <div class="field">
+            <input id="password" type="password" placeholder="Password" autocomplete="current-password" />
+            <button id="togglePw" class="miniBtn" type="button">Show</button>
+          </div>
 
-          <button id="btnAuth" class="btn" type="button">Register</button>
+          <button id="submitBtn" class="primaryBtn" type="button">Create Account</button>
+          <div class="hint" id="hintText">Register using email + password.</div>
 
-          <div class="small" id="authHint">Create an account using email + password.</div>
-
-          <div id="authMsg" class="status"></div>
+          <div id="authMsg" class="msg" style="display:none;"></div>
         </div>
       </section>
 
       <!-- DASHBOARD CARD -->
-      <section id="dashCard" class="card" style="display:none; margin-top:16px;">
-        <div class="cardInner">
+      <section id="dashCard" class="card" style="display:none;">
+        <div class="rowBetween">
+          <div style="font-weight:900;">Logged in as: <span id="who" style="color:rgba(69,224,209,.95)"></span></div>
+          <button id="logoutBtn" class="pill" type="button">Logout</button>
+        </div>
 
-          <div class="panelTop">
-            <div class="pill" id="loggedAs">Logged in as: —</div>
-            <button id="btnLogout" class="btn btnGhost logout" type="button">Logout</button>
-          </div>
+        <div class="btnRow">
+          <button class="segBtn active" id="btnVerifyTab" type="button">Verify</button>
+          <button class="segBtn" id="btnInvestTab" type="button">Invest</button>
+          <button class="segBtn" id="btnInviteTab" type="button">Invite</button>
+        </div>
 
-          <div class="miniTabs">
-            <button id="miniVerify" class="active" type="button">Verify</button>
-            <button id="miniInvest" type="button">Invest</button>
-            <button id="miniInvite" type="button">Invite</button>
-          </div>
-
+        <div class="panel">
           <!-- VERIFY -->
-          <div id="secVerify" class="section active">
-            <div class="box">
-              <div class="boxTitle">✅ Verify Contract</div>
-              <p class="warn">Always verify the official contract address before sending funds.</p>
+          <div id="panelVerify" class="panelBox">
+            <div class="panelTitle">✅ Verify Contract <small>Always verify before sending funds.</small></div>
 
-              <div id="contractAddr" class="contract">
-                0x8D6A79567a701FCe55b62C15d0fbB765913ac84a
-              </div>
+            <div class="contract" id="contractBox">0x8D6A79567a701FCe55b62C15d0fbB765913ac84a</div>
 
-              <div class="twoBtns">
-                <button id="btnCopyContract" class="btn btnGhost" type="button">Copy Contract</button>
-                <button id="btnOpenBscscan" class="btn btnGhost" type="button">Open on BscScan</button>
-              </div>
-
-              <div class="divider"></div>
-
-              <div class="boxTitle" style="margin-top:0;">🚫 Don’t do this</div>
-              <ul class="dont">
-                <li>Don’t trust screenshots or forwarded messages without verification.</li>
-                <li>Don’t send funds to any address that isn’t officially published.</li>
-                <li>Don’t buy “Umoja” tokens that are not the verified contract.</li>
-              </ul>
+            <div class="actionRow">
+              <button id="copyContract" class="pill" type="button">Copy Contract</button>
+              <button id="openBscScan" class="pill" type="button">Open on BscScan</button>
             </div>
 
-            <div class="footerMsg">Welcome ✅ Choose Verify / Invest / Invite.</div>
+            <div class="panelTitle" style="margin-top:14px;">🚫 Don’t do this</div>
+            <ul class="dangerList">
+              <li>Don’t trust screenshots or forwarded messages without verification.</li>
+              <li>Don’t send funds to any address that isn’t officially published.</li>
+              <li>Don’t buy “Umoja” tokens that are not the verified contract.</li>
+            </ul>
+
+            <div class="footerNote">Welcome ✅ Choose Verify / Invest / Invite.</div>
           </div>
 
           <!-- INVEST -->
-          <div id="secInvest" class="section">
-            <div class="box">
-              <div class="boxTitle">🦊 How to Invest (MetaMask)</div>
-              <ol class="dont" style="margin-top:0;">
-                <li>Install MetaMask (browser extension or mobile app).</li>
-                <li>Add / switch to <b>BNB Smart Chain</b> network.</li>
-                <li>Fund your wallet with BNB (gas + investment).</li>
-                <li>Import the token using the official contract address.</li>
-                <li>Buy using your official DEX link.</li>
-              </ol>
+          <div id="panelInvest" class="panelBox" style="display:none;">
+            <div class="panelTitle">🦊 How to Invest (MetaMask)</div>
+            <ol class="dangerList" style="padding-left:18px; margin-top:8px;">
+              <li>Install MetaMask (browser extension or mobile app).</li>
+              <li>Add / switch to <b>BNB Smart Chain</b> network.</li>
+              <li>Fund your wallet with <b>BNB</b> (gas + investment).</li>
+              <li>Import the token using the <b>official contract address</b>.</li>
+              <li>Buy using your official DEX link (you can plug it in later).</li>
+            </ol>
 
-              <div class="divider"></div>
-
-              <div class="boxTitle">Token Import (copy contract)</div>
-              <div class="twoBtns">
-                <button id="btnCopyContract2" class="btn btnGhost" type="button">Copy Contract</button>
-                <button id="btnDex" class="btn btnGhost" type="button">Open DEXTools</button>
-              </div>
-
-              <div style="margin-top:10px; color:var(--muted); font-weight:800;">
-                Tip: Make sure MetaMask is on <b>BNB Smart Chain</b> before swapping.
-              </div>
+            <div class="panelTitle" style="margin-top:14px;">Token Import <small>(copy contract)</small></div>
+            <div class="actionRow">
+              <button id="copyContract2" class="pill" type="button">Copy Contract</button>
+              <button id="btnDex" class="pill" type="button">Open DEXTools</button>
             </div>
 
-            <div class="footerMsg">Welcome ✅ Choose Verify / Invest / Invite.</div>
+            <div class="hint" style="text-align:left;margin-top:10px;">
+              Tip: Make sure MetaMask is on <b>BNB Smart Chain</b> before swapping.
+            </div>
+
+            <div class="footerNote" id="dashMsg" style="display:none;"></div>
           </div>
 
           <!-- INVITE -->
-          <div id="secInvite" class="section">
-            <div class="box">
-              <div class="boxTitle">🔗 Invite Link</div>
-              <p class="warn" style="margin-top:0;">
-                Generate a shareable invitation link (your referral code is saved in the URL).
-              </p>
+          <div id="panelInvite" class="panelBox" style="display:none;">
+            <div class="panelTitle">🎟️ Invite <small>Share your referral link.</small></div>
 
-              <input id="refCode" class="input" type="text" placeholder="Your code (example: FISTON01)" />
-
-              <div style="height:10px"></div>
-
-              <button id="btnGenInvite" class="btn btnGhost" type="button">Generate Invite Link</button>
-
-              <div style="height:10px"></div>
-
-              <div id="inviteLinkBox" class="contract" style="display:none;"></div>
-
-              <div class="twoBtns" style="margin-top:10px;">
-                <button id="btnCopyInvite" class="btn btnGhost" type="button">Copy Invite Link</button>
-                <button id="btnOpenInvite" class="btn btnGhost" type="button">Open Invite Link</button>
-              </div>
+            <div class="hint" style="text-align:left;margin-top:0;">
+              Your invite code is saved in this browser (simple local demo).
             </div>
 
-            <div class="footerMsg">Welcome ✅ Choose Verify / Invest / Invite.</div>
-          </div>
+            <div class="contract" id="inviteCodeBox">—</div>
 
-          <div id="dashMsg" class="status"></div>
+            <div class="actionRow">
+              <button id="genInvite" class="pill" type="button">Generate / Refresh Code</button>
+              <button id="copyInvite" class="pill" type="button">Copy Invite Link</button>
+            </div>
+
+            <div class="footerNote">Post your invite link on social media to bring new investors.</div>
+          </div>
         </div>
       </section>
 
@@ -520,43 +471,45 @@
   </div>
 
   <script type="module">
-    // ===== Helpers =====
+    // =========================
+    // 0) HELPERS
+    // =========================
     const qs = (id) => document.getElementById(id);
-    const setMsg = (el, text, kind="") => {
-      if (!el) return;
-      el.classList.remove("error","ok");
-      if (kind) el.classList.add(kind);
-      el.textContent = text || "";
-    };
-    const safeOpen = (url) => window.open(url, "_blank", "noopener,noreferrer");
+    const show = (el) => el && (el.style.display = "");
+    const hide = (el) => el && (el.style.display = "none");
+    const setActive = (btn, on) => btn && btn.classList.toggle("active", !!on);
 
-    async function copyText(text){
-      try{
-        await navigator.clipboard.writeText(text);
-        return true;
-      }catch(e){
-        // fallback
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        document.body.removeChild(ta);
-        return true;
-      }
+    const authCard = qs("authCard");
+    const dashCard = qs("dashCard");
+
+    const authMsg = qs("authMsg");
+    const dashMsg = qs("dashMsg");
+
+    function setAuthMessage(text, type="info"){
+      if(!authMsg) return;
+      authMsg.className = "msg";
+      if(type==="ok") authMsg.classList.add("ok");
+      if(type==="err") authMsg.classList.add("err");
+      authMsg.textContent = text;
+      show(authMsg);
+    }
+    function clearAuthMessage(){
+      if(!authMsg) return;
+      authMsg.textContent = "";
+      hide(authMsg);
+    }
+    function setDashMessage(text){
+      if(!dashMsg) return;
+      dashMsg.textContent = text;
+      show(dashMsg);
+      setTimeout(()=> hide(dashMsg), 1800);
     }
 
-    // ===== Firebase (Modular CDN) =====
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-    import {
-      getAuth,
-      createUserWithEmailAndPassword,
-      signInWithEmailAndPassword,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-
-    // IMPORTANT: Replace with YOUR real config from Firebase Console
+    // =========================
+    // 1) CONFIG YOU MUST SET
+    // =========================
+    // IMPORTANT: Paste your REAL Firebase config values here (from Firebase Console).
+    // If you see "auth/api-key-not-valid", your apiKey here is wrong OR not from this project.
     const firebaseConfig = {
   apiKey: "AIzaSyCbQ9fNYrq_qko-GUhKi3xSMkb_IKhrBB0",
   authDomain: "umoja-v2-landing.firebaseapp.com",
@@ -566,204 +519,228 @@
   appId: "1:964715983746:web:b4bb1615f35d773ae7159b"
 };
 
+    // Your official contract:
+    const OFFICIAL_CONTRACT = "0x8D6A79567a701FCe55b62C15d0fbB765913ac84a";
+
+    // BscScan link:
+    const BSCSCAN_URL = `https://bscscan.com/address/${OFFICIAL_CONTRACT}`;
+
+    // DEXTools (set later if you want). For now it opens DEXTools main page:
+    const DEXTOOLS_URL = "https://www.dextools.io/app/en/bnb";
+
+    // =========================
+    // 2) FIREBASE (MODULAR CDN)
+    // =========================
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+    // Init Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // ===== Constants =====
-    const OFFICIAL_CONTRACT = "0x8D6A79567a701FCe55b62C15d0fbB765913ac84a";
-    const DEXTOOLS_URL = "https://www.dextools.io/app/en/bnb/pair-explorer"; // change if you want
-    const BSCSCAN_TOKEN_URL = (addr) => `https://bscscan.com/token/${addr}`;
+    // =========================
+    // 3) AUTH UI
+    // =========================
+    let mode = "register"; // or "login"
 
-    // ===== UI refs =====
     const tabRegister = qs("tabRegister");
     const tabLogin = qs("tabLogin");
-    const btnAuth = qs("btnAuth");
-    const authHint = qs("authHint");
-    const authMsg = qs("authMsg");
+    const submitBtn = qs("submitBtn");
+    const hintText = qs("hintText");
+
     const emailEl = qs("email");
     const pwEl = qs("password");
-    const btnShowPw = qs("btnShowPw");
-
-    const authCard = qs("authCard");
-    const dashCard = qs("dashCard");
-    const loggedAs = qs("loggedAs");
-    const btnLogout = qs("btnLogout");
-    const dashMsg = qs("dashMsg");
-
-    const miniVerify = qs("miniVerify");
-    const miniInvest = qs("miniInvest");
-    const miniInvite = qs("miniInvite");
-
-    const secVerify = qs("secVerify");
-    const secInvest = qs("secInvest");
-    const secInvite = qs("secInvite");
-
-    const contractAddr = qs("contractAddr");
-    if (contractAddr) contractAddr.textContent = OFFICIAL_CONTRACT;
-
-    // ===== Auth mode =====
-    let mode = "register"; // or "login"
+    const togglePw = qs("togglePw");
 
     function setMode(next){
       mode = next;
-      tabRegister.classList.toggle("active", mode === "register");
-      tabLogin.classList.toggle("active", mode === "login");
-      btnAuth.textContent = mode === "register" ? "Register" : "Login";
-      authHint.textContent = mode === "register"
-        ? "Create an account using email + password."
+      clearAuthMessage();
+      setActive(tabRegister, mode==="register");
+      setActive(tabLogin, mode==="login");
+      if(submitBtn) submitBtn.textContent = mode==="register" ? "Create Account" : "Login";
+      if(hintText) hintText.textContent = mode==="register"
+        ? "Register using email + password."
         : "Use the same email + password you registered with.";
-      setMsg(authMsg, "");
+      if(pwEl) pwEl.autocomplete = mode==="register" ? "new-password" : "current-password";
     }
 
-    tabRegister.addEventListener("click", ()=>setMode("register"));
-    tabLogin.addEventListener("click", ()=>setMode("login"));
+    tabRegister?.addEventListener("click", ()=> setMode("register"));
+    tabLogin?.addEventListener("click", ()=> setMode("login"));
 
-    btnShowPw.addEventListener("click", ()=>{
+    togglePw?.addEventListener("click", ()=>{
+      if(!pwEl) return;
       const isPw = pwEl.type === "password";
       pwEl.type = isPw ? "text" : "password";
-      btnShowPw.textContent = isPw ? "Hide" : "Show";
+      togglePw.textContent = isPw ? "Hide" : "Show";
     });
 
-    btnAuth.addEventListener("click", async ()=>{
-      const email = (emailEl.value || "").trim();
-      const password = pwEl.value || "";
+    submitBtn?.addEventListener("click", async ()=>{
+      clearAuthMessage();
+      const email = (emailEl?.value || "").trim();
+      const password = (pwEl?.value || "").trim();
 
-      setMsg(authMsg, "");
-      if (!email || !password){
-        setMsg(authMsg, "Please enter email and password.", "error");
+      if(!email || !password){
+        setAuthMessage("Please enter email and password.", "err");
         return;
       }
 
-      btnAuth.disabled = true;
-      btnAuth.style.opacity = ".85";
-
       try{
-        if (mode === "register"){
+        if(mode==="register"){
           await createUserWithEmailAndPassword(auth, email, password);
-          setMsg(authMsg, "✅ Account created. Logging you in…", "ok");
+          setAuthMessage("✅ Account created. Logging you in…", "ok");
         }else{
           await signInWithEmailAndPassword(auth, email, password);
-          setMsg(authMsg, "✅ Logged in successfully.", "ok");
+          setAuthMessage("✅ Logged in successfully.", "ok");
         }
-      }catch(err){
-        setMsg(authMsg, `Firebase: ${err?.message || err}`, "error");
-      }finally{
-        btnAuth.disabled = false;
-        btnAuth.style.opacity = "1";
-      }
-    });
-
-    // ===== Dashboard tabs =====
-    function setDashTab(which){
-      miniVerify.classList.toggle("active", which==="verify");
-      miniInvest.classList.toggle("active", which==="invest");
-      miniInvite.classList.toggle("active", which==="invite");
-
-      secVerify.classList.toggle("active", which==="verify");
-      secInvest.classList.toggle("active", which==="invest");
-      secInvite.classList.toggle("active", which==="invite");
-      setMsg(dashMsg, "");
-    }
-
-    miniVerify.addEventListener("click", ()=>setDashTab("verify"));
-    miniInvest.addEventListener("click", ()=>setDashTab("invest"));
-    miniInvite.addEventListener("click", ()=>setDashTab("invite"));
-
-    btnLogout.addEventListener("click", async ()=>{
-      try{
-        await signOut(auth);
       }catch(e){
-        setMsg(dashMsg, `Logout error: ${e?.message || e}`, "error");
+        const msg = (e && e.message) ? e.message : "Authentication error.";
+        setAuthMessage("Firebase: " + msg, "err");
       }
     });
 
-    // ===== Verify actions =====
-    const btnCopyContract = qs("btnCopyContract");
-    const btnCopyContract2 = qs("btnCopyContract2");
-    const btnOpenBscscan = qs("btnOpenBscscan");
+    // =========================
+    // 4) DASH UI + PANELS
+    // =========================
+    const who = qs("who");
+    const logoutBtn = qs("logoutBtn");
 
-    const doCopy = async ()=>{
-      await copyText(OFFICIAL_CONTRACT);
-      setMsg(dashMsg, "✅ Contract copied.", "ok");
-    };
+    const btnVerifyTab = qs("btnVerifyTab");
+    const btnInvestTab = qs("btnInvestTab");
+    const btnInviteTab = qs("btnInviteTab");
 
-    btnCopyContract.addEventListener("click", doCopy);
-    btnCopyContract2.addEventListener("click", doCopy);
+    const panelVerify = qs("panelVerify");
+    const panelInvest = qs("panelInvest");
+    const panelInvite = qs("panelInvite");
 
-    btnOpenBscscan.addEventListener("click", ()=>{
-      safeOpen(BSCSCAN_TOKEN_URL(OFFICIAL_CONTRACT));
-    });
-
-    // ===== Invest actions =====
-    const btnDex = qs("btnDex");
-    btnDex.addEventListener("click", ()=>{
-      safeOpen(DEXTOOLS_URL);
-      setMsg(dashMsg, "✅ Opening DEXTools…", "ok");
-    });
-
-    // ===== Invite actions =====
-    const refCodeEl = qs("refCode");
-    const btnGenInvite = qs("btnGenInvite");
-    const inviteLinkBox = qs("inviteLinkBox");
-    const btnCopyInvite = qs("btnCopyInvite");
-    const btnOpenInvite = qs("btnOpenInvite");
-
-    function buildInviteLink(code){
-      const base = window.location.origin + window.location.pathname;
-      const u = new URL(base);
-      if (code) u.searchParams.set("ref", code);
-      return u.toString();
+    function showPanel(which){
+      // tabs
+      setActive(btnVerifyTab, which==="verify");
+      setActive(btnInvestTab, which==="invest");
+      setActive(btnInviteTab, which==="invite");
+      // panels
+      panelVerify.style.display = (which==="verify") ? "" : "none";
+      panelInvest.style.display = (which==="invest") ? "" : "none";
+      panelInvite.style.display = (which==="invite") ? "" : "none";
     }
 
-    btnGenInvite.addEventListener("click", ()=>{
-      const code = (refCodeEl.value || "").trim();
-      if (!code){
-        setMsg(dashMsg, "Please enter a referral code first.", "error");
-        return;
-      }
-      const link = buildInviteLink(code);
-      inviteLinkBox.style.display = "block";
-      inviteLinkBox.textContent = link;
-      setMsg(dashMsg, "✅ Invite link generated.", "ok");
+    btnVerifyTab?.addEventListener("click", ()=> showPanel("verify"));
+    btnInvestTab?.addEventListener("click", ()=> showPanel("invest"));
+    btnInviteTab?.addEventListener("click", ()=> showPanel("invite"));
+
+    logoutBtn?.addEventListener("click", async ()=>{
+      try{ await signOut(auth); } catch(_e){}
     });
 
-    btnCopyInvite.addEventListener("click", async ()=>{
-      const link = inviteLinkBox.textContent.trim();
-      if (!link){
-        setMsg(dashMsg, "Generate an invite link first.", "error");
-        return;
+    // Contract actions
+    qs("contractBox").textContent = OFFICIAL_CONTRACT;
+
+    function copyText(text){
+      return navigator.clipboard.writeText(text);
+    }
+
+    qs("copyContract")?.addEventListener("click", async ()=>{
+      try{
+        await copyText(OFFICIAL_CONTRACT);
+        setDashMessage("✅ Copied contract.");
+      }catch(e){
+        setDashMessage("❌ Copy failed (browser blocked).");
       }
-      await copyText(link);
-      setMsg(dashMsg, "✅ Invite link copied.", "ok");
     });
 
-    btnOpenInvite.addEventListener("click", ()=>{
-      const link = inviteLinkBox.textContent.trim();
-      if (!link){
-        setMsg(dashMsg, "Generate an invite link first.", "error");
-        return;
+    qs("copyContract2")?.addEventListener("click", async ()=>{
+      try{
+        await copyText(OFFICIAL_CONTRACT);
+        setDashMessage("✅ Copied contract.");
+      }catch(e){
+        setDashMessage("❌ Copy failed (browser blocked).");
       }
-      safeOpen(link);
     });
 
-    // Prefill ref from URL if present
-    const params = new URLSearchParams(window.location.search);
-    const ref = params.get("ref");
-    if (ref) refCodeEl.value = ref;
+    qs("openBscScan")?.addEventListener("click", ()=>{
+      window.open(BSCSCAN_URL, "_blank", "noopener,noreferrer");
+    });
 
-    // ===== Auth state =====
+    // DEXTools button
+    qs("btnDex")?.addEventListener("click", ()=>{
+      window.open(DEXTOOLS_URL, "_blank", "noopener,noreferrer");
+      setDashMessage("✅ Opening DEXTools…");
+    });
+
+    // Invite
+    const inviteCodeBox = qs("inviteCodeBox");
+    const INVITE_KEY = "umoja_invite_code";
+
+    function randomCode(len=8){
+      const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+      let out="";
+      for(let i=0;i<len;i++) out += chars[Math.floor(Math.random()*chars.length)];
+      return out;
+    }
+    function getOrCreateInvite(){
+      let code = localStorage.getItem(INVITE_KEY);
+      if(!code){
+        code = "UMJ-" + randomCode(8);
+        localStorage.setItem(INVITE_KEY, code);
+      }
+      return code;
+    }
+    function refreshInvite(){
+      const code = "UMJ-" + randomCode(8);
+      localStorage.setItem(INVITE_KEY, code);
+      return code;
+    }
+    function inviteLink(code){
+      const url = new URL(window.location.href);
+      url.searchParams.set("ref", code);
+      return url.toString();
+    }
+    function renderInvite(){
+      const code = getOrCreateInvite();
+      inviteCodeBox.textContent = code;
+    }
+
+    qs("genInvite")?.addEventListener("click", ()=>{
+      const code = refreshInvite();
+      inviteCodeBox.textContent = code;
+      setDashMessage("✅ New invite code generated.");
+    });
+
+    qs("copyInvite")?.addEventListener("click", async ()=>{
+      const code = getOrCreateInvite();
+      const link = inviteLink(code);
+      try{
+        await copyText(link);
+        setDashMessage("✅ Copied invite link.");
+      }catch(e){
+        setDashMessage("❌ Copy failed (browser blocked).");
+      }
+    });
+
+    // =========================
+    // 5) AUTH STATE ROUTING
+    // =========================
     onAuthStateChanged(auth, (user)=>{
-      if (user){
-        authCard.style.display = "none";
-        dashCard.style.display = "block";
-        loggedAs.textContent = `Logged in as: ${user.email || user.uid}`;
-        setDashTab("verify");
+      if(user){
+        hide(authCard);
+        show(dashCard);
+        if(who) who.textContent = user.email || "user";
+        showPanel("verify");
+        renderInvite();
       }else{
-        dashCard.style.display = "none";
-        authCard.style.display = "block";
-        setMode("register");
+        hide(dashCard);
+        show(authCard);
+        setMode(mode); // keep current mode
       }
     });
+
+    // Default mode
+    setMode("register");
   </script>
 </body>
 </html>
