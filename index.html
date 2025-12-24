@@ -1,207 +1,651 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>UMOJA V2 • Official Landing</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>UMOJA V2 • Official Landing</title>
 
-<style>
-:root {
-  --bg: #07181a;
-  --card: rgba(255,255,255,0.06);
-  --stroke: rgba(255,255,255,0.12);
-  --accent: #40e0d0;
-  --text: #eaf6f5;
-  --muted: rgba(234,246,245,0.65);
-}
+  <!-- OPTIONAL: If you add a favicon later, put it in /assets/favicon.png -->
+  <!-- <link rel="icon" type="image/png" href="./assets/favicon.png" /> -->
 
-* {
-  box-sizing: border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-}
+  <style>
+    :root{
+      --bg1:#031114;
+      --bg2:#052226;
+      --card: rgba(255,255,255,.06);
+      --stroke: rgba(255,255,255,.12);
+      --text:#eaf6f5;
+      --muted: rgba(234,246,245,.70);
+      --muted2: rgba(234,246,245,.52);
 
-body {
-  margin: 0;
-  background: radial-gradient(circle at top, #0c2b2f, #050c0e);
-  color: var(--text);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+      --accent1:#37d6c8;
+      --accent2:#2aa6ff;
 
-/* ===== LAYOUT ===== */
-.wrapper {
-  width: 100%;
-  max-width: 420px;
-  padding: 24px;
-}
+      --shadow: 0 18px 55px rgba(0,0,0,.45);
+      --radius: 22px;
+    }
 
-.card {
-  background: var(--card);
-  border: 1px solid var(--stroke);
-  border-radius: 20px;
-  padding: 24px;
-  backdrop-filter: blur(14px);
-}
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(900px 600px at 50% 0%, rgba(55,214,200,.22), transparent 60%),
+        radial-gradient(700px 500px at 15% 20%, rgba(42,166,255,.18), transparent 55%),
+        linear-gradient(180deg, var(--bg2), var(--bg1));
+      overflow-x:hidden;
+    }
 
-/* ===== LOGO ===== */
-.logo {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 16px;
-}
+    .wrap{
+      min-height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px 16px 40px;
+    }
 
-.logo img {
-  width: 120px;
-  height: auto;
-  display: block;
-  filter: drop-shadow(0 0 24px rgba(64,224,208,0.45));
-}
+    .shell{
+      width:min(980px, 100%);
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:16px;
+      align-items:start;
+      justify-items:center;
+    }
 
-h1 {
-  text-align: center;
-  margin: 8px 0 4px;
-  letter-spacing: 0.18em;
-  font-weight: 800;
-}
+    /* ----- Brand header ----- */
+    .brand{
+      text-align:center;
+      padding-top:6px;
+      padding-bottom:4px;
+    }
 
-.sub {
-  text-align: center;
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 20px;
-}
+    .logoWrap{
+      display:flex;
+      justify-content:center;
+      margin-bottom:12px;
+    }
 
-/* ===== TABS ===== */
-.tabs {
-  display: flex;
-  background: rgba(255,255,255,0.05);
-  border-radius: 999px;
-  overflow: hidden;
-  margin-bottom: 16px;
-}
+    /* NEW LOGO STYLE (no circle crop problems) */
+    .logoBox{
+      width:92px;
+      height:92px;
+      border-radius:18px;
+      background: rgba(0,0,0,.22);
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.08),
+        0 0 45px rgba(55,214,200,.22);
+      overflow:hidden;
+      display:grid;
+      place-items:center;
+      animation: glowPulse 3.2s ease-in-out infinite;
+    }
+    .logoBox img{
+      width:100%;
+      height:100%;
+      object-fit:cover; /* keep rectangle logo visible */
+      display:block;
+      transform: scale(1.02);
+    }
 
-.tabs button {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  background: transparent;
-  color: var(--muted);
-  cursor: pointer;
-}
+    @keyframes glowPulse{
+      0%,100%{ box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 0 45px rgba(55,214,200,.18); }
+      50%{ box-shadow: 0 0 0 1px rgba(255,255,255,.12), 0 0 65px rgba(42,166,255,.22); }
+    }
 
-.tabs button.active {
-  background: var(--accent);
-  color: #022;
-  font-weight: 700;
-}
+    h1{
+      margin:0;
+      font-size: clamp(34px, 5vw, 56px);
+      letter-spacing:.12em;
+      font-weight:900;
+      text-transform:uppercase;
+      text-shadow: 0 10px 26px rgba(0,0,0,.42);
+    }
 
-/* ===== INPUTS ===== */
-.input {
-  width: 100%;
-  padding: 14px;
-  border-radius: 999px;
-  border: 1px solid var(--stroke);
-  background: rgba(255,255,255,0.08);
-  color: var(--text);
-  margin-bottom: 12px;
-}
+    .sub{
+      margin-top:6px;
+      font-weight:600;
+      color: var(--muted);
+      letter-spacing:.06em;
+    }
 
-.input::placeholder {
-  color: var(--muted);
-}
+    /* ----- Cards ----- */
+    .card{
+      width:min(720px, 100%);
+      background: var(--card);
+      border:1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
 
-/* ===== BUTTON ===== */
-.main-btn {
-  width: 100%;
-  padding: 14px;
-  border-radius: 999px;
-  border: none;
-  background: linear-gradient(135deg, #42f5e6, #2db4ff);
-  color: #022;
-  font-weight: 800;
-  cursor: pointer;
-  margin-top: 6px;
-}
+    .cardInner{ padding:18px; }
 
-.note {
-  text-align: center;
-  font-size: 12px;
-  color: var(--muted);
-  margin-top: 10px;
-}
+    /* Tabs */
+    .tabs{
+      display:flex;
+      gap:8px;
+      background: rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 999px;
+      padding:6px;
+      margin-bottom:14px;
+    }
+    .tab{
+      flex:1;
+      border:0;
+      border-radius:999px;
+      padding:10px 12px;
+      cursor:pointer;
+      background:transparent;
+      color:var(--muted);
+      font-weight:800;
+      letter-spacing:.04em;
+    }
+    .tab.active{
+      color:#062427;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      box-shadow: 0 10px 22px rgba(0,0,0,.25);
+    }
 
-.error {
-  margin-top: 12px;
-  font-size: 13px;
-  color: #ff7b7b;
-  text-align: center;
-}
-</style>
+    /* Inputs */
+    .field{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 999px;
+      padding:10px 14px;
+      margin:10px 0;
+    }
+    .field input{
+      width:100%;
+      border:0;
+      outline:0;
+      background:transparent;
+      color:var(--text);
+      font-size:16px;
+    }
+    .miniBtn{
+      border:0;
+      border-radius:999px;
+      padding:8px 12px;
+      cursor:pointer;
+      background: rgba(255,255,255,.10);
+      color: var(--text);
+      font-weight:800;
+    }
+    .miniBtn:hover{ background: rgba(255,255,255,.16); }
+
+    .primaryBtn{
+      width:100%;
+      border:0;
+      border-radius: 999px;
+      padding:14px 14px;
+      cursor:pointer;
+      font-weight:900;
+      letter-spacing:.06em;
+      color:#062427;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      box-shadow: 0 16px 30px rgba(0,0,0,.25);
+      margin-top:10px;
+    }
+    .primaryBtn:disabled{
+      opacity:.55;
+      cursor:not-allowed;
+    }
+
+    .hint{
+      margin-top:10px;
+      text-align:center;
+      color: var(--muted2);
+      font-weight:600;
+      letter-spacing:.02em;
+      font-size:13px;
+    }
+
+    .errorBox{
+      display:none;
+      margin-top:12px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,90,90,.35);
+      background: rgba(255,60,60,.10);
+      color: rgba(255,220,220,.95);
+      font-weight:700;
+    }
+
+    /* ----- App (after login) ----- */
+    .topBar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 18px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+    }
+    .who{
+      font-weight:800;
+      color: var(--muted);
+      letter-spacing:.02em;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 72%;
+    }
+    .ghostBtn{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      font-weight:900;
+      border-radius:999px;
+      padding:10px 14px;
+      cursor:pointer;
+    }
+    .ghostBtn:hover{ background: rgba(255,255,255,.14); }
+
+    .pillTabs{
+      display:flex;
+      gap:10px;
+      padding:14px 18px 0;
+      flex-wrap:wrap;
+    }
+    .pill{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      font-weight:900;
+      border-radius: 14px;
+      padding:12px 16px;
+      cursor:pointer;
+      min-width: 140px;
+      text-align:center;
+    }
+    .pill.active{
+      background: rgba(55,214,200,.18);
+      border-color: rgba(55,214,200,.32);
+    }
+
+    .panel{
+      padding:16px 18px 18px;
+    }
+
+    .sectionTitle{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:1000;
+      letter-spacing:.02em;
+      font-size:20px;
+      margin:8px 0 10px;
+    }
+
+    .box{
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+      padding:14px;
+      margin-top:12px;
+    }
+
+    .muted{ color: var(--muted); font-weight:650; }
+
+    .contractLine{
+      user-select: all;
+      word-break: break-all;
+      font-weight:900;
+      letter-spacing:.02em;
+      padding:12px 12px;
+      border-radius: 14px;
+      background: rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.10);
+      margin-top:10px;
+    }
+
+    .row2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+    @media (max-width: 520px){
+      .row2{ grid-template-columns:1fr; }
+      .pill{ min-width: 120px; flex:1; }
+    }
+
+    .smallBtn{
+      width:100%;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      font-weight:900;
+      border-radius: 14px;
+      padding:12px 12px;
+      cursor:pointer;
+    }
+    .smallBtn:hover{ background: rgba(255,255,255,.14); }
+
+    .warnList{
+      margin:10px 0 0;
+      padding-left:18px;
+      color: rgba(234,246,245,.92);
+      font-weight:700;
+      line-height:1.55;
+    }
+
+    .footerNote{
+      text-align:center;
+      color: var(--muted2);
+      font-weight:800;
+      letter-spacing:.02em;
+      padding:12px 18px 18px;
+    }
+  </style>
 </head>
 
 <body>
+  <div class="wrap">
+    <div class="shell">
 
-<div class="wrapper">
-  <div class="card">
+      <!-- BRAND -->
+      <div class="brand">
+        <div class="logoWrap">
+          <div class="logoBox">
+            <img
+              id="umojaLogo"
+              src="./assets/umoja-logo.png"
+              alt="UMOJA Logo"
+              onerror="this.style.display='none'; this.parentElement.style.padding='10px'; this.parentElement.innerHTML='<div style=&quot;font-weight:1000; letter-spacing:.12em; opacity:.9; font-size:18px;&quot;>UMOJA</div>';"
+            />
+          </div>
+        </div>
 
-    <!-- LOGO -->
-    <div class="logo">
-      <img src="./assets/umoja-logo.png" alt="UMOJA Logo" />
+        <h1>UMOJA V2</h1>
+        <div class="sub">Official Landing • Verify • Invest • Invite</div>
+      </div>
+
+      <!-- AUTH CARD -->
+      <section id="authCard" class="card">
+        <div class="cardInner">
+
+          <div class="tabs">
+            <button id="tabRegister" class="tab active" type="button">Register</button>
+            <button id="tabLogin" class="tab" type="button">Login</button>
+          </div>
+
+          <div class="field">
+            <input id="email" type="email" autocomplete="email" placeholder="Email address" />
+          </div>
+
+          <div class="field">
+            <input id="password" type="password" autocomplete="current-password" placeholder="Password" />
+            <button id="togglePw" class="miniBtn" type="button">Show</button>
+          </div>
+
+          <button id="submitBtn" class="primaryBtn" type="button">Create Account</button>
+
+          <div class="hint">Use the same email + password you registered with.</div>
+
+          <div id="errorBox" class="errorBox"></div>
+        </div>
+      </section>
+
+      <!-- APP CARD -->
+      <section id="appCard" class="card" style="display:none;">
+        <div class="topBar">
+          <div id="who" class="who">Logged in</div>
+          <button id="logoutBtn" class="ghostBtn" type="button">Logout</button>
+        </div>
+
+        <div class="pillTabs">
+          <button class="pill active" id="pillVerify" type="button">Verify</button>
+          <button class="pill" id="pillInvest" type="button">Invest</button>
+          <button class="pill" id="pillInvite" type="button">Invite</button>
+        </div>
+
+        <div class="panel">
+
+          <!-- VERIFY -->
+          <div id="panelVerify">
+            <div class="sectionTitle">✅ Verify Contract</div>
+            <div class="box">
+              <div class="muted">Always verify the official contract address before sending funds.</div>
+
+              <div id="contractAddr" class="contractLine">
+                0x8D6A79567a701FCe55b62C15d0fbB765913ac84a
+              </div>
+
+              <div class="row2">
+                <button id="copyContract" class="smallBtn" type="button">Copy Contract</button>
+                <button id="openBscscan" class="smallBtn" type="button">Open on BscScan</button>
+              </div>
+
+              <div class="box" style="margin-top:14px;">
+                <div class="sectionTitle" style="font-size:18px; margin:0 0 8px;">🚫 Don’t do this</div>
+                <ul class="warnList">
+                  <li>Don’t trust screenshots or forwarded messages without verification.</li>
+                  <li>Don’t send funds to any address that isn’t officially published.</li>
+                  <li>Don’t buy “Umoja” tokens that are not the verified contract.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- INVEST -->
+          <div id="panelInvest" style="display:none;">
+            <div class="sectionTitle">💰 Invest</div>
+            <div class="box">
+              <div class="muted">This section can explain your investment steps (MetaMask install + import token, etc.).</div>
+              <div class="hint" style="margin-top:10px; text-align:left;">
+                (We can add your exact “How to Invest” guide here.)
+              </div>
+            </div>
+          </div>
+
+          <!-- INVITE -->
+          <div id="panelInvite" style="display:none;">
+            <div class="sectionTitle">🤝 Invite</div>
+            <div class="box">
+              <div class="muted">This section can generate + track invitation links in your admin system.</div>
+              <div class="hint" style="margin-top:10px; text-align:left;">
+                (Next step: connect Firestore to store inviterCode + newUser.)
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="footerNote">Welcome ✅ Choose Verify / Invest / Invite.</div>
+      </section>
+
     </div>
-
-    <h1>UMOJA V2</h1>
-    <div class="sub">Official Landing • Verify • Invest • Invite</div>
-
-    <!-- TABS -->
-    <div class="tabs">
-      <button id="registerTab">Register</button>
-      <button id="loginTab" class="active">Login</button>
-    </div>
-
-    <!-- FORM -->
-    <input id="email" class="input" placeholder="Email address" />
-    <input id="password" type="password" class="input" placeholder="Password" />
-
-    <button class="main-btn" id="submitBtn">Login</button>
-
-    <div class="note">
-      Use the same email + password you registered with.
-    </div>
-
-    <div id="errorBox" class="error"></div>
-
   </div>
-</div>
 
-<!-- Firebase SDKs -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <!-- Firebase Auth (CDN, no build tools needed) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { 
-    getAuth,
-    signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
-    onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    // 🔥 IMPORTANT: Paste YOUR REAL Firebase config here.
+    // From Firebase Console → Project settings → Your apps → Firebase SDK snippet (Config)
+    const firebaseConfig = {
+  apiKey: "AIzaSyCbQ9fNYrq_qko-GUhKi3xSMkb_IKhrBB0",
+  authDomain: "umoja-v2-landing.firebaseapp.com",
+  projectId: "umoja-v2-landing",
+  storageBucket: "umoja-v2-landing.firebasestorage.app",
+  messagingSenderId: "964715983746",
+  appId: "1:964715983746:web:b4bb1615f35d773ae7159b"
+};
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCbQ9fNYrq_qko-GUhKi3xSMkb_IKhrBB0",
-    authDomain: "umoja-v2-landing.firebaseapp.com",
-    projectId: "umoja-v2-landing",
-    storageBucket: "umoja-v2-landing.appspot.com",
-    messagingSenderId: "964715983746",
-    appId: "1:964715983746:web:b4bb1615f35d773ae7159b"
-  };
+    // ----- Elements -----
+    const authCard = document.getElementById("authCard");
+    const appCard  = document.getElementById("appCard");
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-</script>
+    const tabRegister = document.getElementById("tabRegister");
+    const tabLogin = document.getElementById("tabLogin");
+    const submitBtn = document.getElementById("submitBtn");
+    const emailEl = document.getElementById("email");
+    const pwEl = document.getElementById("password");
+    const togglePw = document.getElementById("togglePw");
+    const errorBox = document.getElementById("errorBox");
 
+    const who = document.getElementById("who");
+    const logoutBtn = document.getElementById("logoutBtn");
 
+    const pillVerify = document.getElementById("pillVerify");
+    const pillInvest = document.getElementById("pillInvest");
+    const pillInvite = document.getElementById("pillInvite");
 
+    const panelVerify = document.getElementById("panelVerify");
+    const panelInvest = document.getElementById("panelInvest");
+    const panelInvite = document.getElementById("panelInvite");
+
+    const contractAddrEl = document.getElementById("contractAddr");
+    const copyContractBtn = document.getElementById("copyContract");
+    const openBscscanBtn = document.getElementById("openBscscan");
+
+    // ----- Helpers -----
+    let mode = "register"; // "register" | "login"
+
+    function setMode(next){
+      mode = next;
+      tabRegister.classList.toggle("active", mode === "register");
+      tabLogin.classList.toggle("active", mode === "login");
+      submitBtn.textContent = (mode === "register") ? "Create Account" : "Login";
+      clearError();
+    }
+
+    function showError(msg){
+      errorBox.style.display = "block";
+      errorBox.textContent = msg;
+    }
+    function clearError(){
+      errorBox.style.display = "none";
+      errorBox.textContent = "";
+    }
+
+    function setLoading(isLoading){
+      submitBtn.disabled = isLoading;
+      submitBtn.textContent = isLoading
+        ? (mode === "register" ? "Creating..." : "Logging in...")
+        : (mode === "register" ? "Create Account" : "Login");
+    }
+
+    function showPanel(which){
+      // pills
+      pillVerify.classList.toggle("active", which === "verify");
+      pillInvest.classList.toggle("active", which === "invest");
+      pillInvite.classList.toggle("active", which === "invite");
+
+      // panels
+      panelVerify.style.display = which === "verify" ? "block" : "none";
+      panelInvest.style.display = which === "invest" ? "block" : "none";
+      panelInvite.style.display = which === "invite" ? "block" : "none";
+    }
+
+    function friendlyAuthError(err){
+      const code = err?.code || "";
+      if (code.includes("auth/api-key-not-valid")) return "Your Firebase apiKey is invalid or not pasted correctly. Paste your real firebaseConfig.";
+      if (code.includes("auth/invalid-email")) return "Invalid email format.";
+      if (code.includes("auth/missing-password")) return "Please enter a password.";
+      if (code.includes("auth/weak-password")) return "Password is too weak. Use at least 6 characters.";
+      if (code.includes("auth/email-already-in-use")) return "This email is already registered. Use Login.";
+      if (code.includes("auth/invalid-credential") || code.includes("auth/wrong-password")) return "Wrong email or password.";
+      if (code.includes("auth/user-not-found")) return "No account found for this email. Use Register.";
+      return err?.message || "Something went wrong.";
+    }
+
+    // ----- Init Firebase -----
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // ----- UI events -----
+    tabRegister.addEventListener("click", () => setMode("register"));
+    tabLogin.addEventListener("click", () => setMode("login"));
+
+    togglePw.addEventListener("click", () => {
+      const isPw = pwEl.type === "password";
+      pwEl.type = isPw ? "text" : "password";
+      togglePw.textContent = isPw ? "Hide" : "Show";
+    });
+
+    submitBtn.addEventListener("click", async () => {
+      clearError();
+
+      const email = (emailEl.value || "").trim();
+      const password = (pwEl.value || "").trim();
+
+      if (!email) return showError("Please enter your email.");
+      if (!password) return showError("Please enter your password.");
+
+      setLoading(true);
+      try{
+        if (mode === "register"){
+          await createUserWithEmailAndPassword(auth, email, password);
+        } else {
+          await signInWithEmailAndPassword(auth, email, password);
+        }
+      } catch(e){
+        showError("Firebase: " + friendlyAuthError(e));
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    logoutBtn.addEventListener("click", async () => {
+      await signOut(auth);
+    });
+
+    // App tabs
+    pillVerify.addEventListener("click", () => showPanel("verify"));
+    pillInvest.addEventListener("click", () => showPanel("invest"));
+    pillInvite.addEventListener("click", () => showPanel("invite"));
+
+    // Verify actions
+    copyContractBtn.addEventListener("click", async () => {
+      const text = contractAddrEl.textContent.trim();
+      try{
+        await navigator.clipboard.writeText(text);
+        copyContractBtn.textContent = "Copied ✅";
+        setTimeout(() => (copyContractBtn.textContent = "Copy Contract"), 1200);
+      } catch {
+        showError("Could not copy. Please copy manually.");
+      }
+    });
+
+    openBscscanBtn.addEventListener("click", () => {
+      const addr = contractAddrEl.textContent.trim();
+      const url = "https://bscscan.com/token/" + addr;
+      window.open(url, "_blank", "noopener,noreferrer");
+    });
+
+    // ----- Auth state -----
+    onAuthStateChanged(auth, (user) => {
+      if (user){
+        authCard.style.display = "none";
+        appCard.style.display = "block";
+        who.textContent = "Logged in as: " + (user.email || "user");
+        showPanel("verify");
+        clearError();
+      } else {
+        appCard.style.display = "none";
+        authCard.style.display = "block";
+        // default to login for returning users
+        setMode("login");
+      }
+    });
+  </script>
 </body>
 </html>
