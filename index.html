@@ -581,11 +581,7 @@ a.smallBtn{
       window.open(`https://bscscan.com/token/${addr}`, "_blank");
     });
 
-    // Invest DEX placeholder
-    qs("btnDex").addEventListener("click", () => {
-      qs("dashMsg").textContent = "ℹ️ Send me your exact DEX link (PancakeSwap), then I’ll connect this button.";
-      alert("DEX link not set yet. Send me your PancakeSwap/DEX URL and I’ll wire it.");
-    });
+   
 
     // Invite link generator
     const refCode = qs("refCode");
@@ -762,6 +758,14 @@ if (btnDex) {
       "_blank",
       "noopener,noreferrer"
     );
+  };
+}
+// === Open DEXTools directly (no alert, no popup) ===
+const btnDex = document.getElementById("btnDex");
+
+if (btnDex) {
+  btnDex.onclick = () => {
+    window.location.href = "https://www.dextools.io/app/en/meme-board";
   };
 }
 
