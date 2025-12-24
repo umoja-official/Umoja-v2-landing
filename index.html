@@ -171,24 +171,54 @@
         <div id="tabLogin" class="tab">Login</div>
       </div>
 
-      <div id="registerPanel">
+      <!-- PANELS -->
+<div id="registerPanel">
   <div class="form">
-
     <div class="field">
       <input id="emailOrPhone" type="text" placeholder="Email or Phone" autocomplete="username" />
     </div>
 
     <div class="field row">
-      <input id="password" type="password" placeholder="Password" autocomplete="current-password" />
+      <input id="password" type="password" placeholder="Password" autocomplete="new-password" />
       <button id="togglePw" type="button">Show</button>
     </div>
 
     <button id="actionBtn" class="btn">Create Account</button>
 
-    <div id="inviteBox" class="inviteBox"></div>
+    <div id="inviteBox" class="inviteBox" style="display:none;">
+      <div class="muted">Referral detected from link:</div>
+      <div id="refText" class="refText"></div>
+    </div>
 
+    <div class="smallMuted">
+      By continuing you agree to the <a href="#" id="openAgreement">Registration Agreement</a>.
+    </div>
+
+    <div id="msg" class="msg"></div>
   </div>
 </div>
+
+<div id="loginPanel" style="display:none;">
+  <div class="form">
+    <div class="field">
+      <input id="loginEmail" type="text" placeholder="Email or Phone" autocomplete="username" />
+    </div>
+
+    <div class="field row">
+      <input id="loginPassword" type="password" placeholder="Password" autocomplete="current-password" />
+      <button id="toggleLoginPw" type="button">Show</button>
+    </div>
+
+    <button id="loginBtn" class="btn">Login</button>
+
+    <div class="smallMuted">
+      By continuing you agree to the <a href="#" id="openAgreement2">Registration Agreement</a>.
+    </div>
+
+    <div id="loginMsg" class="msg"></div>
+  </div>
+</div>
+
 <!-- LOGIN PANEL -->
 <div id="loginPanel" style="display:none;">
   <div class="form">
