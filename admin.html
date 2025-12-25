@@ -2,184 +2,834 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>UMOJA V2 • Admin Dashboard</title>
+
   <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:#061516;color:#eaf6f5;margin:0;padding:24px}
-    .card{max-width:1100px;margin:0 auto;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);border-radius:16px;padding:18px}
-    h1{margin:0 0 10px}
-    .row{display:flex;gap:14px;flex-wrap:wrap}
-    .box{flex:1;min-width:320px;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.10);border-radius:14px;padding:12px}
-    input,button{padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#eaf6f5}
-    button{cursor:pointer;background:rgba(0,255,180,.16)}
-    table{width:100%;border-collapse:collapse;font-size:13px}
-    th,td{padding:8px;border-bottom:1px solid rgba(255,255,255,.10);text-align:left;vertical-align:top}
-    .msg{margin-top:10px;padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,.12)}
+    :root{
+      --bg1:#07181a;
+      --bg2:#061217;
+      --card: rgba(255,255,255,.06);
+      --stroke: rgba(255,255,255,.12);
+      --text: #eaf6f5;
+      --muted: rgba(234,246,245,.72);
+      --brand: #45e0d0;
+      --brand2:#2aa9ff;
+      --danger:#ff5c7a;
+      --ok:#2ef0a6;
+      --shadow: 0 18px 80px rgba(0,0,0,.55);
+      --radius: 18px;
+      --radius2: 26px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 50% 0%, rgba(69,224,208,.12), transparent 60%),
+        radial-gradient(900px 700px at 10% 30%, rgba(42,169,255,.10), transparent 65%),
+        radial-gradient(900px 700px at 90% 40%, rgba(69,224,208,.08), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    .wrap{
+      max-width: 1120px;
+      margin: 36px auto;
+      padding: 0 16px 60px;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:16px;
+    }
+
+    .brandLine{
+      display:flex; align-items:center; gap:12px;
+      user-select:none;
+    }
+
+    .logoBox{
+      width:46px; height:46px;
+      border-radius:14px;
+      border:1px solid var(--stroke);
+      background: rgba(0,0,0,.25);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.06), 0 18px 60px rgba(0,0,0,.45);
+      display:grid; place-items:center;
+      overflow:hidden;
+    }
+
+    .logoBox img{width:100%; height:100%; object-fit:cover; display:block;}
+
+    .titleBlock h1{
+      margin:0;
+      font-size: 18px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      line-height:1.1;
+    }
+    .titleBlock .sub{
+      margin-top:4px;
+      color:var(--muted);
+      font-size: 12px;
+      letter-spacing:.06em;
+    }
+
+    .btnRow{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+    .btn{
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      padding: 10px 12px;
+      border-radius: 14px;
+      cursor:pointer;
+      font-weight: 700;
+      letter-spacing:.02em;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.09);}
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(69,224,208,.35), rgba(42,169,255,.22));
+      border-color: rgba(69,224,208,.55);
+      box-shadow: 0 16px 60px rgba(69,224,208,.12);
+    }
+    .btn.danger{border-color: rgba(255,92,122,.55); background: rgba(255,92,122,.12);}
+    .btn.ghost{background: transparent;}
+
+    .card{
+      background: var(--card);
+      border:1px solid var(--stroke);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .cardHeader{
+      padding: 16px 18px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .cardHeader h2{
+      margin:0;
+      font-size: 14px;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      color: rgba(234,246,245,.92);
+    }
+
+    .content{padding: 16px 18px;}
+
+    .grid{
+      display:grid;
+      gap: 14px;
+    }
+    .grid.two{grid-template-columns: 1.1fr .9fr;}
+    @media (max-width: 980px){ .grid.two{grid-template-columns:1fr;} }
+
+    .kpis{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 12px;
+    }
+    @media (max-width: 980px){ .kpis{grid-template-columns: repeat(2, minmax(0,1fr));} }
+    @media (max-width: 520px){ .kpis{grid-template-columns: 1fr;} }
+
+    .kpi{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.16);
+      border-radius: 18px;
+      padding: 12px 12px;
+    }
+    .kpi .label{color:var(--muted); font-size: 12px; letter-spacing:.06em}
+    .kpi .value{font-size: 22px; font-weight: 900; margin-top:6px}
+    .kpi .hint{color: rgba(234,246,245,.62); font-size: 12px; margin-top:6px}
+
+    .row{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    }
+    .row > *{flex: 1 1 auto;}
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      min-width: 220px;
+    }
+    label{
+      font-size: 12px;
+      color: rgba(234,246,245,.75);
+      letter-spacing:.05em;
+    }
+    input, select{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      outline:none;
+    }
+    input::placeholder{color: rgba(234,246,245,.45);}
+
+    .note{
+      color: rgba(234,246,245,.72);
+      font-size: 12px;
+      line-height:1.45;
+      margin-top: 10px;
+    }
+    .status{
+      margin-top: 10px;
+      font-weight: 800;
+      letter-spacing:.02em;
+      font-size: 12px;
+    }
+    .status.ok{color: var(--ok)}
+    .status.bad{color: var(--danger)}
+    .status.muted{color: rgba(234,246,245,.70)}
+
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 18px;
+      background: rgba(0,0,0,.14);
+    }
+    th, td{
+      padding: 10px 10px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      text-align:left;
+      font-size: 12px;
+      vertical-align:top;
+    }
+    th{
+      color: rgba(234,246,245,.85);
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      font-size: 11px;
+      background: rgba(255,255,255,.04);
+    }
+    tr:last-child td{border-bottom:none;}
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      font-weight: 800;
+      font-size: 12px;
+      white-space:nowrap;
+    }
+    .pill.ok{border-color: rgba(46,240,166,.35); color: rgba(46,240,166,.95);}
+    .pill.bad{border-color: rgba(255,92,122,.35); color: rgba(255,92,122,.95);}
+
+    .miniBtns{display:flex; gap:8px; flex-wrap:wrap;}
+    .miniBtn{
+      padding: 7px 10px;
+      border-radius: 12px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      cursor:pointer;
+      font-weight: 800;
+      font-size: 12px;
+    }
+    .miniBtn:hover{background: rgba(255,255,255,.09);}
+    .miniBtn.danger{border-color: rgba(255,92,122,.45); background: rgba(255,92,122,.12);}
+    .miniBtn.primary{border-color: rgba(69,224,208,.55); background: rgba(69,224,208,.12);}
+
+    .hidden{display:none !important;}
   </style>
 </head>
-<body>
-  <div class="card">
-    <h1>UMOJA V2 — Admin Dashboard</h1>
-    <p>URL: <b>/admin.html</b></p>
 
-    <div class="row">
-      <div class="box">
-        <h3>Admin Login</h3>
-        <input id="email" placeholder="Email or Phone" style="width:100%;margin-bottom:10px" />
-        <input id="pass" placeholder="Password" type="password" style="width:100%;margin-bottom:10px" />
-        <button id="loginBtn">Login</button>
-        <button id="logoutBtn">Logout</button>
-        <div id="msg" class="msg" style="display:none"></div>
+<body>
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="brandLine">
+        <div class="logoBox">
+          <!-- Put your logo file in the repo, ex: /assets/umoja-logo.png -->
+          <img id="brandLogo" src="./assets/umoja-logo.png" alt="UMOJA" onerror="this.style.display='none'" />
+        </div>
+        <div class="titleBlock">
+          <h1>UMOJA V2 • Admin</h1>
+          <div class="sub">Invitations • Referrals • Users • Controls</div>
+        </div>
       </div>
 
-      <div class="box">
-        <h3>Quick Stats</h3>
-        <div id="stats">—</div>
+      <div class="btnRow">
+        <a class="btn ghost" id="openMain" href="./" target="_blank" rel="noopener">↗ Open Main Site</a>
+        <button class="btn" id="refreshBtn">⟳ Refresh</button>
+        <button class="btn danger hidden" id="logoutBtn">Logout</button>
       </div>
     </div>
 
-    <div class="row" style="margin-top:14px">
-      <div class="box">
-        <h3>Invite Clicks (latest 50)</h3>
-        <div style="overflow:auto;max-height:360px">
-          <table>
-            <thead>
-              <tr><th>Time</th><th>Ref</th><th>URL</th></tr>
-            </thead>
-            <tbody id="clicksTbody"></tbody>
-          </table>
+    <!-- LOGIN CARD -->
+    <div class="card" id="loginCard">
+      <div class="cardHeader">
+        <h2>Admin Login</h2>
+        <span class="pill" id="envPill">Firebase</span>
+      </div>
+      <div class="content">
+        <div class="row">
+          <div class="field">
+            <label for="email">Admin Email</label>
+            <input id="email" type="email" placeholder="you@example.com" autocomplete="username" />
+          </div>
+          <div class="field">
+            <label for="pass">Password</label>
+            <input id="pass" type="password" placeholder="••••••••" autocomplete="current-password" />
+          </div>
+          <div class="field" style="flex:0 0 auto; min-width:160px;">
+            <label>&nbsp;</label>
+            <button class="btn primary" id="loginBtn">Login</button>
+          </div>
+        </div>
+
+        <div class="note">
+          Access is restricted. After login, this page checks if you’re an admin.
+          <br/>Admins are controlled from Firestore: <code>admins/{uid}</code>.
+        </div>
+        <div class="status muted" id="loginStatus">Waiting…</div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="grid two hidden" id="dashGrid" style="margin-top:14px;">
+
+      <!-- LEFT -->
+      <div class="card">
+        <div class="cardHeader">
+          <h2>Overview</h2>
+          <span class="pill" id="whoamiPill">Not signed in</span>
+        </div>
+        <div class="content">
+          <div class="kpis">
+            <div class="kpi">
+              <div class="label">Total users (loaded)</div>
+              <div class="value" id="kpiUsers">—</div>
+              <div class="hint">From users collection</div>
+            </div>
+            <div class="kpi">
+              <div class="label">Invite codes (loaded)</div>
+              <div class="value" id="kpiCodes">—</div>
+              <div class="hint">From inviteCodes collection</div>
+            </div>
+            <div class="kpi">
+              <div class="label">Signups with ref (loaded)</div>
+              <div class="value" id="kpiRefUsers">—</div>
+              <div class="hint">users.inviterCode exists</div>
+            </div>
+            <div class="kpi">
+              <div class="label">Top code (loaded)</div>
+              <div class="value" id="kpiTopCode">—</div>
+              <div class="hint">Highest signups count</div>
+            </div>
+          </div>
+
+          <div class="note" id="schemaNote" style="margin-top:12px;">
+            Expected schema:
+            <br/>• <code>users/{uid}</code> → <code>{ email, createdAt, inviterCode }</code>
+            <br/>• <code>inviteCodes/{code}</code> → <code>{ code, ownerEmail, ownerUid, createdAt, clicks, signups, status }</code>
+          </div>
+
+          <div class="status muted" id="dashStatus">—</div>
         </div>
       </div>
 
-      <div class="box">
-        <h3>Users (latest 50)</h3>
-        <div style="overflow:auto;max-height:360px">
-          <table>
-            <thead>
-              <tr><th>Time</th><th>Email/Phone</th><th>Referred By</th><th>My Ref</th></tr>
-            </thead>
-            <tbody id="usersTbody"></tbody>
-          </table>
+      <!-- RIGHT -->
+      <div class="card">
+        <div class="cardHeader">
+          <h2>Create / Manage Invite Codes</h2>
+        </div>
+        <div class="content">
+
+          <div class="row">
+            <div class="field">
+              <label for="ownerEmail">Owner Email</label>
+              <input id="ownerEmail" type="email" placeholder="referrer@email.com" />
+            </div>
+            <div class="field">
+              <label for="customCode">Custom Code (optional)</label>
+              <input id="customCode" type="text" placeholder="AUTO-GENERATE" />
+            </div>
+            <div class="field" style="flex:0 0 auto; min-width:170px;">
+              <label>&nbsp;</label>
+              <button class="btn primary" id="createCodeBtn">+ Create Code</button>
+            </div>
+          </div>
+
+          <div class="note">
+            “Copy Link” will generate a URL like:
+            <code>.../Umoja-v2-landing/?ref=CODE</code>
+          </div>
+
+          <div class="status muted" id="codeStatus">—</div>
         </div>
       </div>
+
+      <!-- FULL WIDTH TABLES -->
+      <div class="card" style="grid-column: 1 / -1;">
+        <div class="cardHeader">
+          <h2>Invite Codes</h2>
+          <span class="pill" id="codesPill">—</span>
+        </div>
+        <div class="content">
+          <div style="overflow:auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Owner</th>
+                  <th>Status</th>
+                  <th>Clicks</th>
+                  <th>Signups</th>
+                  <th>Created</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="codesBody">
+                <tr><td colspan="7">No data yet.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="note">Tip: Disable a code instead of deleting it (keeps history).</div>
+        </div>
+      </div>
+
+      <div class="card" style="grid-column: 1 / -1;">
+        <div class="cardHeader">
+          <h2>Recent Users</h2>
+          <span class="pill" id="usersPill">—</span>
+        </div>
+        <div class="content">
+          <div style="overflow:auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>UID</th>
+                  <th>Inviter Code</th>
+                  <th>Created</th>
+                </tr>
+              </thead>
+              <tbody id="usersBody">
+                <tr><td colspan="4">No data yet.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="note">If “Inviter Code” is empty, the user joined without a referral link.</div>
+        </div>
+      </div>
+
+      <div class="card" style="grid-column: 1 / -1;">
+        <div class="cardHeader">
+          <h2>Leaderboard (Signups per Code)</h2>
+        </div>
+        <div class="content">
+          <div style="overflow:auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Signups</th>
+                </tr>
+              </thead>
+              <tbody id="leaderBody">
+                <tr><td colspan="2">No data yet.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-    import {
-      getAuth,
-      signInWithEmailAndPassword,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-    import {
-      getFirestore,
-      doc,
-      getDoc,
-      collection,
-      query,
-      orderBy,
-      limit,
-      getDocs
-    } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
-
-    // ✅ REPLACE with SAME firebaseConfig you used in index.html (same web app / appId)
+    // ==========================================================
+    // 1) FIREBASE CONFIG — paste your Firebase web config here
+    // ==========================================================
     const firebaseConfig = {
-      apiKey: "REPLACE_ME",
-      authDomain: "REPLACE_ME",
-      projectId: "REPLACE_ME",
-      storageBucket: "REPLACE_ME",
-      messagingSenderId: "REPLACE_ME",
-      appId: "REPLACE_ME"
+      apiKey: "PASTE_YOUR_API_KEY",
+      authDomain: "PASTE_YOUR_AUTH_DOMAIN",
+      projectId: "PASTE_YOUR_PROJECT_ID",
+      storageBucket: "PASTE_YOUR_STORAGE_BUCKET",
+      messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID",
+      appId: "PASTE_YOUR_APP_ID"
     };
+
+    // Optional: Admin email allowlist (extra layer, not security by itself)
+    // Put YOUR email(s) here if you want.
+    const ADMIN_EMAILS = [
+      // "your@email.com",
+    ];
+
+    // ==========================================================
+    // Firebase SDK (CDN / modular)
+    // ==========================================================
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import {
+      getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+    import {
+      getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc,
+      collection, getDocs, query, orderBy, limit, serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    const msg = (t, type="ok") => {
-      const el = document.getElementById("msg");
-      el.style.display = "block";
-      el.textContent = t;
-      el.style.borderColor = type==="err" ? "rgba(255,90,90,.6)" : "rgba(0,255,180,.5)";
-    };
+    // ==========================================================
+    // UI helpers
+    // ==========================================================
+    const $ = (id) => document.getElementById(id);
 
-    function toAuthEmail(v) {
-      v = (v||"").trim();
-      if (!v) return "";
-      if (v.includes("@")) return v.toLowerCase();
-      const digits = v.replace(/[^\d+]/g, "");
-      const safe = digits.replace(/\+/g, "plus");
-      return `${safe}@umojav2.local`;
+    const loginCard = $("loginCard");
+    const dashGrid = $("dashGrid");
+    const loginStatus = $("loginStatus");
+    const dashStatus = $("dashStatus");
+    const codeStatus = $("codeStatus");
+    const whoamiPill = $("whoamiPill");
+    const logoutBtn = $("logoutBtn");
+
+    const kpiUsers = $("kpiUsers");
+    const kpiCodes = $("kpiCodes");
+    const kpiRefUsers = $("kpiRefUsers");
+    const kpiTopCode = $("kpiTopCode");
+
+    const codesBody = $("codesBody");
+    const usersBody = $("usersBody");
+    const leaderBody = $("leaderBody");
+
+    const codesPill = $("codesPill");
+    const usersPill = $("usersPill");
+
+    function fmtDate(v){
+      try{
+        if(!v) return "—";
+        // Firestore Timestamp has .toDate()
+        const d = (typeof v.toDate === "function") ? v.toDate() : new Date(v);
+        return d.toLocaleString();
+      }catch{
+        return "—";
+      }
     }
 
-    async function isAdmin(uid) {
-      // Admin check: Firestore collection "admins", docId = uid, field role="admin"
-      const snap = await getDoc(doc(db, "admins", uid));
-      return snap.exists() && (snap.data()?.role === "admin");
+    function setStatus(el, text, kind="muted"){
+      el.className = "status " + kind;
+      el.textContent = text;
     }
 
-    async function loadTables() {
-      // clicks
-      const clicksQ = query(collection(db, "inviteClicks"), orderBy("createdAt", "desc"), limit(50));
-      const clicksSnap = await getDocs(clicksQ);
-      const clicksT = document.getElementById("clicksTbody");
-      clicksT.innerHTML = "";
-      clicksSnap.forEach(d => {
-        const x = d.data();
-        const tr = document.createElement("tr");
-        tr.innerHTML = `<td>${x.createdAt?.toDate?.()?.toLocaleString?.() || ""}</td>
-                        <td>${x.ref || ""}</td>
-                        <td style="max-width:420px;word-break:break-word">${x.url || ""}</td>`;
-        clicksT.appendChild(tr);
+    function safe(str){ return (str ?? "").toString().replaceAll("<","&lt;").replaceAll(">","&gt;"); }
+
+    function makeInviteLink(code){
+      // If admin.html lives in /Umoja-v2-landing/admin.html
+      // this builds /Umoja-v2-landing/?ref=CODE
+      const baseDir = location.origin + location.pathname.replace(/\/[^\/]*$/, "/");
+      return baseDir + "?ref=" + encodeURIComponent(code);
+    }
+
+    // ==========================================================
+    // ADMIN CHECK (REAL security should be Firestore rules)
+    // - Primary: Firestore doc exists at admins/{uid}
+    // - Optional: fallback allowlist by email
+    // ==========================================================
+    async function isAdminUser(user){
+      if(!user) return false;
+
+      // Optional allowlist
+      if (ADMIN_EMAILS.length && user.email && ADMIN_EMAILS.includes(user.email)) {
+        return true;
+      }
+
+      // Firestore admin doc
+      const adminRef = doc(db, "admins", user.uid);
+      const snap = await getDoc(adminRef);
+      return snap.exists();
+    }
+
+    // ==========================================================
+    // DATA LOADERS
+    // ==========================================================
+    async function loadInviteCodes(){
+      const q1 = query(collection(db, "inviteCodes"), orderBy("createdAt", "desc"), limit(250));
+      const snap = await getDocs(q1);
+      const rows = [];
+      snap.forEach(d => rows.push({ id: d.id, ...d.data() }));
+      return rows;
+    }
+
+    async function loadUsers(){
+      const q1 = query(collection(db, "users"), orderBy("createdAt", "desc"), limit(250));
+      const snap = await getDocs(q1);
+      const rows = [];
+      snap.forEach(d => rows.push({ id: d.id, ...d.data() }));
+      return rows;
+    }
+
+    function renderCodes(codes){
+      codesPill.textContent = `${codes.length} loaded`;
+      if(!codes.length){
+        codesBody.innerHTML = `<tr><td colspan="7">No invite codes found. Create one above.</td></tr>`;
+        return;
+      }
+
+      codesBody.innerHTML = codes.map(c => {
+        const status = (c.status || "active").toLowerCase();
+        const pill = status === "active"
+          ? `<span class="pill ok">● ACTIVE</span>`
+          : `<span class="pill bad">● DISABLED</span>`;
+
+        const clicks = Number(c.clicks || 0);
+        const signups = Number(c.signups || 0);
+        const owner = c.ownerEmail || c.ownerUid || "—";
+
+        return `
+          <tr>
+            <td><strong>${safe(c.code || c.id)}</strong></td>
+            <td>${safe(owner)}</td>
+            <td>${pill}</td>
+            <td>${clicks}</td>
+            <td>${signups}</td>
+            <td>${fmtDate(c.createdAt)}</td>
+            <td>
+              <div class="miniBtns">
+                <button class="miniBtn primary" data-act="copy" data-code="${safe(c.code || c.id)}">Copy Link</button>
+                <button class="miniBtn" data-act="toggle" data-id="${safe(c.id)}" data-status="${safe(status)}">
+                  ${status === "active" ? "Disable" : "Enable"}
+                </button>
+                <button class="miniBtn danger" data-act="delete" data-id="${safe(c.id)}">Delete</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("");
+
+      // hook buttons
+      codesBody.querySelectorAll("button[data-act]").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const act = btn.dataset.act;
+          if(act === "copy"){
+            const code = btn.dataset.code;
+            const link = makeInviteLink(code);
+            await navigator.clipboard.writeText(link);
+            setStatus(codeStatus, `Copied: ${link}`, "ok");
+          }
+
+          if(act === "toggle"){
+            const id = btn.dataset.id;
+            const status = btn.dataset.status;
+            const next = status === "active" ? "disabled" : "active";
+            await updateDoc(doc(db, "inviteCodes", id), { status: next });
+            setStatus(codeStatus, `Code "${id}" set to ${next.toUpperCase()}`, "ok");
+            await refreshAll();
+          }
+
+          if(act === "delete"){
+            const id = btn.dataset.id;
+            const yes = confirm(`Delete invite code "${id}"? (This removes it permanently)`);
+            if(!yes) return;
+            await deleteDoc(doc(db, "inviteCodes", id));
+            setStatus(codeStatus, `Deleted code "${id}"`, "ok");
+            await refreshAll();
+          }
+        });
       });
-
-      // users
-      const usersQ = query(collection(db, "users"), orderBy("createdAt", "desc"), limit(50));
-      const usersSnap = await getDocs(usersQ);
-      const usersT = document.getElementById("usersTbody");
-      usersT.innerHTML = "";
-      usersSnap.forEach(d => {
-        const x = d.data();
-        const tr = document.createElement("tr");
-        tr.innerHTML = `<td>${x.createdAt?.toDate?.()?.toLocaleString?.() || ""}</td>
-                        <td>${x.emailOrPhone || ""}</td>
-                        <td>${x.referredBy || ""}</td>
-                        <td>${x.myRefCode || ""}</td>`;
-        usersT.appendChild(tr);
-      });
-
-      document.getElementById("stats").textContent =
-        `Loaded ${clicksSnap.size} invite clicks & ${usersSnap.size} users.`;
     }
 
-    document.getElementById("loginBtn").addEventListener("click", async () => {
-      const emailOrPhone = document.getElementById("email").value;
-      const pass = document.getElementById("pass").value;
-      try {
-        await signInWithEmailAndPassword(auth, toAuthEmail(emailOrPhone), pass);
-      } catch (e) {
-        msg(e?.message || String(e), "err");
+    function renderUsers(users){
+      usersPill.textContent = `${users.length} loaded`;
+      if(!users.length){
+        usersBody.innerHTML = `<tr><td colspan="4">No users found.</td></tr>`;
+        return;
+      }
+
+      usersBody.innerHTML = users.map(u => `
+        <tr>
+          <td>${safe(u.email || "—")}</td>
+          <td style="max-width:280px; word-break:break-all;">${safe(u.id)}</td>
+          <td><strong>${safe(u.inviterCode || "—")}</strong></td>
+          <td>${fmtDate(u.createdAt)}</td>
+        </tr>
+      `).join("");
+    }
+
+    function renderLeaderboard(codes){
+      const items = codes
+        .map(c => ({ code: c.code || c.id, signups: Number(c.signups || 0) }))
+        .sort((a,b) => b.signups - a.signups)
+        .slice(0, 25);
+
+      if(!items.length){
+        leaderBody.innerHTML = `<tr><td colspan="2">No data yet.</td></tr>`;
+        return;
+      }
+
+      leaderBody.innerHTML = items.map(i => `
+        <tr>
+          <td><strong>${safe(i.code)}</strong></td>
+          <td>${i.signups}</td>
+        </tr>
+      `).join("");
+    }
+
+    function renderKpis(users, codes){
+      kpiUsers.textContent = users.length.toString();
+      kpiCodes.textContent = codes.length.toString();
+
+      const refUsers = users.filter(u => !!u.inviterCode).length;
+      kpiRefUsers.textContent = refUsers.toString();
+
+      const top = [...codes].sort((a,b) => Number(b.signups||0) - Number(a.signups||0))[0];
+      kpiTopCode.textContent = top ? (top.code || top.id) : "—";
+    }
+
+    async function refreshAll(){
+      setStatus(dashStatus, "Loading dashboard data…", "muted");
+      try{
+        const [codes, users] = await Promise.all([loadInviteCodes(), loadUsers()]);
+        renderKpis(users, codes);
+        renderCodes(codes);
+        renderUsers(users);
+        renderLeaderboard(codes);
+        setStatus(dashStatus, "Loaded successfully.", "ok");
+      }catch(err){
+        console.error(err);
+        setStatus(dashStatus, "Failed to load data. Check Firestore rules + collections.", "bad");
+      }
+    }
+
+    // ==========================================================
+    // Create Code
+    // ==========================================================
+    function genCode(){
+      const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+      let out = "";
+      for(let i=0;i<8;i++) out += alphabet[Math.floor(Math.random()*alphabet.length)];
+      return out;
+    }
+
+    $("createCodeBtn").addEventListener("click", async () => {
+      const ownerEmail = $("ownerEmail").value.trim();
+      const custom = $("customCode").value.trim().toUpperCase().replace(/[^A-Z0-9_-]/g, "");
+      const code = custom || genCode();
+
+      if(!ownerEmail){
+        setStatus(codeStatus, "Owner Email is required.", "bad");
+        return;
+      }
+
+      setStatus(codeStatus, "Creating code…", "muted");
+      try{
+        const ref = doc(db, "inviteCodes", code);
+        const snap = await getDoc(ref);
+        if(snap.exists()){
+          setStatus(codeStatus, `Code "${code}" already exists. Choose another.`, "bad");
+          return;
+        }
+
+        await setDoc(ref, {
+          code,
+          ownerEmail,
+          ownerUid: null,
+          status: "active",
+          clicks: 0,
+          signups: 0,
+          createdAt: serverTimestamp()
+        });
+
+        setStatus(codeStatus, `Created code "${code}". Link copied.`, "ok");
+        await navigator.clipboard.writeText(makeInviteLink(code));
+        $("customCode").value = "";
+        await refreshAll();
+      }catch(err){
+        console.error(err);
+        setStatus(codeStatus, "Failed to create code. Check Firestore rules.", "bad");
       }
     });
 
-    document.getElementById("logoutBtn").addEventListener("click", async () => {
+    // ==========================================================
+    // Auth
+    // ==========================================================
+    $("loginBtn").addEventListener("click", async () => {
+      const email = $("email").value.trim();
+      const pass = $("pass").value;
+      if(!email || !pass){
+        setStatus(loginStatus, "Enter email + password.", "bad");
+        return;
+      }
+      setStatus(loginStatus, "Signing in…", "muted");
+      try{
+        await signInWithEmailAndPassword(auth, email, pass);
+      }catch(err){
+        console.error(err);
+        setStatus(loginStatus, err?.message || "Login failed.", "bad");
+      }
+    });
+
+    logoutBtn.addEventListener("click", async () => {
       await signOut(auth);
-      msg("Logged out.");
+    });
+
+    $("refreshBtn").addEventListener("click", async () => {
+      await refreshAll();
     });
 
     onAuthStateChanged(auth, async (user) => {
-      if (!user) return msg("Please login as admin.");
-      const ok = await isAdmin(user.uid);
-      if (!ok) {
-        msg("❌ Access denied. You are not an admin.", "err");
+      if(!user){
+        // signed out
+        loginCard.classList.remove("hidden");
+        dashGrid.classList.add("hidden");
+        logoutBtn.classList.add("hidden");
+        whoamiPill.textContent = "Not signed in";
+        setStatus(loginStatus, "Please login.", "muted");
+        return;
+      }
+
+      setStatus(loginStatus, "Checking admin access…", "muted");
+
+      const ok = await isAdminUser(user);
+      if(!ok){
+        setStatus(loginStatus, "Access denied: you are not an admin.", "bad");
+        alert("Access denied: admin only.");
         await signOut(auth);
         return;
       }
-      msg("✅ Admin verified. Loading dashboard...");
-      await loadTables();
+
+      // authorized
+      whoamiPill.textContent = user.email ? `Admin: ${user.email}` : `Admin UID: ${user.uid}`;
+      logoutBtn.classList.remove("hidden");
+
+      loginCard.classList.add("hidden");
+      dashGrid.classList.remove("hidden");
+
+      setStatus(loginStatus, "Admin access granted.", "ok");
+      await refreshAll();
     });
+
+    // small UX
+    setStatus(loginStatus, "Please login.", "muted");
+    setStatus(codeStatus, "—", "muted");
+    setStatus(dashStatus, "—", "muted");
   </script>
 </body>
 </html>
