@@ -3,833 +3,283 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>UMOJA V2 • Admin Dashboard</title>
-
+  <title>UMOJA • Admin Dashboard</title>
   <style>
     :root{
-      --bg1:#07181a;
-      --bg2:#061217;
-      --card: rgba(255,255,255,.06);
-      --stroke: rgba(255,255,255,.12);
-      --text: #eaf6f5;
-      --muted: rgba(234,246,245,.72);
-      --brand: #45e0d0;
-      --brand2:#2aa9ff;
-      --danger:#ff5c7a;
-      --ok:#2ef0a6;
-      --shadow: 0 18px 80px rgba(0,0,0,.55);
-      --radius: 18px;
-      --radius2: 26px;
+      --bg:#07181a; --card:rgba(255,255,255,.06); --stroke:rgba(255,255,255,.12);
+      --text:#eaf6f5; --muted:rgba(234,246,245,.72); --good:#38f2b3; --bad:#ff6b6b;
     }
-
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text);
-      background:
-        radial-gradient(1200px 800px at 50% 0%, rgba(69,224,208,.12), transparent 60%),
-        radial-gradient(900px 700px at 10% 30%, rgba(42,169,255,.10), transparent 65%),
-        radial-gradient(900px 700px at 90% 40%, rgba(69,224,208,.08), transparent 60%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
-      overflow-x:hidden;
-    }
-
-    .wrap{
-      max-width: 1120px;
-      margin: 36px auto;
-      padding: 0 16px 60px;
-    }
-
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      margin-bottom:16px;
-    }
-
-    .brandLine{
-      display:flex; align-items:center; gap:12px;
-      user-select:none;
-    }
-
-    .logoBox{
-      width:46px; height:46px;
-      border-radius:14px;
-      border:1px solid var(--stroke);
-      background: rgba(0,0,0,.25);
-      box-shadow: 0 0 0 1px rgba(255,255,255,.06), 0 18px 60px rgba(0,0,0,.45);
-      display:grid; place-items:center;
-      overflow:hidden;
-    }
-
-    .logoBox img{width:100%; height:100%; object-fit:cover; display:block;}
-
-    .titleBlock h1{
-      margin:0;
-      font-size: 18px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      line-height:1.1;
-    }
-    .titleBlock .sub{
-      margin-top:4px;
-      color:var(--muted);
-      font-size: 12px;
-      letter-spacing:.06em;
-    }
-
-    .btnRow{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
-    .btn{
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.06);
-      color:var(--text);
-      padding: 10px 12px;
-      border-radius: 14px;
-      cursor:pointer;
-      font-weight: 700;
-      letter-spacing:.02em;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-    }
-    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.09);}
-    .btn.primary{
-      background: linear-gradient(135deg, rgba(69,224,208,.35), rgba(42,169,255,.22));
-      border-color: rgba(69,224,208,.55);
-      box-shadow: 0 16px 60px rgba(69,224,208,.12);
-    }
-    .btn.danger{border-color: rgba(255,92,122,.55); background: rgba(255,92,122,.12);}
-    .btn.ghost{background: transparent;}
-
-    .card{
-      background: var(--card);
-      border:1px solid var(--stroke);
-      border-radius: var(--radius2);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-
-    .cardHeader{
-      padding: 16px 18px;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-
-    .cardHeader h2{
-      margin:0;
-      font-size: 14px;
-      letter-spacing:.10em;
-      text-transform:uppercase;
-      color: rgba(234,246,245,.92);
-    }
-
-    .content{padding: 16px 18px;}
-
-    .grid{
-      display:grid;
-      gap: 14px;
-    }
-    .grid.two{grid-template-columns: 1.1fr .9fr;}
-    @media (max-width: 980px){ .grid.two{grid-template-columns:1fr;} }
-
-    .kpis{
-      display:grid;
-      grid-template-columns: repeat(4, minmax(0,1fr));
-      gap: 12px;
-    }
-    @media (max-width: 980px){ .kpis{grid-template-columns: repeat(2, minmax(0,1fr));} }
-    @media (max-width: 520px){ .kpis{grid-template-columns: 1fr;} }
-
-    .kpi{
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.16);
-      border-radius: 18px;
-      padding: 12px 12px;
-    }
-    .kpi .label{color:var(--muted); font-size: 12px; letter-spacing:.06em}
-    .kpi .value{font-size: 22px; font-weight: 900; margin-top:6px}
-    .kpi .hint{color: rgba(234,246,245,.62); font-size: 12px; margin-top:6px}
-
-    .row{
-      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
-    }
-    .row > *{flex: 1 1 auto;}
-    .field{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-      min-width: 220px;
-    }
-    label{
-      font-size: 12px;
-      color: rgba(234,246,245,.75);
-      letter-spacing:.05em;
-    }
-    input, select{
-      width:100%;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.08);
-      color: var(--text);
-      outline:none;
-    }
-    input::placeholder{color: rgba(234,246,245,.45);}
-
-    .note{
-      color: rgba(234,246,245,.72);
-      font-size: 12px;
-      line-height:1.45;
-      margin-top: 10px;
-    }
-    .status{
-      margin-top: 10px;
-      font-weight: 800;
-      letter-spacing:.02em;
-      font-size: 12px;
-    }
-    .status.ok{color: var(--ok)}
-    .status.bad{color: var(--danger)}
-    .status.muted{color: rgba(234,246,245,.70)}
-
-    table{
-      width:100%;
-      border-collapse:separate;
-      border-spacing:0;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.10);
-      border-radius: 18px;
-      background: rgba(0,0,0,.14);
-    }
-    th, td{
-      padding: 10px 10px;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      text-align:left;
-      font-size: 12px;
-      vertical-align:top;
-    }
-    th{
-      color: rgba(234,246,245,.85);
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      font-size: 11px;
-      background: rgba(255,255,255,.04);
-    }
-    tr:last-child td{border-bottom:none;}
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      font-weight: 800;
-      font-size: 12px;
-      white-space:nowrap;
-    }
-    .pill.ok{border-color: rgba(46,240,166,.35); color: rgba(46,240,166,.95);}
-    .pill.bad{border-color: rgba(255,92,122,.35); color: rgba(255,92,122,.95);}
-
-    .miniBtns{display:flex; gap:8px; flex-wrap:wrap;}
-    .miniBtn{
-      padding: 7px 10px;
-      border-radius: 12px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      cursor:pointer;
-      font-weight: 800;
-      font-size: 12px;
-    }
-    .miniBtn:hover{background: rgba(255,255,255,.09);}
-    .miniBtn.danger{border-color: rgba(255,92,122,.45); background: rgba(255,92,122,.12);}
-    .miniBtn.primary{border-color: rgba(69,224,208,.55); background: rgba(69,224,208,.12);}
-
-    .hidden{display:none !important;}
+    body{margin:0;background:radial-gradient(1200px 600px at 20% 0%, rgba(56,242,179,.12), transparent 60%), var(--bg);
+      color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}
+    .wrap{max-width:1100px;margin:0 auto;padding:20px;}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;}
+    .brand{display:flex;align-items:center;gap:10px;}
+    .brand img{width:38px;height:38px;border-radius:50%;object-fit:contain;background:rgba(255,255,255,.05);border:1px solid var(--stroke);}
+    .pill{padding:8px 12px;border:1px solid var(--stroke);border-radius:999px;background:rgba(255,255,255,.04);color:var(--muted);font-size:13px}
+    .row{display:grid;grid-template-columns:1.3fr .7fr;gap:14px;}
+    .card{border:1px solid var(--stroke);background:var(--card);border-radius:16px;padding:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);}
+    .h{font-weight:800;letter-spacing:.2px;margin:0 0 8px 0}
+    .btn{cursor:pointer;border:1px solid var(--stroke);background:rgba(255,255,255,.06);color:var(--text);
+      padding:10px 12px;border-radius:12px;font-weight:700}
+    .btn:hover{background:rgba(255,255,255,.10)}
+    .btn.danger{border-color:rgba(255,107,107,.4)}
+    input{width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--stroke);
+      background:rgba(0,0,0,.22);color:var(--text);outline:none;}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:top}
+    th{color:var(--muted);text-align:left;font-weight:800}
+    .muted{color:var(--muted)}
+    .tag{display:inline-block;padding:4px 8px;border-radius:999px;border:1px solid var(--stroke);background:rgba(255,255,255,.04);font-size:12px;color:var(--muted)}
+    .ok{color:var(--good);font-weight:800}
+    .no{color:var(--bad);font-weight:800}
   </style>
 </head>
 
 <body>
   <div class="wrap">
-
-    <div class="topbar">
-      <div class="brandLine">
-        <div class="logoBox">
-          <!-- Put your logo file in the repo, ex: /assets/umoja-logo.png -->
-          <img id="brandLogo" src="./assets/umoja-logo.png" alt="UMOJA" onerror="this.style.display='none'" />
-        </div>
-        <div class="titleBlock">
-          <h1>UMOJA V2 • Admin</h1>
-          <div class="sub">Invitations • Referrals • Users • Controls</div>
+    <div class="top">
+      <div class="brand">
+        <!-- put your logo file in the same folder -->
+        <img src="umoja-logo.png" alt="UMOJA" />
+        <div>
+          <div style="font-weight:900">UMOJA Admin</div>
+          <div class="muted" style="font-size:13px">Invitation tracking & management</div>
         </div>
       </div>
 
-      <div class="btnRow">
-        <a class="btn ghost" id="openMain" href="./" target="_blank" rel="noopener">↗ Open Main Site</a>
-        <button class="btn" id="refreshBtn">⟳ Refresh</button>
-        <button class="btn danger hidden" id="logoutBtn">Logout</button>
+      <div style="display:flex;gap:10px;align-items:center">
+        <div class="pill" id="who">Checking access…</div>
+        <button class="btn danger" id="logoutBtn">Logout</button>
       </div>
     </div>
 
-    <!-- LOGIN CARD -->
-    <div class="card" id="loginCard">
-      <div class="cardHeader">
-        <h2>Admin Login</h2>
-        <span class="pill" id="envPill">Firebase</span>
-      </div>
-      <div class="content">
-        <div class="row">
-          <div class="field">
-            <label for="email">Admin Email</label>
-            <input id="email" type="email" placeholder="you@example.com" autocomplete="username" />
-          </div>
-          <div class="field">
-            <label for="pass">Password</label>
-            <input id="pass" type="password" placeholder="••••••••" autocomplete="current-password" />
-          </div>
-          <div class="field" style="flex:0 0 auto; min-width:160px;">
-            <label>&nbsp;</label>
-            <button class="btn primary" id="loginBtn">Login</button>
-          </div>
-        </div>
-
-        <div class="note">
-          Access is restricted. After login, this page checks if you’re an admin.
-          <br/>Admins are controlled from Firestore: <code>admins/{uid}</code>.
-        </div>
-        <div class="status muted" id="loginStatus">Waiting…</div>
-      </div>
-    </div>
-
-    <!-- DASHBOARD -->
-    <div class="grid two hidden" id="dashGrid" style="margin-top:14px;">
-
-      <!-- LEFT -->
+    <div class="row">
       <div class="card">
-        <div class="cardHeader">
-          <h2>Overview</h2>
-          <span class="pill" id="whoamiPill">Not signed in</span>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+          <h3 class="h">Invitation Clicks</h3>
+          <div style="display:flex;gap:10px">
+            <button class="btn" id="refreshBtn">Refresh</button>
+            <button class="btn" id="exportBtn">Export CSV</button>
+          </div>
         </div>
-        <div class="content">
-          <div class="kpis">
-            <div class="kpi">
-              <div class="label">Total users (loaded)</div>
-              <div class="value" id="kpiUsers">—</div>
-              <div class="hint">From users collection</div>
-            </div>
-            <div class="kpi">
-              <div class="label">Invite codes (loaded)</div>
-              <div class="value" id="kpiCodes">—</div>
-              <div class="hint">From inviteCodes collection</div>
-            </div>
-            <div class="kpi">
-              <div class="label">Signups with ref (loaded)</div>
-              <div class="value" id="kpiRefUsers">—</div>
-              <div class="hint">users.inviterCode exists</div>
-            </div>
-            <div class="kpi">
-              <div class="label">Top code (loaded)</div>
-              <div class="value" id="kpiTopCode">—</div>
-              <div class="hint">Highest signups count</div>
-            </div>
-          </div>
 
-          <div class="note" id="schemaNote" style="margin-top:12px;">
-            Expected schema:
-            <br/>• <code>users/{uid}</code> → <code>{ email, createdAt, inviterCode }</code>
-            <br/>• <code>inviteCodes/{code}</code> → <code>{ code, ownerEmail, ownerUid, createdAt, clicks, signups, status }</code>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 14px">
+          <div>
+            <div class="muted" style="font-size:12px;margin:0 0 6px">Filter by ref code</div>
+            <input id="filterRef" placeholder="e.g. ABC123" />
           </div>
+          <div>
+            <div class="muted" style="font-size:12px;margin:0 0 6px">Filter by country (optional)</div>
+            <input id="filterCountry" placeholder="e.g. US" />
+          </div>
+        </div>
 
-          <div class="status muted" id="dashStatus">—</div>
+        <div class="muted" id="status" style="margin-bottom:8px">—</div>
+
+        <div style="overflow:auto;border-radius:12px;border:1px solid rgba(255,255,255,.08)">
+          <table>
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Ref</th>
+                <th>Landing</th>
+                <th>Country</th>
+                <th>Signed In?</th>
+                <th>User</th>
+              </tr>
+            </thead>
+            <tbody id="rows">
+              <tr><td colspan="6" class="muted">No data yet.</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
-      <!-- RIGHT -->
       <div class="card">
-        <div class="cardHeader">
-          <h2>Create / Manage Invite Codes</h2>
+        <h3 class="h">Admin Tools</h3>
+
+        <div class="muted" style="font-size:13px;margin-bottom:10px">
+          This page is protected by <b>Firebase Auth + Firestore Rules</b>. Non-admins cannot read admin data.
         </div>
-        <div class="content">
 
-          <div class="row">
-            <div class="field">
-              <label for="ownerEmail">Owner Email</label>
-              <input id="ownerEmail" type="email" placeholder="referrer@email.com" />
-            </div>
-            <div class="field">
-              <label for="customCode">Custom Code (optional)</label>
-              <input id="customCode" type="text" placeholder="AUTO-GENERATE" />
-            </div>
-            <div class="field" style="flex:0 0 auto; min-width:170px;">
-              <label>&nbsp;</label>
-              <button class="btn primary" id="createCodeBtn">+ Create Code</button>
-            </div>
-          </div>
-
-          <div class="note">
-            “Copy Link” will generate a URL like:
-            <code>.../Umoja-v2-landing/?ref=CODE</code>
-          </div>
-
-          <div class="status muted" id="codeStatus">—</div>
+        <div style="display:grid;gap:10px">
+          <button class="btn" id="openMainBtn">Open Main Site</button>
+          <div class="tag">Tip: keep this file name secret if you want, but rules are the real security.</div>
         </div>
       </div>
-
-      <!-- FULL WIDTH TABLES -->
-      <div class="card" style="grid-column: 1 / -1;">
-        <div class="cardHeader">
-          <h2>Invite Codes</h2>
-          <span class="pill" id="codesPill">—</span>
-        </div>
-        <div class="content">
-          <div style="overflow:auto;">
-            <table>
-              <thead>
-                <tr>
-                  <th>Code</th>
-                  <th>Owner</th>
-                  <th>Status</th>
-                  <th>Clicks</th>
-                  <th>Signups</th>
-                  <th>Created</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody id="codesBody">
-                <tr><td colspan="7">No data yet.</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="note">Tip: Disable a code instead of deleting it (keeps history).</div>
-        </div>
-      </div>
-
-      <div class="card" style="grid-column: 1 / -1;">
-        <div class="cardHeader">
-          <h2>Recent Users</h2>
-          <span class="pill" id="usersPill">—</span>
-        </div>
-        <div class="content">
-          <div style="overflow:auto;">
-            <table>
-              <thead>
-                <tr>
-                  <th>Email</th>
-                  <th>UID</th>
-                  <th>Inviter Code</th>
-                  <th>Created</th>
-                </tr>
-              </thead>
-              <tbody id="usersBody">
-                <tr><td colspan="4">No data yet.</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="note">If “Inviter Code” is empty, the user joined without a referral link.</div>
-        </div>
-      </div>
-
-      <div class="card" style="grid-column: 1 / -1;">
-        <div class="cardHeader">
-          <h2>Leaderboard (Signups per Code)</h2>
-        </div>
-        <div class="content">
-          <div style="overflow:auto;">
-            <table>
-              <thead>
-                <tr>
-                  <th>Code</th>
-                  <th>Signups</th>
-                </tr>
-              </thead>
-              <tbody id="leaderBody">
-                <tr><td colspan="2">No data yet.</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 
   <script type="module">
-    // ==========================================================
-    // 1) FIREBASE CONFIG — paste your Firebase web config here
-    // ==========================================================
-    const firebaseConfig = {
-      apiKey: "PASTE_YOUR_API_KEY",
-      authDomain: "PASTE_YOUR_AUTH_DOMAIN",
-      projectId: "PASTE_YOUR_PROJECT_ID",
-      storageBucket: "PASTE_YOUR_STORAGE_BUCKET",
-      messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID",
-      appId: "PASTE_YOUR_APP_ID"
-    };
-
-    // Optional: Admin email allowlist (extra layer, not security by itself)
-    // Put YOUR email(s) here if you want.
-    const ADMIN_EMAILS = [
-      // "your@email.com",
-    ];
-
-    // ==========================================================
-    // Firebase SDK (CDN / modular)
-    // ==========================================================
+    // Firebase (v10 modular)
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
     import {
-      getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut
+      getAuth, onAuthStateChanged, signOut
     } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-
     import {
-      getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc,
-      collection, getDocs, query, orderBy, limit, serverTimestamp
+      getFirestore, collection, query, orderBy, limit, getDocs
     } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+    // 🔥 PASTE YOUR firebaseConfig HERE (same one as index.html)
+    const firebaseConfig = {
+      apiKey: "PASTE",
+      authDomain: "PASTE",
+      projectId: "PASTE",
+      storageBucket: "PASTE",
+      messagingSenderId: "PASTE",
+      appId: "PASTE"
+    };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // ==========================================================
-    // UI helpers
-    // ==========================================================
-    const $ = (id) => document.getElementById(id);
+    const who = document.getElementById("who");
+    const status = document.getElementById("status");
+    const rows = document.getElementById("rows");
+    const filterRef = document.getElementById("filterRef");
+    const filterCountry = document.getElementById("filterCountry");
 
-    const loginCard = $("loginCard");
-    const dashGrid = $("dashGrid");
-    const loginStatus = $("loginStatus");
-    const dashStatus = $("dashStatus");
-    const codeStatus = $("codeStatus");
-    const whoamiPill = $("whoamiPill");
-    const logoutBtn = $("logoutBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const refreshBtn = document.getElementById("refreshBtn");
+    const exportBtn = document.getElementById("exportBtn");
+    const openMainBtn = document.getElementById("openMainBtn");
 
-    const kpiUsers = $("kpiUsers");
-    const kpiCodes = $("kpiCodes");
-    const kpiRefUsers = $("kpiRefUsers");
-    const kpiTopCode = $("kpiTopCode");
+    let cached = [];
 
-    const codesBody = $("codesBody");
-    const usersBody = $("usersBody");
-    const leaderBody = $("leaderBody");
-
-    const codesPill = $("codesPill");
-    const usersPill = $("usersPill");
-
-    function fmtDate(v){
-      try{
-        if(!v) return "—";
-        // Firestore Timestamp has .toDate()
-        const d = (typeof v.toDate === "function") ? v.toDate() : new Date(v);
-        return d.toLocaleString();
-      }catch{
-        return "—";
-      }
+    function esc(s){ return String(s ?? "").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+    function fmtDate(ms){
+      try { return new Date(ms).toLocaleString(); } catch { return "-"; }
     }
 
-    function setStatus(el, text, kind="muted"){
-      el.className = "status " + kind;
-      el.textContent = text;
-    }
+    function render(data){
+      const ref = filterRef.value.trim().toUpperCase();
+      const ctry = filterCountry.value.trim().toUpperCase();
 
-    function safe(str){ return (str ?? "").toString().replaceAll("<","&lt;").replaceAll(">","&gt;"); }
-
-    function makeInviteLink(code){
-      // If admin.html lives in /Umoja-v2-landing/admin.html
-      // this builds /Umoja-v2-landing/?ref=CODE
-      const baseDir = location.origin + location.pathname.replace(/\/[^\/]*$/, "/");
-      return baseDir + "?ref=" + encodeURIComponent(code);
-    }
-
-    // ==========================================================
-    // ADMIN CHECK (REAL security should be Firestore rules)
-    // - Primary: Firestore doc exists at admins/{uid}
-    // - Optional: fallback allowlist by email
-    // ==========================================================
-    async function isAdminUser(user){
-      if(!user) return false;
-
-      // Optional allowlist
-      if (ADMIN_EMAILS.length && user.email && ADMIN_EMAILS.includes(user.email)) {
-        return true;
-      }
-
-      // Firestore admin doc
-      const adminRef = doc(db, "admins", user.uid);
-      const snap = await getDoc(adminRef);
-      return snap.exists();
-    }
-
-    // ==========================================================
-    // DATA LOADERS
-    // ==========================================================
-    async function loadInviteCodes(){
-      const q1 = query(collection(db, "inviteCodes"), orderBy("createdAt", "desc"), limit(250));
-      const snap = await getDocs(q1);
-      const rows = [];
-      snap.forEach(d => rows.push({ id: d.id, ...d.data() }));
-      return rows;
-    }
-
-    async function loadUsers(){
-      const q1 = query(collection(db, "users"), orderBy("createdAt", "desc"), limit(250));
-      const snap = await getDocs(q1);
-      const rows = [];
-      snap.forEach(d => rows.push({ id: d.id, ...d.data() }));
-      return rows;
-    }
-
-    function renderCodes(codes){
-      codesPill.textContent = `${codes.length} loaded`;
-      if(!codes.length){
-        codesBody.innerHTML = `<tr><td colspan="7">No invite codes found. Create one above.</td></tr>`;
-        return;
-      }
-
-      codesBody.innerHTML = codes.map(c => {
-        const status = (c.status || "active").toLowerCase();
-        const pill = status === "active"
-          ? `<span class="pill ok">● ACTIVE</span>`
-          : `<span class="pill bad">● DISABLED</span>`;
-
-        const clicks = Number(c.clicks || 0);
-        const signups = Number(c.signups || 0);
-        const owner = c.ownerEmail || c.ownerUid || "—";
-
-        return `
-          <tr>
-            <td><strong>${safe(c.code || c.id)}</strong></td>
-            <td>${safe(owner)}</td>
-            <td>${pill}</td>
-            <td>${clicks}</td>
-            <td>${signups}</td>
-            <td>${fmtDate(c.createdAt)}</td>
-            <td>
-              <div class="miniBtns">
-                <button class="miniBtn primary" data-act="copy" data-code="${safe(c.code || c.id)}">Copy Link</button>
-                <button class="miniBtn" data-act="toggle" data-id="${safe(c.id)}" data-status="${safe(status)}">
-                  ${status === "active" ? "Disable" : "Enable"}
-                </button>
-                <button class="miniBtn danger" data-act="delete" data-id="${safe(c.id)}">Delete</button>
-              </div>
-            </td>
-          </tr>
-        `;
-      }).join("");
-
-      // hook buttons
-      codesBody.querySelectorAll("button[data-act]").forEach(btn => {
-        btn.addEventListener("click", async () => {
-          const act = btn.dataset.act;
-          if(act === "copy"){
-            const code = btn.dataset.code;
-            const link = makeInviteLink(code);
-            await navigator.clipboard.writeText(link);
-            setStatus(codeStatus, `Copied: ${link}`, "ok");
-          }
-
-          if(act === "toggle"){
-            const id = btn.dataset.id;
-            const status = btn.dataset.status;
-            const next = status === "active" ? "disabled" : "active";
-            await updateDoc(doc(db, "inviteCodes", id), { status: next });
-            setStatus(codeStatus, `Code "${id}" set to ${next.toUpperCase()}`, "ok");
-            await refreshAll();
-          }
-
-          if(act === "delete"){
-            const id = btn.dataset.id;
-            const yes = confirm(`Delete invite code "${id}"? (This removes it permanently)`);
-            if(!yes) return;
-            await deleteDoc(doc(db, "inviteCodes", id));
-            setStatus(codeStatus, `Deleted code "${id}"`, "ok");
-            await refreshAll();
-          }
-        });
+      const filtered = data.filter(d => {
+        const okRef = !ref || String(d.ref||"").toUpperCase().includes(ref);
+        const okC = !ctry || String(d.country||"").toUpperCase().includes(ctry);
+        return okRef && okC;
       });
-    }
 
-    function renderUsers(users){
-      usersPill.textContent = `${users.length} loaded`;
-      if(!users.length){
-        usersBody.innerHTML = `<tr><td colspan="4">No users found.</td></tr>`;
+      status.textContent = `Showing ${filtered.length} / ${data.length} records`;
+
+      if (!filtered.length){
+        rows.innerHTML = `<tr><td colspan="6" class="muted">No matching records.</td></tr>`;
         return;
       }
 
-      usersBody.innerHTML = users.map(u => `
+      rows.innerHTML = filtered.map(d => `
         <tr>
-          <td>${safe(u.email || "—")}</td>
-          <td style="max-width:280px; word-break:break-all;">${safe(u.id)}</td>
-          <td><strong>${safe(u.inviterCode || "—")}</strong></td>
-          <td>${fmtDate(u.createdAt)}</td>
+          <td>${esc(fmtDate(d.createdAt))}</td>
+          <td><span class="tag">${esc(d.ref || "-")}</span></td>
+          <td class="muted">${esc(d.landing || "-")}</td>
+          <td class="muted">${esc(d.country || "-")}</td>
+          <td>${d.signedIn ? `<span class="ok">YES</span>` : `<span class="no">NO</span>`}</td>
+          <td class="muted">${esc(d.uid || "-")}</td>
         </tr>
       `).join("");
     }
 
-    function renderLeaderboard(codes){
-      const items = codes
-        .map(c => ({ code: c.code || c.id, signups: Number(c.signups || 0) }))
-        .sort((a,b) => b.signups - a.signups)
-        .slice(0, 25);
+    async function loadClicks(){
+      status.textContent = "Loading…";
+      rows.innerHTML = `<tr><td colspan="6" class="muted">Loading…</td></tr>`;
 
-      if(!items.length){
-        leaderBody.innerHTML = `<tr><td colspan="2">No data yet.</td></tr>`;
-        return;
-      }
+      // Admin-only read (rules will block non-admin)
+      const qy = query(collection(db, "invitationClicks"), orderBy("createdAt", "desc"), limit(200));
+      const snap = await getDocs(qy);
 
-      leaderBody.innerHTML = items.map(i => `
-        <tr>
-          <td><strong>${safe(i.code)}</strong></td>
-          <td>${i.signups}</td>
-        </tr>
-      `).join("");
+      cached = snap.docs.map(doc => {
+        const x = doc.data();
+        return {
+          id: doc.id,
+          createdAt: x.createdAt || 0,
+          ref: x.ref || "",
+          landing: x.landing || "",
+          country: x.country || "",
+          signedIn: !!x.signedIn,
+          uid: x.uid || ""
+        };
+      });
+
+      render(cached);
     }
 
-    function renderKpis(users, codes){
-      kpiUsers.textContent = users.length.toString();
-      kpiCodes.textContent = codes.length.toString();
+    function downloadCSV(){
+      const ref = filterRef.value.trim().toUpperCase();
+      const ctry = filterCountry.value.trim().toUpperCase();
+      const filtered = cached.filter(d => {
+        const okRef = !ref || String(d.ref||"").toUpperCase().includes(ref);
+        const okC = !ctry || String(d.country||"").toUpperCase().includes(ctry);
+        return okRef && okC;
+      });
 
-      const refUsers = users.filter(u => !!u.inviterCode).length;
-      kpiRefUsers.textContent = refUsers.toString();
+      const header = ["time","ref","landing","country","signedIn","uid"];
+      const lines = [header.join(",")].concat(
+        filtered.map(d => [
+          `"${new Date(d.createdAt).toISOString()}"`,
+          `"${String(d.ref).replace(/"/g,'""')}"`,
+          `"${String(d.landing).replace(/"/g,'""')}"`,
+          `"${String(d.country).replace(/"/g,'""')}"`,
+          `"${d.signedIn}"`,
+          `"${String(d.uid).replace(/"/g,'""')}"`
+        ].join(","))
+      );
 
-      const top = [...codes].sort((a,b) => Number(b.signups||0) - Number(a.signups||0))[0];
-      kpiTopCode.textContent = top ? (top.code || top.id) : "—";
+      const blob = new Blob([lines.join("\n")], {type:"text/csv;charset=utf-8"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "umoja_invitationClicks.csv";
+      a.click();
+      URL.revokeObjectURL(url);
     }
 
-    async function refreshAll(){
-      setStatus(dashStatus, "Loading dashboard data…", "muted");
-      try{
-        const [codes, users] = await Promise.all([loadInviteCodes(), loadUsers()]);
-        renderKpis(users, codes);
-        renderCodes(codes);
-        renderUsers(users);
-        renderLeaderboard(codes);
-        setStatus(dashStatus, "Loaded successfully.", "ok");
-      }catch(err){
-        console.error(err);
-        setStatus(dashStatus, "Failed to load data. Check Firestore rules + collections.", "bad");
-      }
-    }
+    filterRef.addEventListener("input", () => render(cached));
+    filterCountry.addEventListener("input", () => render(cached));
 
-    // ==========================================================
-    // Create Code
-    // ==========================================================
-    function genCode(){
-      const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-      let out = "";
-      for(let i=0;i<8;i++) out += alphabet[Math.floor(Math.random()*alphabet.length)];
-      return out;
-    }
-
-    $("createCodeBtn").addEventListener("click", async () => {
-      const ownerEmail = $("ownerEmail").value.trim();
-      const custom = $("customCode").value.trim().toUpperCase().replace(/[^A-Z0-9_-]/g, "");
-      const code = custom || genCode();
-
-      if(!ownerEmail){
-        setStatus(codeStatus, "Owner Email is required.", "bad");
-        return;
-      }
-
-      setStatus(codeStatus, "Creating code…", "muted");
-      try{
-        const ref = doc(db, "inviteCodes", code);
-        const snap = await getDoc(ref);
-        if(snap.exists()){
-          setStatus(codeStatus, `Code "${code}" already exists. Choose another.`, "bad");
-          return;
-        }
-
-        await setDoc(ref, {
-          code,
-          ownerEmail,
-          ownerUid: null,
-          status: "active",
-          clicks: 0,
-          signups: 0,
-          createdAt: serverTimestamp()
-        });
-
-        setStatus(codeStatus, `Created code "${code}". Link copied.`, "ok");
-        await navigator.clipboard.writeText(makeInviteLink(code));
-        $("customCode").value = "";
-        await refreshAll();
-      }catch(err){
-        console.error(err);
-        setStatus(codeStatus, "Failed to create code. Check Firestore rules.", "bad");
-      }
+    refreshBtn.addEventListener("click", async () => {
+      try { await loadClicks(); }
+      catch(e){ status.textContent = "Failed to load (not admin or rules blocking)."; console.error(e); }
     });
 
-    // ==========================================================
-    // Auth
-    // ==========================================================
-    $("loginBtn").addEventListener("click", async () => {
-      const email = $("email").value.trim();
-      const pass = $("pass").value;
-      if(!email || !pass){
-        setStatus(loginStatus, "Enter email + password.", "bad");
-        return;
-      }
-      setStatus(loginStatus, "Signing in…", "muted");
-      try{
-        await signInWithEmailAndPassword(auth, email, pass);
-      }catch(err){
-        console.error(err);
-        setStatus(loginStatus, err?.message || "Login failed.", "bad");
-      }
-    });
+    exportBtn.addEventListener("click", downloadCSV);
 
     logoutBtn.addEventListener("click", async () => {
       await signOut(auth);
+      location.href = "index.html";
     });
 
-    $("refreshBtn").addEventListener("click", async () => {
-      await refreshAll();
-    });
+    openMainBtn.addEventListener("click", () => location.href = "index.html");
 
+    // 🔐 Guard: must be logged in AND have admin claim
     onAuthStateChanged(auth, async (user) => {
-      if(!user){
-        // signed out
-        loginCard.classList.remove("hidden");
-        dashGrid.classList.add("hidden");
-        logoutBtn.classList.add("hidden");
-        whoamiPill.textContent = "Not signed in";
-        setStatus(loginStatus, "Please login.", "muted");
+      if (!user){
+        who.textContent = "Not signed in → redirecting…";
+        location.href = "index.html";
         return;
       }
 
-      setStatus(loginStatus, "Checking admin access…", "muted");
+      try{
+        const token = await user.getIdTokenResult(true);
+        const isAdmin = token?.claims?.admin === true;
 
-      const ok = await isAdminUser(user);
-      if(!ok){
-        setStatus(loginStatus, "Access denied: you are not an admin.", "bad");
-        alert("Access denied: admin only.");
-        await signOut(auth);
-        return;
+        if (!isAdmin){
+          who.textContent = "Access denied (not admin)";
+          // Optional: redirect away
+          setTimeout(() => location.href = "index.html", 800);
+          return;
+        }
+
+        who.textContent = `Admin: ${user.email || user.uid}`;
+        await loadClicks();
+
+      }catch(e){
+        who.textContent = "Access check failed";
+        console.error(e);
+        setTimeout(() => location.href = "index.html", 800);
       }
-
-      // authorized
-      whoamiPill.textContent = user.email ? `Admin: ${user.email}` : `Admin UID: ${user.uid}`;
-      logoutBtn.classList.remove("hidden");
-
-      loginCard.classList.add("hidden");
-      dashGrid.classList.remove("hidden");
-
-      setStatus(loginStatus, "Admin access granted.", "ok");
-      await refreshAll();
     });
-
-    // small UX
-    setStatus(loginStatus, "Please login.", "muted");
-    setStatus(codeStatus, "—", "muted");
-    setStatus(dashStatus, "—", "muted");
   </script>
 </body>
 </html>
